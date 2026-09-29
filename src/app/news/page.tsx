@@ -1,15 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { Calendar, MapPin, BellRing, ArrowRight, Clock } from "lucide-react";
-import { NEWS_EVENTS } from "@/lib/data/kmewData";
-
-export function generateMetadata() {
-  return {
-    title: "News & Events — KMEW",
-    description: "Official notices, upcoming health camps, scholarship drives, and press releases from KMEW.",
-  };
-}
+import { useNewsEvents } from "@/lib/data/contentStore";
 
 export default function NewsPage() {
+  const { news } = useNewsEvents();
+
   return (
     <div className="bg-slate-50 min-h-screen py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -29,7 +26,7 @@ export default function NewsPage() {
 
         {/* News Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {NEWS_EVENTS.map((item) => (
+          {news.map((item) => (
             <article
               key={item.id}
               id={item.id}

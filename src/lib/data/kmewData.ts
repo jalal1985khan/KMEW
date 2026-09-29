@@ -199,7 +199,18 @@ export const SUCCESS_STORIES = [
   }
 ];
 
-export const NEWS_EVENTS = [
+export interface NewsEventItem {
+  id: string;
+  title: string;
+  date: string;
+  category: string;
+  summary: string;
+  image: string;
+  location: string;
+  isUpcoming: boolean;
+}
+
+export const NEWS_EVENTS: NewsEventItem[] = [
   {
     id: "annual-scholarship-drive-2026",
     title: "Annual Merit-Cum-Means Higher Education Scholarship Drive 2026 Announced",
@@ -232,7 +243,15 @@ export const NEWS_EVENTS = [
   }
 ];
 
-export const GALLERY_ITEMS = [
+export interface GalleryItem {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+  description: string;
+}
+
+export const GALLERY_ITEMS: GalleryItem[] = [
   {
     id: "g1",
     title: "Annual Scholarship Distribution Ceremony",

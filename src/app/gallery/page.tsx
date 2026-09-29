@@ -2,18 +2,20 @@
 
 import { useState } from "react";
 import { Camera, X, Filter } from "lucide-react";
-import { GALLERY_ITEMS } from "@/lib/data/kmewData";
+import { GalleryItem } from "@/lib/data/kmewData";
+import { useGalleryItems } from "@/lib/data/contentStore";
 
 export default function GalleryPage() {
+  const { gallery } = useGalleryItems();
   const [selectedFilter, setSelectedFilter] = useState("All");
-  const [activeImage, setActiveImage] = useState<typeof GALLERY_ITEMS[0] | null>(null);
+  const [activeImage, setActiveImage] = useState<GalleryItem | null>(null);
 
   const filters = ["All", "Scholarships", "Education", "Skill Development", "Health & Welfare", "School Support"];
 
   const filtered =
     selectedFilter === "All"
-      ? GALLERY_ITEMS
-      : GALLERY_ITEMS.filter((item) => item.category === selectedFilter);
+      ? gallery
+      : gallery.filter((item) => item.category === selectedFilter);
 
   return (
     <div className="bg-slate-50 min-h-screen py-12">

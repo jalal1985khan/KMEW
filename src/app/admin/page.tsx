@@ -46,6 +46,9 @@ import {
   PaymentStatus,
   AuditLogItem,
 } from "@/lib/data/portalData";
+import { NewsManager } from "@/components/portal/admin/NewsManager";
+import { GalleryManager } from "@/components/portal/admin/GalleryManager";
+import { useNewsEvents, useGalleryItems } from "@/lib/data/contentStore";
 import {
   Shield,
   Users,
@@ -66,11 +69,16 @@ import {
   PlusCircle,
   FileSpreadsheet,
   BadgeCheck,
+  Newspaper,
+  Image as ImageIcon,
 } from "lucide-react";
 
 export default function AdminPortalPage() {
   const { currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState("payments");
+
+  const { news } = useNewsEvents();
+  const { gallery } = useGalleryItems();
 
   const [members, setMembers] = useState<MemberRecord[]>(INITIAL_MEMBERS);
   const [associates, setAssociates] = useState<AssociateRecord[]>(INITIAL_ASSOCIATES);
@@ -155,6 +163,19 @@ export default function AdminPortalPage() {
     setAssignModalOpen(false);
   };
 
+  const handleContentAuditLog = (action: string, target: string) => {
+    const adminName = currentUser?.name || "Rajeshwar Sharma";
+    const newAudit: AuditLogItem = {
+      id: `AUD-${Date.now().toString().slice(-6)}`,
+      timestamp: "Just now",
+      action: action,
+      performedBy: `${adminName} (ADMIN)`,
+      target: target,
+      statusBadge: "SUCCESS",
+    };
+    setAuditLogs((prev) => [newAudit, ...prev]);
+  };
+
   // Filtered lists
   const filteredInstallments = installments.filter((i) => {
     if (pipelineFilter !== "ALL" && i.status !== pipelineFilter) return false;
@@ -232,7 +253,7 @@ export default function AdminPortalPage() {
 
         {/* Shadcn UI Tabs Navigation */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-          <TabsList className="bg-slate-200/80 p-1 rounded-xl">
+          <TabsList className="bg-slate-200/80 p-1 rounded-xl flex-wrap h-auto gap-1">
             <TabsTrigger value="payments" className="text-xs font-bold gap-2">
               <CreditCard className="w-3.5 h-3.5" />
               <span>4-Tier Financial Pipeline</span>
@@ -256,6 +277,22 @@ export default function AdminPortalPage() {
               <span>Associate Network</span>
               <Badge variant="secondary" className="h-5 px-1.5 text-[10px] font-bold rounded-full">
                 {associates.length}
+              </Badge>
+            </TabsTrigger>
+
+            <TabsTrigger value="news" className="text-xs font-bold gap-2">
+              <Newspaper className="w-3.5 h-3.5" />
+              <span>News & Events</span>
+              <Badge variant="secondary" className="h-5 px-1.5 text-[10px] font-bold rounded-full">
+                {news.length}
+              </Badge>
+            </TabsTrigger>
+
+            <TabsTrigger value="gallery" className="text-xs font-bold gap-2">
+              <ImageIcon className="w-3.5 h-3.5" />
+              <span>Photo Gallery</span>
+              <Badge variant="secondary" className="h-5 px-1.5 text-[10px] font-bold rounded-full">
+                {gallery.length}
               </Badge>
             </TabsTrigger>
 
@@ -584,6 +621,16 @@ export default function AdminPortalPage() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* TAB 5: News & Events Management */}
+          <TabsContent value="news" className="space-y-4">
+            <NewsManager onAuditLog={handleContentAuditLog} />
+          </TabsContent>
+
+          {/* TAB 6: Photo Gallery Management */}
+          <TabsContent value="gallery" className="space-y-4">
+            <GalleryManager onAuditLog={handleContentAuditLog} />
           </TabsContent>
         </Tabs>
       </div>
