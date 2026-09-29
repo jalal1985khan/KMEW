@@ -356,7 +356,7 @@ export function NewsManager({ onAuditLog }: NewsManagerProps) {
 
       {/* Add / Edit News Modal Dialog */}
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Newspaper className="w-5 h-5 text-emerald-700" />
@@ -522,7 +522,7 @@ export function NewsManager({ onAuditLog }: NewsManagerProps) {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-base font-bold text-rose-600 flex items-center gap-2">
               <AlertTriangle className="w-5 h-5 text-rose-600" />

@@ -484,7 +484,7 @@ export default function AssociatePortalPage() {
 
       {/* Field Verification Approval Dialog (Using shadcn UI Dialog) */}
       <Dialog open={verifyModalOpen} onOpenChange={setVerifyModalOpen}>
-        <DialogContent className="sm:max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-base font-bold text-slate-900">
               Field Verification Approval

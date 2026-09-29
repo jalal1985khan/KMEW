@@ -839,7 +839,7 @@ export default function AdminPortalPage() {
 
       {/* Assign Associate Dialog */}
       <Dialog open={assignModalOpen} onOpenChange={setAssignModalOpen}>
-        <DialogContent className="max-w-md bg-white rounded-2xl">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-base font-bold text-slate-900">Assign Field Associate</DialogTitle>
             <DialogDescription className="text-xs text-slate-500">

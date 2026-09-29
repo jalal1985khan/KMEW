@@ -397,7 +397,7 @@ export default function MemberPortalPage() {
 
       {/* Submit Payment Dialog (Using shadcn UI Dialog) */}
       <Dialog open={payModalOpen} onOpenChange={setPayModalOpen}>
-        <DialogContent className="sm:max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+        <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-base font-bold text-slate-900">
               Submit Installment #{selectedInstallment?.installmentNo}
