@@ -356,11 +356,10 @@ export function GalleryManager({ onAuditLog }: GalleryManagerProps) {
                         key={preset.value}
                         type="button"
                         onClick={() => setFormData({ ...formData, image: preset.value })}
-                        className={`text-[10px] px-2 py-0.5 rounded-md border font-medium transition-colors ${
-                          formData.image === preset.value
+                        className={`text-[10px] px-2 py-0.5 rounded-md border font-medium transition-colors ${formData.image === preset.value
                             ? "bg-blue-100 text-blue-900 border-blue-300 font-bold"
                             : "bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-200"
-                        }`}
+                          }`}
                       >
                         {preset.label}
                       </button>
