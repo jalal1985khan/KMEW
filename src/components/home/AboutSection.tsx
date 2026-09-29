@@ -22,7 +22,7 @@ export function AboutSection() {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-              Kulti Maharaja Educational Welfare Organization (KMEW) is<br className="hidden md:inline" /> a registered non-profit organization committed to<br className="hidden md:inline" /> empowering underprivileged and marginalized communities<br className="hidden md:inline" /> through education, welfare and community development.
+              Kulti Maharaja Educational Welfare Organization (KMEW) is a registered non-profit organization committed to empowering underprivileged and marginalized communities through education, welfare and community development.
             </p>
 
             <div className="pt-0.5">
@@ -52,7 +52,7 @@ export function AboutSection() {
                 <div>
                   <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 leading-tight">Our Mission</h3>
                   <p className="text-[11px] text-slate-500 font-normal leading-snug mt-1">
-                    To empower through<br className="hidden sm:inline" /> education and welfare<br className="hidden sm:inline" /> initiatives.
+                    To empower through education and welfare initiatives.
                   </p>
                 </div>
               </div>
@@ -68,7 +68,7 @@ export function AboutSection() {
                 <div>
                   <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 leading-tight">Our Vision</h3>
                   <p className="text-[11px] text-slate-500 font-normal leading-snug mt-1">
-                    A stronger, healthier<br className="hidden sm:inline" /> and more equitable<br className="hidden sm:inline" /> community.
+                    A stronger, healthier and more equitable community.
                   </p>
                 </div>
               </div>
@@ -88,7 +88,7 @@ export function AboutSection() {
                 <div>
                   <h3 className="text-xs sm:text-[13px] font-bold text-slate-900 leading-tight">Our Values</h3>
                   <p className="text-[11px] text-slate-500 font-normal leading-snug mt-1">
-                    Education, integrity,<br className="hidden sm:inline" /> inclusion and community<br className="hidden sm:inline" /> development.
+                    Education, integrity, inclusion and community development.
                   </p>
                 </div>
               </div>

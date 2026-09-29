@@ -15,54 +15,82 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
     bn: "কুলটি মহারাজা এডুকেশনাল ওয়েলফেয়ার অর্গানাইজেশনের (কেএমইডব্লিউ) অফিসিয়াল পোর্টাল"
   },
 
-  // Navigation Items
+  // Navigation Items - Main Labels
   "Home": { hi: "होम", bn: "হোম" },
   "About Us": { hi: "हमारे बारे में", bn: "আমাদের সম্পর্কে" },
   "Who We Are": { hi: "हम कौन हैं", bn: "আমরা কারা" },
   "Our mission, history, and vision": { hi: "हमारा मिशन, इतिहास और दृष्टिकोण", bn: "আমাদের লক্ষ্য, ইতিহাস ও দৃষ্টিভঙ্গি" },
   "Our Impact": { hi: "हमारा प्रभाव", bn: "আমাদের প্রভাব" },
   "Grassroots reach and verified stats": { hi: "जमीनी स्तर पर पहुंच और सत्यापित आंकड़े", bn: "তৃণমূল পর্যায়ে পৌঁছানো এবং যাচাইকৃত পরিসংখ্যান" },
-  "Leadership & Team": { hi: "नेतृत्व एवं टीम", bn: "নেতৃত্ব ও দল" },
+  "Leadership & Team": { hi: "नेतृत्व एवं टीम", bn: "নেতृत्व ও দল" },
   "Trustees, advisors, and executive team": { hi: "ट्रस्टी, सलाहकार और कार्यकारी टीम", bn: "ট্রাস্টি, উপদেষ্টা এবং নির্বাহী দল" },
+  
+  // Navbar Dropdown - Our Programs
   "Our Programs": { hi: "हमारे कार्यक्रम", bn: "আমাদের কর্মসূচী" },
   "All Programs": { hi: "सभी कार्यक्रम", bn: "সকল কর্মসূচী" },
+  "Explore all 6 flagship initiatives": { hi: "सभी 6 प्रमुख पहलों को जानें", bn: "সকল ৬টি প্রধান উদ্যোগ দেখুন" },
   "Comprehensive list of community initiatives": { hi: "सामुदायिक पहलों की विस्तृत सूची", bn: "কমিউনিটি উদ্যোগের সম্পূর্ণ তালিকা" },
+  "Scholarships": { hi: "छात्रवृत्तियां", bn: "বৃত্তি" },
   "Merit Scholarships": { hi: "मेधावी छात्रवृत्ति", bn: "মেধা বৃত্তি" },
+  "Higher education financial aid": { hi: "उच्च शिक्षा के लिए वित्तीय सहायता", bn: "উচ্চ শিক্ষার জন্য আর্থিক সহায়তা" },
   "Financial aid for higher education": { hi: "उच्च शिक्षा के लिए वित्तीय सहायता", bn: "উচ্চ শিক্ষার জন্য আর্থিক সহায়তা" },
+  "Education Centers": { hi: "शिक्षा केंद्र", bn: "শিক্ষা কেন্দ্র" },
   "Learning Centers": { hi: "शिक्षा केंद्र", bn: "শিক্ষা কেন্দ্র" },
+  "Remedial evening tuition centers": { hi: "उपचारात्मक शाम के ट्यूशन केंद्र", bn: "সান্ধ্যকালীন প্রতিকারমূলক টিউশন কেন্দ্র" },
   "Evening tuition in underserved areas": { hi: "वंचित क्षेत्रों में शाम की ट्यूशन", bn: "সুবিধাবঞ্চিত এলাকায় সান্ধ্যকালীন টিউশন" },
-  "Women Vocational": { hi: "महिला व्यावसायिक प्रशिक्षण", bn: "মহিলাদের বৃত্তিমূলক প্রশিক্ষণ" },
-  "Skill development and micro-grants": { hi: "कौशल विकास और सूक्ष्म अनुदान", bn: "দক্ষতা উন্নয়ন এবং ক্ষুদ্র অনুদান" },
-  "Health Camps": { hi: "स्वास्थ्य शिविर", bn: "স্বাস্থ্য শিবির" },
-  "Preventive checkups & eye screenings": { hi: "निवारक जांच और नेत्र परीक्षण", bn: "প্রতিরোধমূলক স্বাস্থ্য পরীক্ষা ও চক্ষু পরীক্ষা" },
-  "School Support": { hi: "विद्यालय सहयोग", bn: "বিদ্যালয় সহায়তা" },
-  "Kits, uniforms, and stationary drives": { hi: "किट, वर्दी और स्टेशनरी वितरण", bn: "কিট, ইউনিফর্ম এবং স্টেশনারি বিতরণ" },
   "Community Classes": { hi: "सामुदायिक कक्षाएं", bn: "কমিউনিটি ক্লাস" },
+  "Grassroots workshops & literacy": { hi: "जमीनी स्तर पर कार्यशालाएं और साक्षरता", bn: "তৃণমূল পর্যায়ের কর্মশালা ও সাক্ষরতা" },
   "Adult literacy and legal awareness": { hi: "प्रौढ़ साक्षरता और कानूनी जागरूकता", bn: "বয়স্ক সাক্ষরতা এবং আইনি সচেতনতা" },
+  "School Support": { hi: "विद्यालय सहयोग", bn: "বিদ্যালয় সহায়তা" },
+  "Uniforms, books & learning kits": { hi: "वर्दी, किताबें और अध्ययन किट", bn: "ইউনিফর্ম, বই এবং শিক্ষা কিট" },
+  "Kits, uniforms, and stationary drives": { hi: "किट, वर्दी और स्टेशनरी वितरण", bn: "কিট, ইউনিফর্ম এবং স্টেশনারি वितरण" },
+  "Skill Development": { hi: "कौशल विकास", bn: "দক্ষতা উন্নয়ন" },
+  "Women Vocational": { hi: "महिला व्यावसायिक प्रशिक्षण", bn: "মহিলাদের বৃত্তিমূলক প্রশিক্ষণ" },
+  "Vocational & digital skills": { hi: "व्यावसायिक और डिजिटल कौशल", bn: "বৃত্তিমূলক ও ডিজিটাল দক্ষতা" },
+  "Skill development and micro-grants": { hi: "कौशल विकास और सूक्ष्म अनुदान", bn: "দক্ষতা উন্নয়ন এবং ক্ষুদ্র অনুদান" },
+  "Health & Welfare": { hi: "स्वास्थ्य एवं कल्याण", bn: "স্বাস্থ্য ও কল্যাণ" },
+  "Health Camps": { hi: "स्वास्थ्य शिविर", bn: "स्वास्थ्य शिविर" },
+  "Medical diagnostic camps": { hi: "चिकित्सा नैदानिक शिविर", bn: "মেডিকেল ডায়াগনস্টিক ক্যাম্প" },
+  "Preventive checkups & eye screenings": { hi: "निवारक जांच और नेत्र परीक्षण", bn: "প্রতিরোধমূলক স্বাস্থ্য পরীক্ষা ও চক্ষু পরীক্ষা" },
+
+  // Navbar Dropdown - Membership
   "Membership": { hi: "सदस्यता", bn: "সদস্যপদ" },
   "Why Join KMEW?": { hi: "केएमईडब्ल्यू से क्यों जुड़ें?", bn: "কেএমইডব্লিউ-তে কেন যোগ দেবেন?" },
   "Benefits, voting rights, and welfare aid": { hi: "लाभ, मतदान अधिकार और कल्याणकारी सहायता", bn: "সুবিধা, ভোটাধিকার এবং কল্যাণমূলক সহায়তা" },
   "Become a Member": { hi: "सदस्य बनें", bn: "সদস্য হন" },
+  "Register for scholarships & welfare support": { hi: "छात्रवृत्ति और कल्याणकारी सहायता के लिए पंजीकरण करें", bn: "বৃত্তি এবং কল্যাণমূলক সহায়তার জন্য নিবন্ধন করুন" },
   "Register online in 5 minutes": { hi: "5 मिनट में ऑनलाइन पंजीकरण करें", bn: "৫ মিনিটে অনলাইন নিবন্ধন করুন" },
-  "Become an Associate": { hi: "सहयोगी बनें", bn: "সহযোগী হন" },
+  "Become an Associate": { hi: "सहयोगी बनें", bn: "सहযোগী হন" },
+  "Volunteer and lead in your community": { hi: "स्वयंसेवा करें और अपने समुदाय का नेतृत्व करें", bn: "স্বেচ্ছাসেবী হন এবং আপনার সম্প্রদায়ের নেতৃত্ব দিন" },
   "Help onboard members & earn recognition": { hi: "सदस्यों को जोड़ने में मदद करें और पहचान पाएं", bn: "সদস্যদের যুক্ত করতে সাহায্য করুন ও স্বীকৃতি পান" },
+  "Support & Donate": { hi: "सहयोग एवं दान करें", bn: "সহায়তা ও দান করুন" },
+  "Tax-exempt donation under Section 80G": { hi: "धारा 80जी के तहत कर-मुक्त दान", bn: "ধারা ৮০জি-র অধীনে করমুক্ত অনুদান" },
   "Code of Conduct": { hi: "आचार संहिता", bn: "আচরণবিধি" },
-  "Rules, transparency, and ethics": { hi: "नियम, पारदर्शिता और नैतिकता", bn: "নিয়মাবলী, স্বচ্ছতা এবং নীতিশাস্ত্র" },
+  "Rules, transparency, and ethics": { hi: "नियम, पारदर्शिता और नैतिकता", bn: "নিয়মাবলী, স্বচ্ছতা এবং নীতিशास्त्र" },
+
+  // Navbar Dropdown - News & Media
   "News & Media": { hi: "समाचार एवं मीडिया", bn: "খবর ও মিডিয়া" },
-  "Latest Announcements": { hi: "नवीनतम घोषणाएं", bn: "সর্বশেষ ঘোষণা" },
+  "News & Events": { hi: "समाचार एवं कार्यक्रम", bn: "সংবাদ ও ইভেন্ট" },
+  "Announcements & press releases": { hi: "घोषणाएं और प्रेस विज्ञप्तियां", bn: "ঘোষণা ও প্রেস বিজ্ঞপ্তি" },
+  "Latest Announcements": { hi: "नवीनतम घोषणाएं", bn: "সর্বশেষ घोषणा" },
   "Press releases, circulars, and updates": { hi: "प्रेस विज्ञप्ति, परिपत्र और अपडेट", bn: "প্রেস বিজ্ঞপ্তি, সার্কুলার এবং আপডেট" },
   "Press Coverage": { hi: "मीडिया कवरेज", bn: "সংবাদ কভারেজ" },
-  "Media mentions and newspaper reports": { hi: "मीडिया उल्लेख और समाचार पत्र रिपोर्ट", bn: "মিডিয়া উল্লেখ এবং সংবাদপত্রের প্রতিবেদন" },
+  "Media mentions and newspaper reports": { hi: "मीडिया उल्लेख और समाचार पत्र रिपोर्ट", bn: "মিডিয়া उल्लेख এবং সংবাদপত্রের প্রতিবেদন" },
   "Photo Gallery": { hi: "फोटो गैलरी", bn: "ফটো গ্যালারি" },
+  "Moments & life at KMEW": { hi: "केएमईडब्ल्यू में जीवन और यादगार पल", bn: "কেএমইডব্লিউ-তে জীবন ও স্মরণীয় মুহূর্ত" },
+  "Moments & life at": { hi: "जीवन और यादगार पल", bn: "জীবন ও স্মরণীয় মুহূর্ত" },
   "Field camps, events, and distributions": { hi: "फील्ड कैंप, कार्यक्रम और वितरण", bn: "মাঠ পর্যায়ের ক্যাম্প, অনুষ্ঠান ও বিতরণ" },
+
+  // Navbar Actions
   "Contact": { hi: "संपर्क करें", bn: "যোগাযোগ" },
   "Login": { hi: "लॉगिन", bn: "লগইন" },
   "Donate": { hi: "दान करें", bn: "দান করুন" },
-  "DONATE US": { hi: "हमें दान करें", bn: "আমাদের দান করুন" },
-  "Donate Us": { hi: "हमें दान करें", bn: "আমাদের দান করুন" },
-  "Donate Now": { hi: "अभी दान करें", bn: "এখনই দান করুন" },
+  "DONATE US": { hi: "हमें दान करें", bn: "আমাদের दान করুন" },
+  "Donate Us": { hi: "हमें दान करें", bn: "আমাদের दान করুন" },
+  "Donate Now": { hi: "अभी दान करें", bn: "এখনই दान করুন" },
+  "Donate Now →": { hi: "अभी दान करें →", bn: "এখনই দান করুন →" },
   "Portal Login": { hi: "पोर्टल लॉगिन", bn: "পোর্টাল লগইন" },
-  "Language": { hi: "भाषा", bn: "ভাষা" },
+  "Language": { hi: "भाषा", bn: "भाषा" },
 
   // Hero Section
   "Empowering Communities Through Education, Welfare & Development": {
@@ -74,12 +102,25 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
     bn: "কেএমইডব্লিউ শিক্ষা, কল্যাণমূলক উদ্যোগ, আর্থিক সহায়তা এবং তৃণমূল পর্যায়ের উন্নয়নের মাধ্যমে শিশু, পরিবার এবং সম্প্রদায়ের জন্য একটি উজ্জ্বল ভবিষ্যৎ গড়ে তুলতে কাজ করে।"
   },
   "Explore Our Programs": { hi: "हमारे कार्यक्रमों को जानें", bn: "আমাদের কর্মসূচিগুলো দেখুন" },
-  "Join thousands of members": { hi: "हजारों सदस्यों से जुड़ें", bn: "হাজার হাজার সদস্যের সাথে যোগ দিন" },
+  "Join thousands of members": { hi: "हजारों सदस्यों से जुड़ें", bn: "हजार हजार सदस्यের সাথে যোগ দিন" },
   "building stronger communities.": { hi: "मजबूत समुदायों का निर्माण कर रहे हैं।", bn: "একটি শক্তিশালী সম্প্রদায় গড়ে তুলুন।" },
   "Members Supported": { hi: "सहयोग प्राप्त सदस्य", bn: "সহায়তাপ্রাপ্ত সদস্য" },
   "Families Helped": { hi: "सहायता प्राप्त परिवार", bn: "সাহায্যপ্রাপ্ত পরিবার" },
   "Active Programs": { hi: "सक्रिय कार्यक्रम", bn: "সক্রিয় কর্মসূচি" },
   "Direct Aid Given": { hi: "प्रत्यक्ष सहायता प्रदान की गई", bn: "প্রদত্ত সরাসরি সহায়তা" },
+
+  // Hero Floating Metrics
+  "Members": { hi: "सदस्य", bn: "সদস্য" },
+  "Supported": { hi: "सहयोग प्राप्त", bn: "সহায়তাপ্রাপ্ত" },
+  "Families Reached": { hi: "लाभान्वित परिवार", bn: "উপকৃত পরিবার" },
+  "Families": { hi: "परिवार", bn: "পরিবার" },
+  "Reached": { hi: "लाभान्वित", bn: "উপকৃত" },
+  "Programs Conducted": { hi: "आयोजित कार्यक्रम", bn: "পরিচালিত কর্মসূচি" },
+  "Programs": { hi: "कार्यक्रम", bn: "কর্মসূচি" },
+  "Conducted": { hi: "आयोजित", bn: "পরিচালিত" },
+  "Contributions Managed": { hi: "प्रबंधित योगदान", bn: "পরিচালিত অবদান" },
+  "Contributions": { hi: "योगदान", bn: "অবদান" },
+  "Managed": { hi: "प्रबंधित", bn: "পরিচালিত" },
 
   // Stats Banner
   "Verified Grassroots Impact": { hi: "प्रमाणित जमीनी प्रभाव", bn: "যাচাইকৃত তৃণমূল প্রভাব" },
@@ -89,16 +130,48 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
   },
   "Active Members": { hi: "सक्रिय सदस्य", bn: "সক্রিয় সদস্য" },
   "Scholarships Awarded": { hi: "प्रदत्त छात्रवृत्तियां", bn: "প্রদত্ত বৃত্তি" },
-  "Programs Conducted": { hi: "आयोजित कार्यक्रम", bn: "পরিচালিত কর্মসূচি" },
-  "Contributions Managed": { hi: "प्रबंधित योगदान", bn: "পরিচালিত অবদান" },
 
-  // Quick Action Cards
+  // Quick Action Cards (Screenshot 4)
+  "Join KMEW and access our support network, programs and community initiatives.": {
+    hi: "केएमईडब्ल्यू से जुड़ें और हमारे सहायता नेटवर्क, कार्यक्रमों और सामुदायिक पहलों तक पहुंच प्राप्त करें।",
+    bn: "কেএমইডব্লিউ-তে যুক্ত হন এবং আমাদের সহায়তা নেটওয়ার্ক, কর্মসূচি ও কমিউনিটি উদ্যোগের সুবিধা গ্রহণ করুন।"
+  },
+  "Join KMEW and access our support network": {
+    hi: "केएमईडब्ल्यू से जुड़ें और हमारे सहायता नेटवर्क",
+    bn: "কেএমইডব্লিউ-তে যুক্ত হন এবং আমাদের সহায়তা নেটওয়ার্ক"
+  },
+  "programs and community initiatives.": {
+    hi: "कार्यक्रमों और सामुदायिक पहलों तक।",
+    bn: "কর্মসূচি ও কমিউনিটি উদ্যোগের।"
+  },
+  "Register Now →": { hi: "अभी पंजीकरण करें →", bn: "এখনই নিবন্ধন করুন →" },
+  "Register Now": { hi: "अभी पंजीकरण करें", bn: "এখনই নিবন্ধন করুন" },
+  "Help us support members in your community and create real impact.": {
+    hi: "अपने समुदाय के सदस्यों का समर्थन करने और वास्तविक प्रभाव पैदा करने में हमारी मदद करें।",
+    bn: "আপনার কমিউনিটির সদস্যদের সহায়তা করতে এবং বাস্তব প্রভাব তৈরি করতে আমাদের সাহায্য করুন।"
+  },
+  "Join Us →": { hi: "हमसे जुड़ें →", bn: "যুক্ত হন →" },
+  "Join Us": { hi: "हमसे जुड़ें", bn: "যুক্ত হন" },
+  "Member Login": { hi: "सदस्य लॉगिन", bn: "সদস্য লগইন" },
+  "Manage your profile, contributions and stay connected with your associate.": {
+    hi: "अपनी प्रोफ़ाइल, योगदान प्रबंधित करें और अपने सहयोगी से जुड़े रहें।",
+    bn: "আপনার প্রোফাইল, অবদান পরিচালনা করুন এবং আপনার সহযোগীর সাথে সংযুক্ত থাকুন।"
+  },
+  "Login Now →": { hi: "अभी लॉगिन करें →", bn: "এখনই লগইন করুন →" },
+  "Login Now": { hi: "अभी लॉगिन करें", bn: "এখনই লগইন করুন" },
+  "Support KMEW": { hi: "केएमईडब्ल्यू का सहयोग करें", bn: "কেএমইডব্লিউ-কে সহায়তা করুন" },
+  "Contribute to our initiatives and help us create brighter futures.": {
+    hi: "हमारी पहलों में योगदान दें और उज्जवल भविष्य बनाने में हमारी मदद करें।",
+    bn: "আমাদের উদ্যোগে অবদান রাখুন এবং একটি উজ্জ্বল ভবিষ্যৎ গড়ে তুলতে আমাদের সাহায্য করুন।"
+  },
+
+  // Legacy / Additional Card Keys
   "Register as Member": { hi: "सदस्य के रूप में पंजीकरण करें", bn: "সদস্য হিসেবে নিবন্ধন করুন" },
   "Apply for KMEW membership, track application status, and access community benefits.": {
     hi: "केएमईडब्ल्यू सदस्यता के लिए आवेदन करें, आवेदन की स्थिति देखें और सामुदायिक लाभ प्राप्त करें।",
-    bn: "কেএমইডব্লিউ সদস্যপদের জন্য আবেদন করুন, আবেদনের স্থিতি ট্র্যাক করুন এবং কমিউনিটি সুবিধা গ্রহণ করুন।"
+    bn: "কেএমইডব্লিউ সদস্যপদের জন্য आवेदन করুন, আবেদনের স্থিতি ট্র্যাক করুন এবং কমিউনিটি সুবিধা গ্রহণ করুন।"
   },
-  "Register as Associate": { hi: "सहयोगी के रूप में पंजीकरण करें", bn: "সহযোগী হিসেবে নিবন্ধন করুন" },
+  "Register as Associate": { hi: "सहयोगी के रूप में पंजीकरण करें", bn: "सहयोगी হিসেবে নিবন্ধন করুন" },
   "Become a trusted community representative, onboard members, and lead local initiatives.": {
     hi: "एक विश्वसनीय सामुदायिक प्रतिनिधि बनें, नए सदस्यों को जोड़ें और स्थानीय पहलों का नेतृत्व करें।",
     bn: "একজন বিশ্বস্ত কমিউনিটি প্রতিনিধি হন, সদস্যদের যুক্ত করুন এবং স্থানীয় উদ্যোগে নেতৃত্ব দিন।"
@@ -113,43 +186,158 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
     hi: "पारदर्शी दान के साथ हमारी शिक्षा छात्रवृत्ति, चिकित्सा शिविर और राहत कार्यक्रमों का समर्थन करें।",
     bn: "স্বচ্ছ অনুদানের মাধ্যমে আমাদের শিক্ষা বৃত্তি, চিকিৎসা শিবির এবং ত্রাণ কর্মসূচিকে সহায়তা করুন।"
   },
-  "Register Now": { hi: "अभी पंजीकरण करें", bn: "এখনই নিবন্ধন করুন" },
-  "Apply as Associate": { hi: "सहयोगी के रूप में आवेदन करें", bn: "সহযোগী হিসেবে আবেদন করুন" },
+  "Apply as Associate": { hi: "सहयोगी के रूप में आवेदन करें", bn: "सहयोगी হিসেবে আবেদন করুন" },
   "Login to Account": { hi: "खाते में लॉगिन करें", bn: "অ্যাকাউন্টে লগইন করুন" },
   "Contribute Online": { hi: "ऑनलाइन योगदान करें", bn: "অনলাইনে অবদান রাখুন" },
 
-  // About Section
+  // About Section (Screenshot 5)
+  "ABOUT KMEW": { hi: "केएमईडब्ल्यू के बारे में", bn: "কেএমইডব্লিউ সম্পর্কে" },
+  "A Stronger Community for a Brighter Tomorrow": {
+    hi: "उज्जवल कल के लिए एक मजबूत समुदाय",
+    bn: "উজ্জ্বল আগামীর জন্য একটি শক্তিশালী সম্প্রদায়"
+  },
+  "A Stronger Community": { hi: "एक मजबूत समुदाय", bn: "একটি শক্তিশালী সম্প্রদায়" },
+  "for a Brighter Tomorrow": { hi: "उज्जवल कल के लिए", bn: "উজ্জ্বল আগামীর জন্য" },
+  "Kulti Maharaja Educational Welfare Organization (KMEW) is a registered non-profit organization committed to empowering underprivileged and marginalized communities through education, welfare and community development.": {
+    hi: "कुल्टी महाराजा एजुकेशनल वेलफेयर ऑर्गनाइजेशन (केएमईडब्ल्यू) एक पंजीकृत गैर-लाभकारी संगठन है जो शिक्षा, कल्याण और सामुदायिक विकास के माध्यम से वंचित और हाशिए पर मौजूद समुदायों को सशक्त बनाने के लिए प्रतिबद्ध है।",
+    bn: "কুলটি মহারাজা এডুকেশনাল ওয়েলফেয়ার অর্গানাইজেশন (কেএমইডব্লিউ) একটি নিবন্ধিত অলাভজনক সংস্থা যা শিক্ষা, কল্যাণ এবং সম্প্রদায়ের উন্নয়নের মাধ্যমে সুবিধাবঞ্চিত ও প্রান্তিক জনগোষ্ঠীর ক্ষমতায়নের জন্য প্রতিশ্রুতিবদ্ধ।"
+  },
+  "Kulti Maharaja Educational Welfare Organization (KMEW) is": {
+    hi: "कुल्टी महाराजा एजुकेशनल वेलफेयर ऑर्गनाइजेशन (केएमईडब्ल्यू)",
+    bn: "কুলটি মহারাজা এডুকেশনাল ওয়েলফেয়ার অর্গানাইজেশন (কেএমইডব্লিউ)"
+  },
+  "a registered non-profit organization committed to": {
+    hi: "एक पंजीकृत गैर-लाभकारी संगठन है जो",
+    bn: "একটি নিবন্ধিত অলাভজনক সংস্থা যা"
+  },
+  "empowering underprivileged and marginalized communities": {
+    hi: "वंचित और हाशिए पर मौजूद समुदायों को सशक्त बनाने",
+    bn: "সুবিধাবঞ্চিত ও প্রান্তিক জনগোষ্ঠীর ক্ষমতায়নের"
+  },
+  "through education, welfare and community development.": {
+    hi: "शिक्षा, कल्याण और सामुदायिक विकास के लिए प्रतिबद्ध है।",
+    bn: "শিক্ষা, কল্যাণ এবং সম্প্রদায়ের উন্নয়নে প্রতিশ্রুতিবদ্ধ।"
+  },
+  "Learn More About KMEW": { hi: "केएमईडब्ल्यू के बारे में और जानें", bn: "কেএমইডব্লিউ সম্পর্কে আরও জানুন" },
+  "Learn More About": { hi: "के बारे में और जानें", bn: "সম্পর্কে আরও জানুন" },
+  "Our Mission": { hi: "हमारा लक्ष्य", bn: "আমাদের লক্ষ্য" },
+  "Our Vision": { hi: "हमारा दृष्टिकोण", bn: "আমাদের দৃষ্টিভঙ্গি" },
+  "Our Values": { hi: "हमारे मूल्य", bn: "আমাদের মূল্যবোধ" },
+  "To empower through education and welfare initiatives.": {
+    hi: "शिक्षा और कल्याणकारी पहलों के माध्यम से सशक्त बनाना।",
+    bn: "শিক্ষা এবং কল্যাণমূলক উদ্যোগের মাধ্যমে ক্ষমতায়ন করা।"
+  },
+  "A stronger, healthier and more equitable community.": {
+    hi: "एक मजबूत, स्वस्थ और अधिक समतापूर्ण समुदाय।",
+    bn: "একটি শক্তিশালী, স্বাস্থ্যকর এবং আরও সমতাভিত্তিক সম্প্রদায়।"
+  },
+  "Education, integrity, inclusion and community development.": {
+    hi: "शिक्षा, सत्यनिष्ठा, समावेशन और सामुदायिक विकास।",
+    bn: "শিক্ষা, সততা, অন্তর্ভুক্তি এবং সম্প্রদায়ের উন্নয়ন।"
+  },
+  "To empower through": { hi: "सशक्त बनाना", bn: "ক্ষমতায়ন করা" },
+  "education and welfare": { hi: "शिक्षा और कल्याण", bn: "শিক্ষা এবং কল্যাণমূলক" },
+  "initiatives.": { hi: "पहलों के माध्यम से।", bn: "উদ্যোগের মাধ্যমে।" },
+  "A stronger, healthier": { hi: "एक मजबूत, स्वस्थ", bn: "একটি শক্তিশালী, স্বাস্থ্যকর" },
+  "and more equitable": { hi: "और अधिक समतापूर्ण", bn: "এবং আরও সমতাভিত্তিক" },
+  "community.": { hi: "समुदाय।", bn: "সম্প্রদায়।" },
+  "Education, integrity,": { hi: "शिक्षा, सत्यनिष्ठा,", bn: "শিক্ষা, সততা," },
+  "inclusion and community": { hi: "समावेशन और सामुदायिक", bn: "অন্তর্ভুক্তি এবং সম্প্রদায়ের" },
+  "development.": { hi: "विकास।", bn: "উন্নয়ন।" },
+
+  // About Page Sub-sections
   "Who We Are & What We Stand For": { hi: "हम कौन हैं और हमारे सिद्धांत क्या हैं", bn: "আমরা কারা এবং আমাদের আদর্শ কী" },
   "KMEW was established with a singular vision: no child in our region should be denied education due to poverty, and no family should face hardship alone.": {
     hi: "केएमईडब्ल्यू की स्थापना एक अद्वितीय दृष्टिकोण के साथ की गई थी: हमारे क्षेत्र में गरीबी के कारण कोई भी बच्चा शिक्षा से वंचित न रहे, और कोई भी परिवार अकेले संकट का सामना न करे।",
     bn: "কেএমইডব্লিউ একটি অনন্য দৃষ্টিভঙ্গি নিয়ে প্রতিষ্ঠিত হয়েছিল: দারিদ্র্যের কারণে আমাদের অঞ্চলের কোনো শিশুই যেন শিক্ষা থেকে বঞ্চিত না হয় এবং কোনো পরিবার যেন একা সংকটের মুখোমুখি না হয়।"
   },
-  "Our Vision": { hi: "हमारा दृष्टिकोण", bn: "আমাদের দৃষ্টিভঙ্গি" },
   "To build an inclusive, empowered society where quality education, social dignity, and economic self-reliance are accessible to every individual regardless of socio-economic background.": {
     hi: "एक समावेशी, सशक्त समाज का निर्माण करना जहां सामाजिक-आर्थिक पृष्ठभूमि की परवाह किए बिना प्रत्येक व्यक्ति को गुणवत्तापूर्ण शिक्षा, सामाजिक गरिमा और आर्थिक आत्मनिर्भरता सुलभ हो।",
     bn: "একটি অন্তর্ভুক্তিমূলক, ক্ষমতায়িত সমাজ গড়ে তোলা যেখানে আর্থ-সামাজিক পটভূমি নির্বিশেষে প্রতিটি ব্যক্তির কাছে মানসম্পন্ন শিক্ষা, সামাজিক মর্যাদা এবং অর্থনৈতিক আত্মনির্ভরশীলতা পৌঁছে দেওয়া যায়।"
   },
-  "Our Mission": { hi: "हमारा मिशन", bn: "আমাদের লক্ষ্য" },
   "Mobilizing grassroots resources, delivering merit-based scholarships, operating community learning centers, and providing transparent welfare assistance to underserved communities.": {
     hi: "जमीनी संसाधनों को जुटाना, योग्यता-आधारित छात्रवृत्ति प्रदान करना, सामुदायिक शिक्षा केंद्र संचालित करना और वंचित समुदायों को पारदर्शी कल्याण सहायता प्रदान करना।",
     bn: "তৃণমূল পর্যায়ে সম্পদ সংগ্রহ, মেধাভিত্তিক বৃত্তি প্রদান, কমিউনিটি লার্নিং সেন্টার পরিচালনা এবং সুবিধাবঞ্চিত জনগোষ্ঠীকে স্বচ্ছ কল্যাণমূলক সহায়তা প্রদান।"
   },
-  "Core Pillars": { hi: "मूल स्तंभ", bn: "মূল ভিত্তি" },
+  "Core Pillars": { hi: "मूल स्तंभ", bn: "मूल ভিত্তি" },
   "Education First": { hi: "शिक्षा सर्वोपरि", bn: "শিক্ষা সর্বাগ্রে" },
   "Transparent Governance": { hi: "पारदर्शी शासन", bn: "স্বচ্ছ পরিচালনা" },
   "Community Empowerment": { hi: "सामुदायिक सशक्तिकरण", bn: "কমিউনিটি ক্ষমতায়ন" },
   "Read Our Full Story": { hi: "हमारी पूरी कहानी पढ़ें", bn: "আমাদের সম্পূর্ণ গল্প পড়ুন" },
 
   // Programs Preview
+  "OUR PROGRAMS": { hi: "हमारे कार्यक्रम", bn: "আমাদের কর্মসূচী" },
+  "Focused Initiatives for a Stronger Tomorrow": {
+    hi: "एक मजबूत कल के लिए केंद्रित पहल",
+    bn: "একটি শক্তিশালী আগামীর জন্য লক্ষ্যভিত্তিক উদ্যোগ"
+  },
+  "Providing educational assistance to deserving students.": {
+    hi: "योग्य छात्रों को शैक्षिक सहायता प्रदान करना।",
+    bn: "যোগ্য শিক্ষার্থীদের শিক্ষাগত সহায়তা প্রদান করা।"
+  },
+  "Education": { hi: "शिक्षा", bn: "শিক্ষা" },
+  "Supporting quality education for brighter futures.": {
+    hi: "उज्जवल भविष्य के लिए गुणवत्तापूर्ण शिक्षा का समर्थन।",
+    bn: "উজ্জ্বল ভবিষ্যতের জন্য মানসম্পন্ন শিক্ষাকে সহায়তা করা।"
+  },
+  "Learning opportunities for children and youth in the community.": {
+    hi: "समुदाय में बच्चों और युवाओं के लिए सीखने के अवसर।",
+    bn: "কমিউনিটির শিশু এবং যুবকদের জন্য শেখার সুযোগ।"
+  },
+  "Providing essential resources for school education.": {
+    hi: "स्कूली शिक्षा के लिए आवश्यक संसाधन उपलब्ध कराना।",
+    bn: "স্কুল শিক্ষার জন্য প্রয়োজনীয় উপকরণ সরবরাহ করা।"
+  },
+  "Building skills for better employment opportunities.": {
+    hi: "बेहतर रोजगार के अवसरों के लिए कौशल निर्माण।",
+    bn: "উন্নত কর্মসংস্থানের সুযোগের জন্য দক্ষতা বৃদ্ধি।"
+  },
+  "Supporting health camps and welfare initiatives.": {
+    hi: "स्वास्थ्य शिविरों और कल्याणकारी पहलों का समर्थन।",
+    bn: "স্বাস্থ্য শিবির এবং কল্যাণমূলক উদ্যোগের সহায়তা।"
+  },
   "Our Flagship Welfare Programs": { hi: "हमारे प्रमुख कल्याणकारी कार्यक्रम", bn: "আমাদের প্রধান কল্যাণমূলক কর্মসূচি" },
   "Designed to address multi-dimensional challenges in education, healthcare, and livelihood across local communities.": {
     hi: "स्थानीय समुदायों में शिक्षा, स्वास्थ्य सेवा और आजीविका की बहुआयामी चुनौतियों का समाधान करने के लिए डिज़ाइन किया गया।",
-    bn: "স্থানীয় জনগোষ্ঠীর মধ্যে শিক্ষা, স্বাস্থ্যসেবা এবং জীবিকার বহুমুখী চ্যালেঞ্জ মোকাবেলার জন্য পরিকল্পিত।"
+    bn: "স্থানীয় জনগোষ্ঠীর মধ্যে শিক্ষা, स्वास्थ्यসেবা এবং জীবিকার বহুমুখী চ্যালেঞ্জ মোকাবেলার জন্য পরিকল্পিত।"
   },
   "View All Programs": { hi: "सभी कार्यक्रम देखें", bn: "সকল কর্মসূচি দেখুন" },
   "Accepting Applications": { hi: "आवेदन स्वीकार किए जा रहे हैं", bn: "আবেদন গ্রহণ চলছে" },
   "Active": { hi: "सक्रिय", bn: "সক্রিয়" },
   "Ongoing": { hi: "जारी है", bn: "চলমান" },
+
+  // Registration Cards Section
+  "Become a KMEW Member": { hi: "केएमईडब्ल्यू सदस्य बनें", bn: "কেএমইডব্লিউ সদস্য হন" },
+  "Join a growing community and become part of KMEW's mission to support education, welfare and community development.": {
+    hi: "एक बढ़ते समुदाय से जुड़ें और शिक्षा, कल्याण और सामुदायिक विकास का समर्थन करने के केएमईडब्ल्यू के मिशन का हिस्सा बनें।",
+    bn: "একটি ক্রমবর্ধমান সম্প্রদায়ে যোগ দিন এবং শিক্ষা, কল্যাণ ও কমিউনিটি উন্নয়নকে সমর্থন করার কেএমইডব্লিউ-এর লক্ষ্যের অংশ হন।"
+  },
+  "Access Programs": { hi: "कार्यक्रमों तक पहुंच", bn: "কর্মসূচি সুবিধা" },
+  "Get Associate Support": { hi: "सहयोगी सहायता प्राप्त करें", bn: "সহযোগীর সহায়তা পান" },
+  "Manage Contributions": { hi: "योगदान प्रबंधित करें", bn: "অবদান পরিচালনা করুন" },
+  "Stay Connected": { hi: "जुड़े रहें", bn: "সংযুক্ত থাকুন" },
+  "Already registered?": { hi: "पहले से पंजीकृत हैं?", bn: "ইতিমধ্যে নিবন্ধিত?" },
+  "Login →": { hi: "लॉगिन →", bn: "লগইন →" },
+  "Become a KMEW Associate": { hi: "केएमईडब्ल्यू सहयोगी बनें", bn: "কেএমইডব্লিউ সহযোগী হন" },
+  "Associates play an important role in connecting KMEW with members and supporting them at the community level.": {
+    hi: "सहयोगी केएमईडब्ल्यू को सदस्यों से जोड़ने और सामुदायिक स्तर पर उनका समर्थन करने में महत्वपूर्ण भूमिका निभाते हैं।",
+    bn: "সহযোগীরা সদস্যদের সাথে কেএমইডব্লিউ-কে যুক্ত করতে এবং কমিউনিটি পর্যায়ে তাদের समर्थन করতে গুরুত্বপূর্ণ ভূমিকা পালন করেন।"
+  },
+  "Connect with Members": { hi: "सदस्यों से जुड़ें", bn: "সদস্যদের সাথে যুক্ত হন" },
+  "Support Initiatives": { hi: "पहलों का समर्थन करें", bn: "উদ্যোগে সহায়তা করুন" },
+  "Build Community Impact": { hi: "सामुदायिक प्रभाव बनाएं", bn: "কমিউনিটি প্রভাব তৈরি করুন" },
+
+  // Life At KMEW Section
+  "LIFE AT KMEW": { hi: "केएमईडब्ल्यू में जीवन", bn: "কেএমইডব্লিউ-তে জীবন" },
+  "Moments that inspire change.": { hi: "बदलाव को प्रेरित करने वाले पल।", bn: "পরিবর্তনকে অনুপ্রাণিত করার মুহূর্তগুলো।" },
+  "View Gallery": { hi: "गैलरी देखें", bn: "গ্যালারি দেখুন" },
+  "Classroom Study": { hi: "कक्षा अध्ययन", bn: "শ্রেণিকক্ষে পাঠদান" },
+  "Smiling Children": { hi: "मुस्कुराते बच्चे", bn: "হাস্যোজ্জ্বল শিশু" },
+  "Community Assembly": { hi: "सामुदायिक सभा", bn: "কমিউনিটি সভা" },
+  "Health & Welfare Camp": { hi: "स्वास्थ्य एवं कल्याण शिविर", bn: "স্বাস্থ্য ও কল্যাণ ক্যাম্প" },
+  "School Child": { hi: "स्कूली बच्चा", bn: "স্কুল শিক্ষার্থী" },
+  "Outdoor Activities": { hi: "बाहरी गतिविधियाँ", bn: "মাঠের কার্যক্রম" },
+  "Seedling Growth": { hi: "पौधों का विकास", bn: "চারাগাছের বিকাশ" },
 
   // How It Works
   "How KMEW Membership Works": { hi: "केएमईडब्ल्यू सदस्यता कैसे काम करती है", bn: "কেএমইডব্লিউ সদস্যপদ যেভাবে কাজ করে" },
@@ -198,7 +386,7 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
   "Frequently Asked Questions": { hi: "अक्सर पूछे जाने वाले प्रश्न", bn: "সাধারণ জিজ্ঞাসা (FAQ)" },
   "Clear answers to common questions about membership, donations, welfare assistance, and governance.": {
     hi: "सदस्यता, दान, कल्याणकारी सहायता और शासन के बारे में सामान्य प्रश्नों के स्पष्ट उत्तर।",
-    bn: "সদস্যপদ, অনুদান, কল্যাণমূলক সহায়তা এবং পরিচালনা সম্পর্কিত সাধারণ প্রশ্নের স্পষ্ট উত্তর।"
+    bn: "সদস্যপদ, অনুদান, কল্যাণমূলক সহায়তা এবং পরিচালনা সম্পর্কিত সাধারণ প্রশ্নের স্পষ্ট उत्तर।"
   },
   "Who can become a KMEW member?": {
     hi: "केएमईडब्ल्यू का सदस्य कौन बन सकता है?",
@@ -274,6 +462,10 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
   "Register for Free": { hi: "मुफ्त पंजीकरण करें", bn: "বিনামূল্যে নিবন্ধন করুন" },
 
   // Footer
+  "Empowering communities through education, welfare and social development.": {
+    hi: "शिक्षा, कल्याण और सामाजिक विकास के माध्यम से समुदायों का सशक्तिकरण।",
+    bn: "শিক্ষা, কল্যাণ এবং সামাজিক উন্নয়নের মাধ্যমে সম্প্রদায়ের ক্ষমতায়ন।"
+  },
   "Dedicated to the educational advancement, social welfare, and economic self-sufficiency of underprivileged communities across West Bengal.": {
     hi: "पश्चिम बंगाल में वंचित समुदायों की शैक्षिक उन्नति, सामाजिक कल्याण और आर्थिक आत्मनिर्भरता के लिए समर्पित।",
     bn: "পশ্চিমবঙ্গ জুড়ে সুবিধাবঞ্চিত জনগোষ্ঠীর শিক্ষাগত অগ্রগতি, সামাজিক কল্যাণ এবং অর্থনৈতিক স্বনির্ভরতার জন্য নিবেদিত।"
@@ -293,7 +485,10 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
   "Terms of Service": { hi: "सेवा की शर्तें", bn: "পরিষেবার শর্তাবলী" },
   "Member Guidelines": { hi: "सदस्य दिशानिर्देश", bn: "সদস্য নির্দেশিকা" },
 
-  // General Portal / Common Actions
+  // Common UI words
+  "Support": { hi: "सहयोग", bn: "সহায়তা" },
+  "Member": { hi: "सदस्य", bn: "সদস্য" },
+  "Associate": { hi: "सहयोगी", bn: "সহযোগী" },
   "Active Status": { hi: "सक्रिय स्थिति", bn: "সক্রিয় স্থিতি" },
   "View All": { hi: "सभी देखें", bn: "সব দেখুন" },
   "Close": { hi: "बंद करें", bn: "বন্ধ করুন" },

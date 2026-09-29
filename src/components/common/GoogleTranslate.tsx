@@ -56,6 +56,15 @@ function translateText(text: string, targetLang: "hi" | "bn"): string {
     return leadingWs + directMatch + trailingWs;
   }
 
+  // Normalized whitespace match (replaces internal newlines / consecutive spaces)
+  const normalized = trimmed.replace(/\s+/g, " ");
+  const normalizedMatch = KMEW_TRANSLATIONS[normalized]?.[targetLang];
+  if (normalizedMatch) {
+    const leadingWs = text.match(/^\s*/)?.[0] || "";
+    const trailingWs = text.match(/\s*$/)?.[0] || "";
+    return leadingWs + normalizedMatch + trailingWs;
+  }
+
   // Multi-phrase or sentence match
   let result = text;
   let hasReplacement = false;
