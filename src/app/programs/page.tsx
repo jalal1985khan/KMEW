@@ -14,6 +14,15 @@ import {
 } from "lucide-react";
 import { PROGRAMS_DATA, ProgramItem } from "@/lib/data/kmewData";
 
+const PROGRAM_ALIASES: Record<string, string> = {
+  "merit-cum-means-scholarship": "scholarships",
+  "community-learning-centers": "education",
+  "women-skill-vocational": "skill-development",
+  "health-wellness-camps": "health-welfare",
+  "school-readiness-kit": "school-support",
+  "digital-literacy-youth": "community-classes"
+};
+
 export default function ProgramsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -104,8 +113,11 @@ export default function ProgramsPage() {
               <div
                 key={program.id}
                 id={program.id}
-                className="bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden grid grid-cols-1 lg:grid-cols-12"
+                className="relative bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden grid grid-cols-1 lg:grid-cols-12 scroll-mt-24"
               >
+                {PROGRAM_ALIASES[program.id] && (
+                  <span id={PROGRAM_ALIASES[program.id]} className="absolute -top-24 block" />
+                )}
                 {/* Left Image */}
                 <div className="lg:col-span-5 relative h-64 lg:h-auto bg-slate-100">
                   <img

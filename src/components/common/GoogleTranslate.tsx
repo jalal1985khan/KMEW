@@ -8,6 +8,9 @@ declare global {
   interface Node {
     __kmewOriginal?: string;
   }
+  interface HTMLElement {
+    __kmewOriginalPlaceholder?: string;
+  }
 }
 
 const STORAGE_KEY = "kmew_selected_lang";
@@ -137,10 +140,32 @@ function processNode(node: Node, targetLang: "en" | "hi" | "bn") {
     }
   } else if (node.nodeType === Node.ELEMENT_NODE) {
     const el = node as HTMLElement;
-    if (IGNORED_TAGS.has(el.tagName)) return;
     if (targetLang !== "en" && (el.classList?.contains("notranslate") || el.getAttribute("translate") === "no")) {
       return;
     }
+
+    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+      const placeholder = el.getAttribute("placeholder");
+      if (placeholder) {
+        if (el.__kmewOriginalPlaceholder === undefined) {
+          el.__kmewOriginalPlaceholder = placeholder;
+        }
+        if (targetLang === "en") {
+          if (el.getAttribute("placeholder") !== el.__kmewOriginalPlaceholder) {
+            el.setAttribute("placeholder", el.__kmewOriginalPlaceholder);
+          }
+        } else {
+          const original = el.__kmewOriginalPlaceholder;
+          const translated = translateText(original, targetLang);
+          if (el.getAttribute("placeholder") !== translated) {
+            el.setAttribute("placeholder", translated);
+          }
+        }
+      }
+      return;
+    }
+
+    if (IGNORED_TAGS.has(el.tagName)) return;
 
     for (let i = 0; i < node.childNodes.length; i++) {
       processNode(node.childNodes[i], targetLang);
