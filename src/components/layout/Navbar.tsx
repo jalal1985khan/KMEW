@@ -231,13 +231,15 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Sync selected language with googtrans cookie on mount
+  // Sync selected language on mount
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (typeof document !== "undefined") {
-        const match = document.cookie.match(/googtrans=\/[^/]+\/([a-z]{2})/);
-        if (match && match[1]) {
-          const found = languages.find((l) => l.code === match[1]);
+      if (typeof window !== "undefined") {
+        const stored = localStorage.getItem("kmew_selected_lang");
+        const cookieMatch = document.cookie.match(/googtrans=\/[^/]+\/([a-z]{2})/);
+        const code = stored || (cookieMatch && cookieMatch[1]);
+        if (code) {
+          const found = languages.find((l) => l.code === code);
           if (found) {
             setSelectedLang(found);
           }
@@ -285,7 +287,7 @@ export function Navbar() {
             <span className="text-emerald-700 hidden md:inline">|</span>
 
             {/* Language Selector Dropdown */}
-            <div className="relative hidden md:block" ref={langDropdownRef}>
+            <div className="relative hidden md:block notranslate" translate="no" ref={langDropdownRef}>
               <button
                 type="button"
                 onClick={() => setLangDropdownOpen((prev) => !prev)}
@@ -583,7 +585,7 @@ export function Navbar() {
             </div>
 
             {/* Mobile Language Selector */}
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-between notranslate" translate="no">
               <span className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
                 <Globe className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Language</span>

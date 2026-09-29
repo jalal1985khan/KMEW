@@ -1,157 +1,212 @@
 "use client";
 
-import { useEffect } from "react";
-import Script from "next/script";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
+import { KMEW_TRANSLATIONS } from "@/lib/i18n/translations";
 
-export function applyLanguage(langCode: string) {
-  if (typeof window === "undefined") return;
+declare global {
+  interface Node {
+    __kmewOriginal?: string;
+  }
+}
 
-  const hostname = window.location.hostname;
-  
-  if (langCode === "en") {
-    // Clear cookies for all domain levels to restore default English
-    document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${hostname}; path=/;`;
-    document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${hostname}; path=/;`;
-    
-    const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
-    if (select) {
-      select.value = "en";
-      select.dispatchEvent(new Event("change"));
+const STORAGE_KEY = "kmew_selected_lang";
+const IGNORED_TAGS = new Set([
+  "SCRIPT",
+  "STYLE",
+  "CODE",
+  "PRE",
+  "SVG",
+  "INPUT",
+  "TEXTAREA",
+  "SELECT",
+  "NOSCRIPT"
+]);
+
+// Sorted phrase keys by length descending to match longer phrases first
+const SORTED_KEYS = Object.keys(KMEW_TRANSLATIONS).sort(
+  (a, b) => b.length - a.length
+);
+
+export function getCurrentLanguage(): "en" | "hi" | "bn" {
+  if (typeof window === "undefined") return "en";
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === "hi" || stored === "bn") return stored;
+
+    const cookieMatch = document.cookie.match(/googtrans=\/[^/]+\/([a-z]{2})/);
+    if (cookieMatch && (cookieMatch[1] === "hi" || cookieMatch[1] === "bn")) {
+      return cookieMatch[1] as "hi" | "bn";
     }
-    setTimeout(() => {
-      window.location.reload();
-    }, 150);
-  } else {
-    const val = `/en/${langCode}`;
-    document.cookie = `googtrans=${val}; path=/;`;
-    document.cookie = `googtrans=${val}; domain=${hostname}; path=/;`;
-    document.cookie = `googtrans=${val}; domain=.${hostname}; path=/;`;
+  } catch {
+    // Ignore storage/cookie errors
+  }
+  return "en";
+}
 
-    const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
-    if (select) {
-      select.value = langCode;
-      select.dispatchEvent(new Event("change"));
+function translateText(text: string, targetLang: "hi" | "bn"): string {
+  const trimmed = text.trim();
+  if (!trimmed) return text;
+
+  // Direct exact match
+  const directMatch = KMEW_TRANSLATIONS[trimmed]?.[targetLang];
+  if (directMatch) {
+    const leadingWs = text.match(/^\s*/)?.[0] || "";
+    const trailingWs = text.match(/\s*$/)?.[0] || "";
+    return leadingWs + directMatch + trailingWs;
+  }
+
+  // Multi-phrase or sentence match
+  let result = text;
+  let hasReplacement = false;
+
+  for (const phrase of SORTED_KEYS) {
+    if (result.includes(phrase)) {
+      const translation = KMEW_TRANSLATIONS[phrase]?.[targetLang];
+      if (translation) {
+        result = result.split(phrase).join(translation);
+        hasReplacement = true;
+      }
+    }
+  }
+
+  return hasReplacement ? result : text;
+}
+
+function processNode(node: Node, targetLang: "en" | "hi" | "bn") {
+  if (node.nodeType === Node.TEXT_NODE) {
+    const parent = node.parentElement;
+    if (parent) {
+      if (IGNORED_TAGS.has(parent.tagName)) return;
+      if (parent.closest(".notranslate") || parent.getAttribute("translate") === "no") {
+        return;
+      }
+    }
+
+    const currentVal = node.nodeValue || "";
+    if (!currentVal.trim()) return;
+
+    if (node.__kmewOriginal === undefined) {
+      node.__kmewOriginal = currentVal;
+    }
+
+    if (targetLang === "en") {
+      if (node.nodeValue !== node.__kmewOriginal) {
+        node.nodeValue = node.__kmewOriginal;
+      }
     } else {
-      window.location.reload();
+      const original = node.__kmewOriginal;
+      const translated = translateText(original, targetLang);
+      if (node.nodeValue !== translated) {
+        node.nodeValue = translated;
+      }
+    }
+  } else if (node.nodeType === Node.ELEMENT_NODE) {
+    const el = node as HTMLElement;
+    if (IGNORED_TAGS.has(el.tagName)) return;
+    if (el.classList?.contains("notranslate") || el.getAttribute("translate") === "no") {
+      return;
+    }
+
+    for (let i = 0; i < node.childNodes.length; i++) {
+      processNode(node.childNodes[i], targetLang);
     }
   }
 }
 
-export function GoogleTranslate() {
-  useEffect(() => {
-    // Suppress Google Translate top banner iframe and force body top back to 0px
-    const fixBodyTopAndHideBanner = () => {
-      if (document.body && document.body.style.top && document.body.style.top !== "0px") {
-        document.body.style.top = "0px";
-      }
-      if (document.documentElement && document.documentElement.style.top && document.documentElement.style.top !== "0px") {
-        document.documentElement.style.top = "0px";
-      }
+export function translateDOM(targetLang: "en" | "hi" | "bn") {
+  if (typeof document === "undefined" || !document.body) return;
+  document.documentElement.lang = targetLang;
+  processNode(document.body, targetLang);
+}
 
-      const elementsToHide = document.querySelectorAll(
-        "iframe.goog-te-banner-frame, body > .skiptranslate, iframe[id*='container'], .goog-te-banner-frame"
-      );
-      elementsToHide.forEach((el) => {
-        const htmlEl = el as HTMLElement;
-        htmlEl.style.setProperty("display", "none", "important");
-        htmlEl.style.setProperty("visibility", "hidden", "important");
-        htmlEl.style.setProperty("height", "0", "important");
-        htmlEl.style.setProperty("max-height", "0", "important");
-        htmlEl.style.setProperty("opacity", "0", "important");
-        htmlEl.style.setProperty("pointer-events", "none", "important");
-      });
+export function applyLanguage(langCode: string) {
+  if (typeof window === "undefined") return;
+
+  const validLang: "en" | "hi" | "bn" =
+    langCode === "hi" || langCode === "bn" ? langCode : "en";
+
+  try {
+    localStorage.setItem(STORAGE_KEY, validLang);
+    if (validLang === "en") {
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    } else {
+      document.cookie = `googtrans=/en/${validLang}; path=/; max-age=31536000;`;
+    }
+  } catch {
+    // Ignore storage errors
+  }
+
+  // Update DOM translation
+  translateDOM(validLang);
+
+  // Dispatch event for any reactive listener components
+  window.dispatchEvent(
+    new CustomEvent("kmew-lang-change", { detail: { lang: validLang } })
+  );
+}
+
+export function GoogleTranslate() {
+  const pathname = usePathname();
+  const observerRef = useRef<MutationObserver | null>(null);
+
+  useEffect(() => {
+    const currentLang = getCurrentLanguage();
+
+    // Initial translation on mount if non-English
+    if (currentLang !== "en") {
+      translateDOM(currentLang);
+    }
+
+    // Handle language change events
+    const handleLangChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ lang: "en" | "hi" | "bn" }>;
+      const lang = customEvent.detail?.lang || getCurrentLanguage();
+      translateDOM(lang);
     };
 
-    fixBodyTopAndHideBanner();
+    window.addEventListener("kmew-lang-change", handleLangChange);
 
-    const observer = new MutationObserver(() => {
-      fixBodyTopAndHideBanner();
+    // MutationObserver to automatically translate newly added DOM nodes (modals, client renders)
+    let timeoutId: NodeJS.Timeout | null = null;
+    observerRef.current = new MutationObserver(() => {
+      const activeLang = getCurrentLanguage();
+      if (activeLang === "en") return;
+
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        translateDOM(activeLang);
+      }, 50);
     });
 
     if (document.body) {
-      observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ["style"],
+      observerRef.current.observe(document.body, {
         childList: true,
+        subtree: true,
       });
     }
-
-    if (document.documentElement) {
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["style"],
-      });
-    }
-
-    const interval = setInterval(fixBodyTopAndHideBanner, 200);
 
     return () => {
-      observer.disconnect();
-      clearInterval(interval);
+      window.removeEventListener("kmew-lang-change", handleLangChange);
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
   }, []);
 
-  return (
-    <>
-      {/* Inline styles to guarantee immediate banner eradication */}
-      <style>{`
-        .goog-te-banner-frame,
-        .goog-te-banner-frame.skiptranslate,
-        iframe.goog-te-banner-frame,
-        iframe.skiptranslate,
-        body > .skiptranslate,
-        iframe[id*=":1.container"],
-        iframe[id*=":2.container"],
-        iframe[class*="goog-te-banner"],
-        #goog-gt-tt,
-        .goog-te-balloon-frame {
-          display: none !important;
-          visibility: hidden !important;
-          height: 0 !important;
-          width: 0 !important;
-          opacity: 0 !important;
-          pointer-events: none !important;
-          max-height: 0 !important;
-          overflow: hidden !important;
-        }
+  // Re-run translation on route change
+  useEffect(() => {
+    const activeLang = getCurrentLanguage();
+    if (activeLang !== "en") {
+      const timer = setTimeout(() => {
+        translateDOM(activeLang);
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
 
-        html, body {
-          top: 0px !important;
-          position: static !important;
-        }
-
-        .goog-text-highlight {
-          background: none !important;
-          box-shadow: none !important;
-        }
-
-        .VIpgJd-ZVi9od-ORHb-OEVmcb,
-        .VIpgJd-ZVi9od-l4eHX-hSRLGd,
-        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
-          display: none !important;
-        }
-      `}</style>
-
-      <div id="google_translate_element" aria-hidden="true" />
-      <Script id="google-translate-init" strategy="afterInteractive">
-        {`
-          window.googleTranslateElementInit = function() {
-            if (window.google && window.google.translate) {
-              new window.google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,hi,bn',
-                autoDisplay: false
-              }, 'google_translate_element');
-            }
-          };
-        `}
-      </Script>
-      <Script
-        id="google-translate-script"
-        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-        strategy="afterInteractive"
-      />
-    </>
-  );
+  return null;
 }
