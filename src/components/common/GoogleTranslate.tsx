@@ -90,8 +90,16 @@ function translateText(text: string, targetLang: "hi" | "bn"): string {
     if (result.includes(phrase)) {
       const translation = KMEW_TRANSLATIONS[phrase]?.[targetLang];
       if (translation) {
-        result = result.split(phrase).join(translation);
-        hasReplacement = true;
+        if (/^[A-Za-z0-9]+$/.test(phrase)) {
+          const regex = new RegExp(`\\b${phrase}\\b`, "g");
+          if (regex.test(result)) {
+            result = result.replace(regex, translation);
+            hasReplacement = true;
+          }
+        } else {
+          result = result.split(phrase).join(translation);
+          hasReplacement = true;
+        }
       }
     }
   }

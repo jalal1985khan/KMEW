@@ -603,5 +603,27 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
   "Upon initial application approval, KMEW administration assigns a verified field associate operating in your local municipality or ward to mentor and assist you.": {
     hi: "प्रारंभिक आवेदन स्वीकृति पर, केएमईडब्ल्यू प्रशासन आपका मार्गदर्शन और सहायता करने के लिए आपके स्थानीय नगर पालिका या वार्ड में कार्यरत एक सत्यापित फील्ड सहयोगी को नियुक्त करता है।",
     bn: "প্রাথমিক আবেদন অনুমোদনের পর, কেএমইডব্লিউ প্রশাসন আপনাকে নির্দেশনা ও সহায়তা করার জন্য আপনার স্থানীয় পৌরসভা বা ওয়ার্ডে কর্মরত একজন যাচাইকৃত মাঠ সহযোগীকে নিয়োগ করে।"
-  }
+  },
+
+  // Programs card explore buttons
+  "Explore": { hi: "विस्तार से जानें", bn: "বিস্তারিত দেখুন" },
+  "Explore →": { hi: "विस्तार से जानें →", bn: "বিস্তারিত দেখুন →" },
+
+  // Footer navigation items
+  "Associates": { hi: "सहयोगी", bn: "সহযোগী" },
+  "Associate Registration": { hi: "सहयोगी पंजीकरण", bn: "সহযোগী নিবন্ধন" },
+  "Associate Login": { hi: "सहयोगी लॉगिन", bn: "সহযোগী লগইন" },
+  "Member Registration": { hi: "सदस्य पंजीकरण", bn: "সদস্য নিবন্ধন" },
+  "Registration": { hi: "पंजीकरण", bn: "নিবন্ধন" },
+  "Contribution History": { hi: "योगदान का इतिहास", bn: "অবদানের ইতিহাস" },
+  "Legal": { hi: "कानूनी", bn: "আইনি" },
+  "LEGAL": { hi: "कानूनी", bn: "আইনি" },
+  "Terms & Conditions": { hi: "नियम एवं शर्तें", bn: "শর্তাবলী ও নিয়ম" },
+  "Refund Policy": { hi: "रिफंड नीति", bn: "রিফান্ড নীতি" },
+  "Grievance Policy": { hi: "शिकायत नीति", bn: "অভিযোগ নীতি" },
+  "Gallery": { hi: "गैलरी", bn: "গ্যালারি" },
+  "Designed with": { hi: "के साथ निर्मित", bn: "দিয়ে তৈরি" },
+  "for a better tomorrow.": { hi: "एक बेहतर कल के लिए।", bn: "একটি সুন্দর আগামীর জন্য।" },
+  "All Rights Reserved.": { hi: "सर्वाधिकार सुरक्षित।", bn: "সর্বস্বত্ব সংরক্ষিত।" },
+  "All Rights Reserved": { hi: "सर्वाधिकार सुरक्षित", bn: "सर्वস্বত্ব সংরক্ষিত" }
 };
