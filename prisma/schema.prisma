@@ -7,3 +7,135 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+// User credentials and profile for Admin, Associate, and Member login
+model User {
+  id           String   @id
+  email        String   @unique
+  password     String
+  name         String
+  role         String   // "ADMIN" | "ASSOCIATE" | "MEMBER"
+  phone        String
+  ward         String?
+  badgeNumber  String?
+  avatarLetter String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+// Community Member records
+model Member {
+  id                    String   @id
+  name                  String
+  email                 String
+  phone                 String
+  ward                  String
+  category              String   // "Higher Education" | "School Tuition" | "Vocational Skill" | "Medical Aid"
+  kycStatus             String   // "VERIFIED" | "PENDING_REVIEW" | "REJECTED"
+  assignedAssociateId   String?
+  assignedAssociateName String?
+  aidAmount             Float
+  disbursedAmount       Float
+  installmentsCount     Int
+  completedInstallments Int
+  joinedDate            String
+  address               String
+  guardianName          String
+  guardianPhone         String
+  bankAccount           Json
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("members")
+}
+
+// Field Associate profiles and metrics
+model Associate {
+  id                   String   @id
+  badgeNumber          String
+  name                 String
+  email                String
+  phone                String
+  assignedWards        Json     // list of wards as JSON array
+  assignedMembersCount Int      @default(0)
+  activePlansCount     Int      @default(0)
+  totalCollections     Float    @default(0)
+  pendingVerifications Int      @default(0)
+  rating               Float    @default(5.0)
+  joinedDate           String
+  status               String   @default("ACTIVE") // "ACTIVE" | "ON_LEAVE" | "PENDING_APPROVAL"
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@map("associates")
+}
+
+// Multi-tier installment payments with digital verification handshake
+model PaymentInstallment {
+  id                  String   @id
+  memberId            String
+  memberName          String
+  associateId         String
+  associateName       String
+  installmentNo       Int
+  totalInstallments   Int
+  amount              Float
+  dueDate             String
+  paidDate            String?
+  status              String   // "PENDING" | "MEMBER_PAID" | "ASSOCIATE_VERIFIED" | "MEMBER_APPROVED" | "ADMIN_CONFIRMED"
+  paymentMode         String?
+  utrReference        String?
+  receiptUrl          String?
+  remarks             String?
+  associateVerifiedAt String?
+  adminConfirmedAt    String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("payment_installments")
+}
+
+// Governance and transparent audit logs
+model AuditLog {
+  id          String   @id
+  timestamp   String
+  action      String
+  performedBy String
+  target      String
+  statusBadge String
+  createdAt   DateTime @default(now())
+
+  @@map("audit_logs")
+}
+
+// Public News & Announcements managed from Admin Console
+model NewsEvent {
+  id         String   @id
+  title      String
+  date       String
+  category   String
+  summary    String
+  image      String
+  location   String
+  isUpcoming Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("news_events")
+}
+
+// Public Photo Gallery items managed from Admin Console
+model GalleryItem {
+  id          String   @id
+  title       String
+  category    String
+  image       String
+  description String
+  date        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("gallery_items")
+}

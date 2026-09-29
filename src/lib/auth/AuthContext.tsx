@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 interface AuthContextType {
   currentUser: AuthUser | null;
   isLoading: boolean;
-  login: (emailOrPhone: string, pass: string) => { success: boolean; error?: string };
+  login: (emailOrPhone: string, pass: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   requireAuth: (allowedRoles: string[]) => boolean;
 }
@@ -15,7 +15,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   currentUser: null,
   isLoading: true,
-  login: () => ({ success: false }),
+  login: async () => ({ success: false }),
   logout: () => { },
   requireAuth: () => false,
 });
@@ -28,29 +28,46 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          // Verify user still exists in database
-          const match = USERS_DATABASE.find((u) => u.id === parsed.id);
-          if (match) {
-            setCurrentUser(match);
-          } else {
-            localStorage.removeItem(STORAGE_KEY);
-          }
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && parsed.id) {
+          setCurrentUser(parsed);
         }
-      } catch {
-        localStorage.removeItem(STORAGE_KEY);
-      } finally {
-        setIsLoading(false);
       }
-    }, 0);
-    return () => clearTimeout(timer);
+    } catch {
+      localStorage.removeItem(STORAGE_KEY);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  const login = (emailOrPhone: string, pass: string) => {
+  const login = async (emailOrPhone: string, pass: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emailOrPhone, password: pass }),
+      });
+      const data = await res.json();
+      if (data.success && data.user) {
+        setCurrentUser(data.user);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data.user));
+        } catch {
+          // ignore
+        }
+        return { success: true };
+      }
+      if (data.error) {
+        return { success: false, error: data.error };
+      }
+    } catch (err) {
+      console.warn("API login failed, checking fallback:", err);
+    }
+
+    // Fallback if needed
     const user = authenticate(emailOrPhone, pass);
     if (!user) {
       return {
@@ -61,10 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setCurrentUser(user);
     try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ id: user.id, email: user.email, role: user.role })
-      );
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     } catch {
       // ignore
     }

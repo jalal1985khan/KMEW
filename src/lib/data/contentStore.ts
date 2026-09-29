@@ -103,8 +103,20 @@ export function useNewsEvents() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    // 1. Load initial cache
     setNews(getStoredNewsEvents());
     setIsLoaded(true);
+
+    // 2. Fetch live data from Supabase DB
+    fetch("/api/news")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.items) && data.items.length > 0) {
+          setNews(data.items);
+          saveStoredNewsEvents(data.items);
+        }
+      })
+      .catch((err) => console.warn("Live news fetch fallback:", err));
 
     const handleUpdate = (e: Event) => {
       const custom = e as CustomEvent<NewsEventItem[]>;
@@ -131,6 +143,14 @@ export function useNewsEvents() {
     const updated = [newItem, ...news];
     setNews(updated);
     saveStoredNewsEvents(updated);
+
+    // Persist to Supabase
+    fetch("/api/news", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "create", item: newItem }),
+    }).catch((err) => console.error("Failed to save news to database:", err));
+
     return newItem;
   };
 
@@ -138,12 +158,26 @@ export function useNewsEvents() {
     const updated = news.map((item) => (item.id === id ? { ...item, ...updates } : item));
     setNews(updated);
     saveStoredNewsEvents(updated);
+
+    // Persist to Supabase
+    fetch("/api/news", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "update", id, updates }),
+    }).catch((err) => console.error("Failed to update news in database:", err));
   };
 
   const deleteNews = (id: string) => {
     const updated = news.filter((item) => item.id !== id);
     setNews(updated);
     saveStoredNewsEvents(updated);
+
+    // Persist to Supabase
+    fetch("/api/news", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "delete", id }),
+    }).catch((err) => console.error("Failed to delete news from database:", err));
   };
 
   const resetNewsToDefault = () => {
@@ -167,8 +201,20 @@ export function useGalleryItems() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    // 1. Load initial cache
     setGallery(getStoredGalleryItems());
     setIsLoaded(true);
+
+    // 2. Fetch live data from Supabase DB
+    fetch("/api/gallery")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.items) && data.items.length > 0) {
+          setGallery(data.items);
+          saveStoredGalleryItems(data.items);
+        }
+      })
+      .catch((err) => console.warn("Live gallery fetch fallback:", err));
 
     const handleUpdate = (e: Event) => {
       const custom = e as CustomEvent<GalleryItem[]>;
@@ -195,6 +241,14 @@ export function useGalleryItems() {
     const updated = [newItem, ...gallery];
     setGallery(updated);
     saveStoredGalleryItems(updated);
+
+    // Persist to Supabase
+    fetch("/api/gallery", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "create", item: newItem }),
+    }).catch((err) => console.error("Failed to save photo to database:", err));
+
     return newItem;
   };
 
@@ -202,12 +256,26 @@ export function useGalleryItems() {
     const updated = gallery.map((item) => (item.id === id ? { ...item, ...updates } : item));
     setGallery(updated);
     saveStoredGalleryItems(updated);
+
+    // Persist to Supabase
+    fetch("/api/gallery", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "update", id, updates }),
+    }).catch((err) => console.error("Failed to update photo in database:", err));
   };
 
   const deleteGallery = (id: string) => {
     const updated = gallery.filter((item) => item.id !== id);
     setGallery(updated);
     saveStoredGalleryItems(updated);
+
+    // Persist to Supabase
+    fetch("/api/gallery", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "delete", id }),
+    }).catch((err) => console.error("Failed to delete photo from database:", err));
   };
 
   const resetGalleryToDefault = () => {

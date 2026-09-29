@@ -70,12 +70,12 @@ export default function LoginPage() {
     setErrorMessage(null);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
     setIsLoading(true);
 
-    const result = login(emailOrPhone, password);
+    const result = await login(emailOrPhone, password);
 
     if (result.success) {
       setTimeout(() => {
