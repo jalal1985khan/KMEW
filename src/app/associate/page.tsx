@@ -14,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableHeader,
@@ -159,7 +161,7 @@ export default function AssociatePortalPage() {
 
   return (
     <PortalShell currentRole="ASSOCIATE">
-      <div className="space-y-6">
+      <div className="flex flex-col gap-6">
         {/* Associate Profile & Metrics Header */}
         <div className="bg-gradient-to-r from-[#042421] via-[#073531] to-[#0a4d44] rounded-3xl p-6 text-white shadow-md">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -169,7 +171,7 @@ export default function AssociatePortalPage() {
                   Badge {associate.badgeNumber}
                 </Badge>
                 <span className="text-[11px] text-emerald-300 font-semibold flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <ShieldCheck className="size-3.5" />
                   Active Field Officer
                 </span>
               </div>
@@ -177,7 +179,7 @@ export default function AssociatePortalPage() {
                 Associate Portal: {associate.name}
               </h1>
               <p className="text-emerald-100/90 text-xs sm:text-sm mt-1 flex items-center gap-1.5 flex-wrap">
-                <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+                <MapPin className="size-3.5 text-emerald-400" />
                 <span>Assigned Coverage: {associate.assignedWards.join(" • ")}</span>
               </p>
             </div>
@@ -186,7 +188,7 @@ export default function AssociatePortalPage() {
               onClick={() => setActiveTab("collection")}
               className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-xs flex items-center gap-1.5"
             >
-              <PlusCircle className="w-4 h-4" />
+              <PlusCircle className="size-4" />
               <span>Record Field Collection</span>
             </Button>
           </div>
@@ -213,10 +215,10 @@ export default function AssociatePortalPage() {
         </div>
 
         {/* Shadcn UI Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col gap-4">
           <TabsList className="bg-slate-200/80 p-1 rounded-xl">
             <TabsTrigger value="verifications" className="text-xs font-bold gap-2">
-              <FileCheck2 className="w-3.5 h-3.5" />
+              <FileCheck2 className="size-3.5" />
               <span>Verification Queue</span>
               {pendingVerifications.length > 0 && (
                 <Badge variant="destructive" className="py-0 px-1 text-[10px] h-4">
@@ -225,17 +227,17 @@ export default function AssociatePortalPage() {
               )}
             </TabsTrigger>
             <TabsTrigger value="members" className="text-xs font-bold gap-2">
-              <Users className="w-3.5 h-3.5" />
+              <Users className="size-3.5" />
               <span>Assigned Members ({members.length})</span>
             </TabsTrigger>
             <TabsTrigger value="collection" className="text-xs font-bold gap-2">
-              <CreditCard className="w-3.5 h-3.5" />
+              <CreditCard className="size-3.5" />
               <span>Record Cash Collection</span>
             </TabsTrigger>
           </TabsList>
 
           {/* TAB 1: Verification Queue */}
-          <TabsContent value="verifications" className="space-y-4">
+          <TabsContent value="verifications" className="flex flex-col gap-4">
             <Card className="rounded-2xl border-slate-200 shadow-xs bg-white">
               <CardHeader className="pb-3 border-b border-slate-100">
                 <CardTitle className="text-base font-bold text-slate-900">
@@ -248,8 +250,8 @@ export default function AssociatePortalPage() {
 
               <CardContent className="pt-4">
                 {pendingVerifications.length === 0 ? (
-                  <div className="py-12 text-center text-slate-500 space-y-2">
-                    <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto" />
+                  <div className="py-12 text-center text-slate-500 flex flex-col items-center gap-2">
+                    <CheckCircle2 className="size-10 text-emerald-500" />
                     <p className="text-sm font-bold text-slate-800">All verifications up to date!</p>
                     <p className="text-xs text-slate-400">No pending member payments in your assigned wards right now.</p>
                   </div>
@@ -280,7 +282,7 @@ export default function AssociatePortalPage() {
                           onClick={() => handleOpenVerify(inst)}
                           className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 shrink-0"
                         >
-                          <ShieldCheck className="w-4 h-4" />
+                          <ShieldCheck className="size-4" />
                           <span>Verify & Approve</span>
                         </Button>
                       </div>
@@ -326,7 +328,7 @@ export default function AssociatePortalPage() {
                 </div>
 
                 <div className="relative w-full sm:w-64">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                  <Search className="size-4 text-slate-400 absolute left-3 top-2.5" />
                   <Input
                     type="text"
                     placeholder="Search name, ID or ward..."
@@ -352,9 +354,19 @@ export default function AssociatePortalPage() {
                     {filteredMembers.map((m) => (
                       <TableRow key={m.id} className="hover:bg-slate-50/70 transition-colors">
                         <TableCell className="pl-6">
-                          <div className="font-bold text-slate-900">{m.name}</div>
-                          <div className="text-[10px] text-slate-400 font-mono">{m.id}</div>
+                          <div className="flex items-center gap-3">
+                            <Avatar size="sm">
+                              <AvatarFallback className="bg-emerald-100 text-emerald-800 font-bold text-xs">
+                                {m.name[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <div className="font-bold text-slate-900">{m.name}</div>
+                              <div className="text-[10px] text-slate-400 font-mono">{m.id}</div>
+                            </div>
+                          </div>
                         </TableCell>
+
                         <TableCell>
                           <span className="font-medium text-slate-700 block">{m.category}</span>
                           <span className="text-[11px] text-slate-500">{m.ward}</span>

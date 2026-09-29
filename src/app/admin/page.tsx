@@ -14,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableHeader,
@@ -196,7 +198,7 @@ export default function AdminPortalPage() {
 
   return (
     <PortalShell currentRole="ADMIN">
-      <div className="space-y-6">
+      <div className="flex flex-col gap-6">
         {/* Executive Overview Banner */}
         <div className="bg-gradient-to-r from-[#042421] via-[#073531] to-[#0e705b] rounded-3xl p-6 text-white shadow-md">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -206,7 +208,7 @@ export default function AdminPortalPage() {
                   Super Admin Console
                 </Badge>
                 <span className="text-[11px] text-emerald-300 font-semibold flex items-center gap-1">
-                  <Shield className="w-3.5 h-3.5" />
+                  <Shield className="size-3.5" />
                   KMEW Central Governance
                 </span>
               </div>
@@ -220,7 +222,7 @@ export default function AdminPortalPage() {
 
             <div className="flex gap-2">
               <Badge variant="secondary" className="px-3 py-1.5 bg-white/10 hover:bg-white/15 text-white border-white/20 text-xs font-semibold gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
                 Ledger Synchronized
               </Badge>
             </div>
@@ -252,7 +254,7 @@ export default function AdminPortalPage() {
         </div>
 
         {/* Shadcn UI Tabs Navigation */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col gap-4">
           <TabsList className="bg-slate-200/80 p-1 rounded-xl flex-wrap h-auto gap-1">
             <TabsTrigger value="payments" className="text-xs font-bold gap-2">
               <CreditCard className="w-3.5 h-3.5" />
@@ -373,8 +375,17 @@ export default function AdminPortalPage() {
                         return (
                           <TableRow key={inst.id} className="hover:bg-slate-50/80 transition-colors">
                             <TableCell className="py-3">
-                              <div className="font-bold text-slate-900">{inst.memberName}</div>
-                              <div className="text-[10px] text-slate-400 font-mono">{inst.memberId}</div>
+                              <div className="flex items-center gap-3">
+                                <Avatar size="sm">
+                                  <AvatarFallback className="bg-emerald-100 text-emerald-800 font-bold text-xs">
+                                    {inst.memberName[0]}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div>
+                                  <div className="font-bold text-slate-900">{inst.memberName}</div>
+                                  <div className="text-[10px] text-slate-400 font-mono">{inst.memberId}</div>
+                                </div>
+                              </div>
                             </TableCell>
                             <TableCell className="py-3">
                               <div className="font-bold text-slate-900">
@@ -482,8 +493,17 @@ export default function AdminPortalPage() {
                       {members.map((m) => (
                         <TableRow key={m.id} className="hover:bg-slate-50/80 transition-colors">
                           <TableCell className="py-3">
-                            <div className="font-bold text-slate-900">{m.name}</div>
-                            <div className="text-[10px] text-slate-400 font-mono">{m.id}</div>
+                            <div className="flex items-center gap-3">
+                              <Avatar size="sm">
+                                <AvatarFallback className="bg-emerald-100 text-emerald-800 font-bold text-xs">
+                                  {m.name[0]}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <div className="font-bold text-slate-900">{m.name}</div>
+                                <div className="text-[10px] text-slate-400 font-mono">{m.id}</div>
+                              </div>
+                            </div>
                           </TableCell>
                           <TableCell className="py-3">
                             <span className="font-semibold text-slate-800 block">{m.category}</span>
@@ -536,7 +556,7 @@ export default function AdminPortalPage() {
           </TabsContent>
 
           {/* TAB 3: Associate Network */}
-          <TabsContent value="associates" className="space-y-4">
+          <TabsContent value="associates" className="flex flex-col gap-4">
             <Card className="border-slate-200 shadow-xs">
               <CardHeader className="pb-4 border-b border-slate-100">
                 <CardTitle className="text-base font-bold text-slate-900 tracking-tight">Field Associate Network</CardTitle>
@@ -551,12 +571,19 @@ export default function AdminPortalPage() {
                     <Card key={asc.id} className="border-slate-200 bg-slate-50/60 shadow-xs">
                       <CardHeader className="pb-2">
                         <div className="flex justify-between items-start">
-                          <div>
-                            <Badge variant="outline" className="font-mono text-[10px] font-bold text-blue-700 bg-blue-50 border-blue-200">
-                              {asc.badgeNumber}
-                            </Badge>
-                            <CardTitle className="text-base font-bold text-slate-900 mt-1.5">{asc.name}</CardTitle>
-                            <p className="text-xs text-slate-500">{asc.phone}</p>
+                          <div className="flex items-center gap-3">
+                            <Avatar size="default">
+                              <AvatarFallback className="bg-blue-100 text-blue-800 font-bold text-xs">
+                                {asc.name[0]}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <Badge variant="outline" className="font-mono text-[10px] font-bold text-blue-700 bg-blue-50 border-blue-200">
+                                {asc.badgeNumber}
+                              </Badge>
+                              <CardTitle className="text-base font-bold text-slate-900 mt-1">{asc.name}</CardTitle>
+                              <p className="text-xs text-slate-500">{asc.phone}</p>
+                            </div>
                           </div>
                           <Badge className="bg-emerald-100 text-emerald-800 text-[10px] font-bold hover:bg-emerald-200">
                             {asc.status}
@@ -593,7 +620,7 @@ export default function AdminPortalPage() {
           </TabsContent>
 
           {/* TAB 4: Audit & Activity Ledger */}
-          <TabsContent value="audit" className="space-y-4">
+          <TabsContent value="audit" className="flex flex-col gap-4">
             <Card className="border-slate-200 shadow-xs">
               <CardHeader className="pb-4 border-b border-slate-100">
                 <CardTitle className="text-base font-bold text-slate-900 tracking-tight">Immutable Audit Ledger</CardTitle>
@@ -624,12 +651,12 @@ export default function AdminPortalPage() {
           </TabsContent>
 
           {/* TAB 5: News & Events Management */}
-          <TabsContent value="news" className="space-y-4">
+          <TabsContent value="news" className="flex flex-col gap-4">
             <NewsManager onAuditLog={handleContentAuditLog} />
           </TabsContent>
 
           {/* TAB 6: Photo Gallery Management */}
-          <TabsContent value="gallery" className="space-y-4">
+          <TabsContent value="gallery" className="flex flex-col gap-4">
             <GalleryManager onAuditLog={handleContentAuditLog} />
           </TabsContent>
         </Tabs>

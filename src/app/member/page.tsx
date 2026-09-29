@@ -14,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
 import {
   Table,
   TableHeader,
@@ -116,11 +118,11 @@ export default function MemberPortalPage() {
 
   return (
     <PortalShell currentRole="MEMBER">
-      <div className="space-y-6">
+      <div className="flex flex-col gap-6">
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-[#073531] to-[#0e705b] rounded-3xl p-6 text-white shadow-md relative overflow-hidden">
           <div className="absolute right-0 top-0 bottom-0 opacity-10 pointer-events-none flex items-center pr-8">
-            <ShieldCheck className="w-64 h-64 text-white" />
+            <ShieldCheck className="size-64 text-white" />
           </div>
 
           <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -130,7 +132,7 @@ export default function MemberPortalPage() {
                   {member.category} Program
                 </Badge>
                 <span className="flex items-center gap-1 text-[11px] font-semibold text-emerald-100">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                  <CheckCircle2 className="size-3.5 text-emerald-300" />
                   KYC Verified
                 </span>
               </div>
@@ -155,27 +157,27 @@ export default function MemberPortalPage() {
         {/* PRD Color System Explainer Strip */}
         <Card className="p-3.5 border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs bg-white rounded-2xl">
           <span className="font-bold text-slate-800 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-600" />
+            <span className="size-2 rounded-full bg-emerald-600" />
             Installment Status Pipeline:
           </span>
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px]">
             <Badge variant="outline" className="bg-amber-50 text-amber-900 border-amber-300 font-semibold gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+              <span className="size-1.5 rounded-full bg-amber-500" />
               Member Paid
             </Badge>
             <span className="text-slate-300">→</span>
             <Badge variant="outline" className="bg-blue-50 text-blue-900 border-blue-300 font-semibold gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
+              <span className="size-1.5 rounded-full bg-blue-600" />
               Associate Verified
             </Badge>
             <span className="text-slate-300">→</span>
             <Badge variant="outline" className="bg-emerald-50 text-emerald-900 border-emerald-300 font-semibold gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+              <span className="size-1.5 rounded-full bg-emerald-600" />
               Member Approved
             </Badge>
             <span className="text-slate-300">→</span>
             <Badge variant="outline" className="bg-rose-50 text-rose-900 border-rose-300 font-semibold gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-rose-600" />
+              <span className="size-1.5 rounded-full bg-rose-600" />
               Admin Confirmed
             </Badge>
           </div>
@@ -183,7 +185,7 @@ export default function MemberPortalPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Left: Installments Table (Using shadcn UI Table) */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 flex flex-col gap-6">
             <Card className="rounded-2xl border-slate-200 shadow-xs bg-white">
               <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-slate-100">
                 <div>
@@ -267,7 +269,7 @@ export default function MemberPortalPage() {
 
                             {inst.status === "ADMIN_CONFIRMED" && (
                               <span className="text-[11px] text-rose-700 font-bold inline-flex items-center gap-1">
-                                <CheckCircle2 className="w-3.5 h-3.5" />
+                                <CheckCircle2 className="size-3.5" />
                                 Sealed
                               </span>
                             )}
@@ -284,7 +286,7 @@ export default function MemberPortalPage() {
             <Card className="rounded-2xl border-slate-200 shadow-xs bg-white">
               <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-slate-100">
                 <CardTitle className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <Building className="w-4 h-4 text-emerald-600" />
+                  <Building className="size-4 text-emerald-600" />
                   Registered Bank Account (DBT Disbursement)
                 </CardTitle>
                 <Badge variant="outline" className="text-[11px] text-emerald-700 bg-emerald-50 border-emerald-200">
@@ -309,7 +311,7 @@ export default function MemberPortalPage() {
           </div>
 
           {/* Right Sidebar: Assigned Associate Card & Profile Details */}
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <Card className="rounded-2xl border-slate-200 shadow-xs bg-white">
               <CardHeader className="flex flex-row items-center justify-between pb-3 border-b border-slate-100">
                 <CardTitle className="text-sm font-bold text-slate-900">Assigned Field Associate</CardTitle>
@@ -318,11 +320,13 @@ export default function MemberPortalPage() {
                 </Badge>
               </CardHeader>
 
-              <CardContent className="space-y-4 pt-4">
+              <CardContent className="flex flex-col gap-4 pt-4">
                 <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-black text-base ring-2 ring-blue-500/20">
-                    BD
-                  </div>
+                  <Avatar size="lg" className="ring-2 ring-blue-500/20">
+                    <AvatarFallback className="bg-blue-100 text-blue-700 font-bold text-sm">
+                      BD
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <h4 className="font-bold text-slate-900 text-sm">{member.assignedAssociateName}</h4>
                     <p className="text-[11px] text-slate-500">Official Field Officer • Kulti Region</p>
@@ -330,13 +334,15 @@ export default function MemberPortalPage() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 space-y-2 text-xs">
+                <Separator />
+
+                <div className="flex flex-col gap-2 text-xs">
                   <a
                     href="tel:+918972285850"
                     className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors text-slate-700 font-medium"
                   >
                     <span className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                      <Phone className="size-3.5 text-emerald-600" />
                       <span>+91 89722 85850</span>
                     </span>
                     <span className="text-[10px] text-emerald-700 font-bold">Call</span>
@@ -349,10 +355,10 @@ export default function MemberPortalPage() {
                     className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-colors text-emerald-800 font-medium"
                   >
                     <span className="flex items-center gap-2">
-                      <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                      <MessageCircle className="size-3.5 text-emerald-600" />
                       <span>Chat on WhatsApp</span>
                     </span>
-                    <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
+                    <ExternalLink className="size-3.5 text-emerald-600" />
                   </a>
                 </div>
 
@@ -367,15 +373,17 @@ export default function MemberPortalPage() {
               <CardHeader className="pb-2 border-b border-slate-100">
                 <CardTitle className="text-sm font-bold text-slate-900">Guardian & Address Details</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 pt-3 text-xs">
+              <CardContent className="flex flex-col gap-3 pt-3 text-xs">
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase font-semibold">Guardian</span>
                   <p className="font-bold text-slate-800">{member.guardianName} ({member.guardianPhone})</p>
                 </div>
+                <Separator />
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase font-semibold">Registered Address</span>
                   <p className="text-slate-600 mt-0.5 leading-relaxed">{member.address}</p>
                 </div>
+                <Separator />
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase font-semibold">Registered Contact</span>
                   <p className="text-slate-600 font-mono">{member.phone} • {member.email}</p>
@@ -385,6 +393,7 @@ export default function MemberPortalPage() {
           </div>
         </div>
       </div>
+
 
       {/* Submit Payment Dialog (Using shadcn UI Dialog) */}
       <Dialog open={payModalOpen} onOpenChange={setPayModalOpen}>
