@@ -61,17 +61,17 @@ export function usePortalData() {
       prev.map((inst) =>
         inst.id === installmentId
           ? {
-              ...inst,
-              status: "MEMBER_PAID",
-              paymentMode,
-              utrReference,
-              remarks: remarks || inst.remarks,
-              paidDate: new Date().toLocaleDateString("en-IN", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              }),
-            }
+            ...inst,
+            status: "MEMBER_PAID",
+            paymentMode,
+            utrReference,
+            remarks: remarks || inst.remarks,
+            paidDate: new Date().toLocaleDateString("en-IN", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            }),
+          }
           : inst
       )
     );
@@ -116,11 +116,11 @@ export function usePortalData() {
       prev.map((inst) =>
         inst.id === installmentId
           ? {
-              ...inst,
-              status: "ASSOCIATE_VERIFIED",
-              associateVerifiedAt: verifiedTimestamp,
-              remarks: remarks || inst.remarks,
-            }
+            ...inst,
+            status: "ASSOCIATE_VERIFIED",
+            associateVerifiedAt: verifiedTimestamp,
+            remarks: remarks || inst.remarks,
+          }
           : inst
       )
     );
@@ -159,10 +159,10 @@ export function usePortalData() {
       prev.map((inst) =>
         inst.id === installmentId
           ? {
-              ...inst,
-              status: "ADMIN_CONFIRMED",
-              adminConfirmedAt: confirmedTimestamp,
-            }
+            ...inst,
+            status: "ADMIN_CONFIRMED",
+            adminConfirmedAt: confirmedTimestamp,
+          }
           : inst
       )
     );
@@ -255,10 +255,10 @@ export function usePortalData() {
       prev.map((inst) =>
         inst.id === installmentId
           ? {
-              ...inst,
-              status: "MEMBER_APPROVED",
-              remarks: "Member verified and approved receipt handed over by associate.",
-            }
+            ...inst,
+            status: "MEMBER_APPROVED",
+            remarks: "Member verified and approved receipt handed over by associate.",
+          }
           : inst
       )
     );
