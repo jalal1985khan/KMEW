@@ -16,7 +16,7 @@ export function AppLayoutWrapper({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
       {isPortal ? (
-        <main className="flex-1 w-full">{children}</main>
+        <main className="flex-1 w-full notranslate" translate="no">{children}</main>
       ) : (
         <>
           <Navbar />

@@ -112,7 +112,7 @@ function processNode(node: Node, targetLang: "en" | "hi" | "bn") {
     const parent = node.parentElement;
     if (parent) {
       if (IGNORED_TAGS.has(parent.tagName)) return;
-      if (parent.closest(".notranslate") || parent.getAttribute("translate") === "no") {
+      if (targetLang !== "en" && (parent.closest(".notranslate") || parent.getAttribute("translate") === "no")) {
         return;
       }
     }
@@ -138,7 +138,7 @@ function processNode(node: Node, targetLang: "en" | "hi" | "bn") {
   } else if (node.nodeType === Node.ELEMENT_NODE) {
     const el = node as HTMLElement;
     if (IGNORED_TAGS.has(el.tagName)) return;
-    if (el.classList?.contains("notranslate") || el.getAttribute("translate") === "no") {
+    if (targetLang !== "en" && (el.classList?.contains("notranslate") || el.getAttribute("translate") === "no")) {
       return;
     }
 
@@ -184,7 +184,18 @@ export function GoogleTranslate() {
   const pathname = usePathname();
   const observerRef = useRef<MutationObserver | null>(null);
 
+  const isPortal =
+    pathname?.startsWith("/admin") ||
+    pathname?.startsWith("/member") ||
+    pathname?.startsWith("/associate");
+
   useEffect(() => {
+    // Portal routes (admin, associate, member) remain strictly in English
+    if (isPortal) {
+      translateDOM("en");
+      return;
+    }
+
     const currentLang = getCurrentLanguage();
 
     // Initial translation on mount if non-English
@@ -194,6 +205,7 @@ export function GoogleTranslate() {
 
     // Handle language change events
     const handleLangChange = (e: Event) => {
+      if (isPortal) return;
       const customEvent = e as CustomEvent<{ lang: "en" | "hi" | "bn" }>;
       const lang = customEvent.detail?.lang || getCurrentLanguage();
       translateDOM(lang);
@@ -204,6 +216,7 @@ export function GoogleTranslate() {
     // MutationObserver to automatically translate newly added DOM nodes (modals, client renders)
     let timeoutId: NodeJS.Timeout | null = null;
     observerRef.current = new MutationObserver(() => {
+      if (isPortal) return;
       const activeLang = getCurrentLanguage();
       if (activeLang === "en") return;
 
@@ -229,10 +242,16 @@ export function GoogleTranslate() {
         clearTimeout(timeoutId);
       }
     };
-  }, []);
+  }, [isPortal]);
 
-  // Re-run translation on route change
+  // Re-run translation or revert on route change
   useEffect(() => {
+    if (isPortal) {
+      // Revert completely to English when entering portal routes
+      translateDOM("en");
+      return;
+    }
+
     const activeLang = getCurrentLanguage();
     if (activeLang !== "en") {
       const timer = setTimeout(() => {
@@ -240,7 +259,7 @@ export function GoogleTranslate() {
       }, 50);
       return () => clearTimeout(timer);
     }
-  }, [pathname]);
+  }, [pathname, isPortal]);
 
   return null;
 }

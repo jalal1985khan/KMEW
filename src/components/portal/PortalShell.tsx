@@ -57,7 +57,7 @@ export function PortalShell({
   if (!isLoading) {
     if (!currentUser) {
       return (
-        <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 notranslate" translate="no">
           <div className="max-w-md w-full bg-white rounded-3xl p-8 border border-slate-200 shadow-xl text-center space-y-5">
             <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
               <Lock className="w-7 h-7" />
@@ -81,7 +81,7 @@ export function PortalShell({
 
     if (currentUser.role !== currentRole) {
       return (
-        <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 notranslate" translate="no">
           <div className="max-w-md w-full bg-white rounded-3xl p-8 border border-slate-200 shadow-xl text-center space-y-5">
             <div className="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
               <AlertTriangle className="w-7 h-7" />
@@ -119,7 +119,7 @@ export function PortalShell({
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-100 flex flex-col font-sans notranslate" translate="no">
       {/* Top Bar for Switcher & Profile */}
       <header className="sticky top-0 z-40 bg-[#073531] text-white border-b border-[#0e5c50] shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
