@@ -27,6 +27,7 @@ const IGNORED_TAGS = new Set([
 ]);
 
 // Sorted phrase keys by length descending to match longer phrases first
+// Sorted phrase keys by length descending to match longer phrases first
 const SORTED_KEYS = Object.keys(KMEW_TRANSLATIONS).sort(
   (a, b) => b.length - a.length
 );
@@ -37,11 +38,30 @@ for (const key of SORTED_KEYS) {
   LOWER_KEY_MAP.set(key.toLowerCase(), key);
 }
 
+// Reverse translation lookup maps: Indic (Hindi/Bengali) text -> English text
+const REVERSE_COMBINED_MAP = new Map<string, string>();
+for (const [enKey, trans] of Object.entries(KMEW_TRANSLATIONS)) {
+  if (trans.hi) {
+    REVERSE_COMBINED_MAP.set(trans.hi, enKey);
+  }
+  if (trans.bn) {
+    REVERSE_COMBINED_MAP.set(trans.bn, enKey);
+  }
+}
+
+// Sorted reverse keys by length descending to match longest sentences first
+const SORTED_REVERSE_KEYS = Array.from(REVERSE_COMBINED_MAP.keys()).sort(
+  (a, b) => b.length - a.length
+);
+
+// Regex to detect Indic (Devanagari or Bengali) characters
+const INDIC_REGEX = /[\u0900-\u097F\u0980-\u09FF]/;
+
 export function getCurrentLanguage(): "en" | "hi" | "bn" {
   if (typeof window === "undefined") return "en";
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored === "hi" || stored === "bn") return stored;
+    if (stored === "en" || stored === "hi" || stored === "bn") return stored;
 
     const cookieMatch = document.cookie.match(/googtrans=\/[^/]+\/([a-z]{2})/);
     if (cookieMatch && (cookieMatch[1] === "hi" || cookieMatch[1] === "bn")) {
@@ -51,6 +71,44 @@ export function getCurrentLanguage(): "en" | "hi" | "bn" {
     // Ignore storage/cookie errors
   }
   return "en";
+}
+
+function translateToEnglish(text: string): string {
+  const trimmed = text.trim();
+  if (!trimmed || !INDIC_REGEX.test(trimmed)) return text;
+
+  // Direct exact match
+  const direct = REVERSE_COMBINED_MAP.get(trimmed);
+  if (direct) {
+    const leadingWs = text.match(/^\s*/)?.[0] || "";
+    const trailingWs = text.match(/\s*$/)?.[0] || "";
+    return leadingWs + direct + trailingWs;
+  }
+
+  // Normalized whitespace match
+  const normalized = trimmed.replace(/\s+/g, " ");
+  const normMatch = REVERSE_COMBINED_MAP.get(normalized);
+  if (normMatch) {
+    const leadingWs = text.match(/^\s*/)?.[0] || "";
+    const trailingWs = text.match(/\s*$/)?.[0] || "";
+    return leadingWs + normMatch + trailingWs;
+  }
+
+  // Multi-phrase or sentence match
+  let result = text;
+  let hasReplacement = false;
+
+  for (const phrase of SORTED_REVERSE_KEYS) {
+    if (result.includes(phrase)) {
+      const en = REVERSE_COMBINED_MAP.get(phrase);
+      if (en) {
+        result = result.split(phrase).join(en);
+        hasReplacement = true;
+      }
+    }
+  }
+
+  return hasReplacement ? result : text;
 }
 
 function translateText(text: string, targetLang: "hi" | "bn"): string {
@@ -123,15 +181,30 @@ function processNode(node: Node, targetLang: "en" | "hi" | "bn") {
     const currentVal = node.nodeValue || "";
     if (!currentVal.trim()) return;
 
-    if (node.__kmewOriginal === undefined) {
-      node.__kmewOriginal = currentVal;
-    }
-
     if (targetLang === "en") {
-      if (node.nodeValue !== node.__kmewOriginal) {
-        node.nodeValue = node.__kmewOriginal;
+      // Restore clean English
+      if (node.__kmewOriginal !== undefined && !INDIC_REGEX.test(node.__kmewOriginal)) {
+        if (node.nodeValue !== node.__kmewOriginal) {
+          node.nodeValue = node.__kmewOriginal;
+        }
+      } else if (INDIC_REGEX.test(currentVal)) {
+        // Reverse translate any Indic characters to English
+        const en = translateToEnglish(currentVal);
+        node.nodeValue = en;
+        node.__kmewOriginal = en;
+      } else {
+        node.__kmewOriginal = currentVal;
       }
     } else {
+      // Non-English (hi or bn)
+      if (node.__kmewOriginal === undefined || INDIC_REGEX.test(node.__kmewOriginal)) {
+        if (!INDIC_REGEX.test(currentVal)) {
+          node.__kmewOriginal = currentVal;
+        } else {
+          node.__kmewOriginal = translateToEnglish(currentVal);
+        }
+      }
+
       const original = node.__kmewOriginal;
       const translated = translateText(original, targetLang);
       if (node.nodeValue !== translated) {
@@ -147,14 +220,26 @@ function processNode(node: Node, targetLang: "en" | "hi" | "bn") {
     if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
       const placeholder = el.getAttribute("placeholder");
       if (placeholder) {
-        if (el.__kmewOriginalPlaceholder === undefined) {
-          el.__kmewOriginalPlaceholder = placeholder;
-        }
         if (targetLang === "en") {
-          if (el.getAttribute("placeholder") !== el.__kmewOriginalPlaceholder) {
-            el.setAttribute("placeholder", el.__kmewOriginalPlaceholder);
+          if (el.__kmewOriginalPlaceholder !== undefined && !INDIC_REGEX.test(el.__kmewOriginalPlaceholder)) {
+            if (el.getAttribute("placeholder") !== el.__kmewOriginalPlaceholder) {
+              el.setAttribute("placeholder", el.__kmewOriginalPlaceholder);
+            }
+          } else if (INDIC_REGEX.test(placeholder)) {
+            const en = translateToEnglish(placeholder);
+            el.setAttribute("placeholder", en);
+            el.__kmewOriginalPlaceholder = en;
+          } else {
+            el.__kmewOriginalPlaceholder = placeholder;
           }
         } else {
+          if (el.__kmewOriginalPlaceholder === undefined || INDIC_REGEX.test(el.__kmewOriginalPlaceholder)) {
+            if (!INDIC_REGEX.test(placeholder)) {
+              el.__kmewOriginalPlaceholder = placeholder;
+            } else {
+              el.__kmewOriginalPlaceholder = translateToEnglish(placeholder);
+            }
+          }
           const original = el.__kmewOriginalPlaceholder;
           const translated = translateText(original, targetLang);
           if (el.getAttribute("placeholder") !== translated) {
@@ -189,6 +274,11 @@ export function applyLanguage(langCode: string) {
     localStorage.setItem(STORAGE_KEY, validLang);
     if (validLang === "en") {
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "googtrans=/en/en; path=/; max-age=31536000;";
+      if (window.location.hostname) {
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname};`;
+      }
     } else {
       document.cookie = `googtrans=/en/${validLang}; path=/; max-age=31536000;`;
     }

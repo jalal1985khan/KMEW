@@ -237,16 +237,30 @@ export function Navbar() {
       if (typeof window !== "undefined") {
         const stored = localStorage.getItem("kmew_selected_lang");
         const cookieMatch = document.cookie.match(/googtrans=\/[^/]+\/([a-z]{2})/);
-        const code = stored || (cookieMatch && cookieMatch[1]);
-        if (code) {
-          const found = languages.find((l) => l.code === code);
-          if (found) {
-            setSelectedLang(found);
-          }
-        }
+        const code =
+          stored === "en" || stored === "hi" || stored === "bn"
+            ? stored
+            : cookieMatch && (cookieMatch[1] === "hi" || cookieMatch[1] === "bn")
+            ? cookieMatch[1]
+            : "en";
+        const found = languages.find((l) => l.code === code) || languages[0];
+        setSelectedLang(found);
       }
     }, 0);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const handleLang = (e: Event) => {
+      const customEvent = e as CustomEvent<{ lang: "en" | "hi" | "bn" }>;
+      const langCode = customEvent.detail?.lang;
+      if (langCode) {
+        const found = languages.find((l) => l.code === langCode);
+        if (found) setSelectedLang(found);
+      }
+    };
+    window.addEventListener("kmew-lang-change", handleLang);
+    return () => window.removeEventListener("kmew-lang-change", handleLang);
   }, []);
 
   const handleSelectLanguage = (lang: (typeof languages)[0]) => {
