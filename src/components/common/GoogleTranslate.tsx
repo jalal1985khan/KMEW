@@ -28,6 +28,12 @@ const SORTED_KEYS = Object.keys(KMEW_TRANSLATIONS).sort(
   (a, b) => b.length - a.length
 );
 
+// Lowercase lookup map for case-insensitive exact matches (e.g. UPPERCASE headings)
+const LOWER_KEY_MAP = new Map<string, string>();
+for (const key of SORTED_KEYS) {
+  LOWER_KEY_MAP.set(key.toLowerCase(), key);
+}
+
 export function getCurrentLanguage(): "en" | "hi" | "bn" {
   if (typeof window === "undefined") return "en";
   try {
@@ -63,6 +69,17 @@ function translateText(text: string, targetLang: "hi" | "bn"): string {
     const leadingWs = text.match(/^\s*/)?.[0] || "";
     const trailingWs = text.match(/\s*$/)?.[0] || "";
     return leadingWs + normalizedMatch + trailingWs;
+  }
+
+  // Case-insensitive direct match (e.g. UPPERCASE headings like HOW IT WORKS, SUCCESS STORIES)
+  const lowerKey = LOWER_KEY_MAP.get(normalized.toLowerCase());
+  if (lowerKey) {
+    const lowerMatch = KMEW_TRANSLATIONS[lowerKey]?.[targetLang];
+    if (lowerMatch) {
+      const leadingWs = text.match(/^\s*/)?.[0] || "";
+      const trailingWs = text.match(/\s*$/)?.[0] || "";
+      return leadingWs + lowerMatch + trailingWs;
+    }
   }
 
   // Multi-phrase or sentence match

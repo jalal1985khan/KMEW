@@ -496,5 +496,112 @@ export const KMEW_TRANSLATIONS: Record<string, { hi: string; bn: string }> = {
   "Submit": { hi: "जमा करें", bn: "জমা দিন" },
   "Cancel": { hi: "रद्द करें", bn: "বাতিল করুন" },
   "Back": { hi: "पीछे", bn: "পেছনে" },
-  "Next": { hi: "आगे", bn: "পরবর্তী" }
+  "Next": { hi: "आगे", bn: "পরবর্তী" },
+
+  // How It Works (Detailed)
+  "HOW IT WORKS": { hi: "यह कैसे काम करता है", bn: "এটি যেভাবে কাজ করে" },
+  "Your Journey With KMEW": { hi: "केएमईडब्ल्यू के साथ आपकी यात्रा", bn: "কেএমইডব্লিউ-এর সাথে আপনার যাত্রা" },
+  "Your Journey With": { hi: "के साथ आपकी यात्रा", bn: "সাথে আপনার যাত্রা" },
+  "A simple and transparent process to connect, support and create impact.": {
+    hi: "जुड़ने, सहयोग करने और प्रभाव पैदा करने की एक सरल और पारदर्शी प्रक्रिया।",
+    bn: "সংযুক্ত হতে, সহায়তা করতে এবং প্রভাব তৈরি করতে একটি সহজ ও স্বচ্ছ প্রক্রিয়া।"
+  },
+  "Register Online": { hi: "ऑनलाइन पंजीकरण करें", bn: "অনলাইনে নিবন্ধন করুন" },
+  "Create your account as a member.": { hi: "सदस्य के रूप में अपना खाता बनाएं।", bn: "সদস্য হিসেবে আপনার অ্যাকাউন্ট তৈরি করুন।" },
+  "Review by KMEW": { hi: "केएमईडब्ल्यू द्वारा समीक्षा", bn: "কেএমইডব্লিউ দ্বারা পর্যালোচনা" },
+  "Review by": { hi: "द्वारा समीक्षा", bn: "দ্বারা পর্যালোচনা" },
+  "Your application is reviewed.": { hi: "आपके आवेदन की समीक्षा की जाती है।", bn: "আপনার আবেদন পর্যালোচনা করা হয়।" },
+  "Associate Assigned": { hi: "सहयोगी नियुक्त", bn: "সহযোগী নিয়োগ" },
+  "KMEW assigns a dedicated associate.": { hi: "केएमईडब्ल्यू एक समर्पित सहयोगी नियुक्त करता है।", bn: "কেএমইডব্লিউ একজন নিবেদিত সহযোগী নিয়োগ করে।" },
+  "Connect with Member": { hi: "सदस्य से जुड़ें", bn: "সদস্যের সাথে যুক্ত হন" },
+  "Connect with": { hi: "से जुड़ें", bn: "সাথে যুক্ত হন" },
+  "Your associate connects with you.": { hi: "आपके सहयोगी आपसे संपर्क करते हैं।", bn: "আপনার সহযোগী আপনার সাথে যোগাযোগ করবেন।" },
+  "Easily track and manage your contributions.": { hi: "अपने योगदान को आसानी से ट्रैक और प्रबंधित करें।", bn: "সহজেই আপনার অবদান ট্র্যাক এবং পরিচালনা করুন।" },
+  "Verified by KMEW": { hi: "केएमईडब्ल्यू द्वारा सत्यापित", bn: "কেএমইডব্লিউ দ্বারা যাচাইকৃত" },
+  "Verified by": { hi: "द्वारा सत्यापित", bn: "দ্বারা যাচাইকৃত" },
+  "Final verification by our admin team.": { hi: "हमारी व्यवस्थापक टीम द्वारा अंतिम सत्यापन।", bn: "আমাদের অ্যাডমিন দল দ্বারা চূড়ান্ত যাচাইকরণ।" },
+
+  // Success Stories (Detailed)
+  "SUCCESS STORIES": { hi: "सफलता की कहानियां", bn: "সাফল্যের গল্প" },
+  "Real People. Real Impact.": { hi: "सच्चे लोग। वास्तविक प्रभाव।", bn: "বাস্তব মানুষ। বাস্তব প্রভাব।" },
+  "View All Stories": { hi: "सभी कहानियां देखें", bn: "সকল গল্প দেখুন" },
+  "Stories": { hi: "कहानियां", bn: "গল্প" },
+  "Student": { hi: "छात्र", bn: "শিক্ষার্থী" },
+  "KMEW Member": { hi: "केएमईडब्ल्यू सदस्य", bn: "কেএমইডব্লিউ সদস্য" },
+  "KMEW Associate": { hi: "केएमईडब्ल्यू सहयोगी", bn: "কেএমইডব্লিউ সহযোগী" },
+  "Through KMEW, I was able to continue my education and dream bigger for my future.": {
+    hi: "केएमईडब्ल्यू के माध्यम से, मैं अपनी शिक्षा जारी रखने और अपने भविष्य के लिए बड़े सपने देखने में सक्षम हुई।",
+    bn: "কেএমইডব্লিউ-এর মাধ্যমে আমি আমার পড়াশোনা চালিয়ে যেতে পেরেছি এবং ভবিষ্যতের জন্য বড় স্বপ্ন দেখতে পেরেছি।"
+  },
+  "The support from KMEW helped me get the resources i needed for my studies.": {
+    hi: "केएमईडब्ल्यू के सहयोग ने मुझे अपनी पढ़ाई के लिए आवश्यक संसाधन प्राप्त करने में मदद की।",
+    bn: "কেএমইডব্লিউ-এর সহায়তা আমাকে আমার পড়াশোনার জন্য প্রয়োজনীয় উপকরণ পেতে সাহায্য করেছে।"
+  },
+  "The support from KMEW helped me get the resources I needed for my studies.": {
+    hi: "केएमईडब्ल्यू के सहयोग ने मुझे अपनी पढ़ाई के लिए आवश्यक संसाधन प्राप्त करने में मदद की।",
+    bn: "কেএমইডব্লিউ-এর সহায়তা আমাকে আমার পড়াশোনার জন্য প্রয়োজনীয় উপকরণ পেতে সাহায্য করেছে।"
+  },
+  "Being an associate with KMEW has allowed me to serve my community and make a difference.": {
+    hi: "केएमईडब्ल्यू के साथ एक सहयोगी होने से मुझे अपने समुदाय की सेवा करने और बदलाव लाने का अवसर मिला है।",
+    bn: "কেএমইডব্লিউ-এর একজন সহযোগী হিসেবে কাজ করা আমাকে আমার সম্প্রদায়ের সেবা করার এবং পরিবর্তন আনার সুযোগ দিয়েছে।"
+  },
+
+  // Latest News & Events (Detailed)
+  "LATEST NEWS & EVENTS": { hi: "नवीनतम समाचार एवं कार्यक्रम", bn: "সর্বশেষ সংবাদ ও ইভেন্ট" },
+  "LATEST NEWS &amp; EVENTS": { hi: "नवीनतम समाचार एवं कार्यक्रम", bn: "সর্বশেষ সংবাদ ও ইভেন্ট" },
+  "Stay updated with our latest activities, events and announcements.": {
+    hi: "हमारी नवीनतम गतिविधियों, कार्यक्रमों और घोषणाओं से अपडेट रहें।",
+    bn: "আমাদের সর্বশেষ কার্যক্রম, ইভেন্ট এবং ঘোষণার সাথে আপডেট থাকুন।"
+  },
+  "View All News": { hi: "सभी समाचार देखें", bn: "সকল সংবাদ দেখুন" },
+  "News": { hi: "समाचार", bn: "সংবাদ" },
+  "Education Program for Underprivileged Children": {
+    hi: "वंचित बच्चों के लिए शिक्षा कार्यक्रम",
+    bn: "সুবিধাবঞ্চিত শিশুদের জন্য শিক্ষা কর্মসূচি"
+  },
+  "Community Health Camp Organized": {
+    hi: "सामुदायिक स्वास्थ्य शिविर का आयोजन",
+    bn: "কমিউনিটি স্বাস্থ্য শিবির আয়োজিত"
+  },
+  "Scholarship Drive for Deserving Students": {
+    hi: "योग्य छात्रों के लिए छात्रवृत्ति अभियान",
+    bn: "যোগ্য শিক্ষার্থীদের জন্য বৃত্তি অভিযান"
+  },
+
+  // Call To Action (Detailed)
+  "Your Support Can Change a Life": {
+    hi: "आपका सहयोग एक जीवन बदल सकता है",
+    bn: "আপনার সহায়তা একটি জীবন বদলে দিতে পারে"
+  },
+  "Your Support": { hi: "आपका सहयोग", bn: "আপনার সহায়তা" },
+  "Can Change a Life": { hi: "एक जीवन बदल सकता है", bn: "একটি জীবন বদলে দিতে পারে" },
+  "Every contribution helps us create opportunities, strengthen communities and support those who need it most.": {
+    hi: "प्रत्येक योगदान हमें अवसर पैदा करने, समुदायों को मजबूत करने और उन लोगों की सहायता करने में मदद करता है जिन्हें इसकी सबसे अधिक आवश्यकता है।",
+    bn: "প্রতিটি অবদান আমাদের সুযোগ তৈরি করতে, সম্প্রদায়কে শক্তিশালী করতে এবং যাদের সবচেয়ে বেশি প্রয়োজন তাদের সহায়তা করতে সাহায্য করে।"
+  },
+
+  // FAQ Section (Detailed)
+  "FREQUENTLY ASKED QUESTIONS": { hi: "अक्सर पूछे जाने वाले प्रश्न", bn: "সাধারণ জিজ্ঞাসা (FAQ)" },
+  "Find answers to common questions about membership, contributions and our programs.": {
+    hi: "सदस्यता, योगदान और हमारे कार्यक्रमों के बारे में सामान्य प्रश्नों के उत्तर प्राप्त करें।",
+    bn: "সদস্যপদ, অবদান এবং আমাদের কর্মসূচি সম্পর্কিত সাধারণ প্রশ্নের উত্তর খুঁজুন।"
+  },
+  "View All FAQs": { hi: "सभी प्रश्न देखें", bn: "সকল প্রশ্নাবলী দেখুন" },
+  "FAQs": { hi: "सामान्य प्रश्न", bn: "সাধারণ জিজ্ঞাসা" },
+  "Any individual, student, or community member seeking educational assistance, scholarship grants, tuition support, or participation in community development can become a member.": {
+    hi: "शैक्षिक सहायता, छात्रवृत्ति अनुदान, ट्यूशन सहायता, या सामुदायिक विकास में भागीदारी चाहने वाला कोई भी व्यक्ति, छात्र या समुदाय का सदस्य सदस्य बन सकता है।",
+    bn: "শিক্ষাগত সহায়তা, বৃত্তি অনুদান, টিউশন সহায়তা বা কমিউনিটি উন্নয়নে অংশগ্রহণ করতে আগ্রহী যে কোনো ব্যক্তি, শিক্ষার্থী বা সম্প্রদায়ের সদস্য সদস্য হতে পারেন।"
+  },
+  "You can register online through our digital Member Registration form by providing your basic details, government ID, student status, and bank account information for direct disbursements.": {
+    hi: "आप अपने बुनियादी विवरण, सरकारी पहचान पत्र, छात्र की स्थिति और सीधे भुगतान के लिए बैंक खाते की जानकारी प्रदान करके हमारे डिजिटल सदस्य पंजीकरण फॉर्म के माध्यम से ऑनलाइन पंजीकरण कर सकते हैं।",
+    bn: "আপনি আপনার প্রাথমিক তথ্য, সরকারি পরিচয়পত্র, শিক্ষার্থীর অবস্থা এবং সরাসরি অর্থ প্রদানের জন্য ব্যাংক অ্যাকাউন্টের বিবরণ প্রদান করে আমাদের ডিজিটাল সদস্য নিবন্ধন ফর্মের মাধ্যমে অনলাইনে নিবন্ধন করতে পারেন।"
+  },
+  "KMEW Central Administration typically reviews and verifies submitted member applications within 2 to 3 business days.": {
+    hi: "केएमईडब्ल्यू केंद्रीय प्रशासन आमतौर पर 2 से 3 कार्य दिवसों के भीतर जमा किए गए सदस्य आवेदनों की समीक्षा और सत्यापन करता है।",
+    bn: "কেএমইডব্লিউ কেন্দ্রীয় প্রশাসন সাধারণত ২ থেকে ৩ কার্যদিবসের মধ্যে জমা দেওয়া সদস্য আবেদন পর্যালোচনা ও যাচাই করে।"
+  },
+  "Upon initial application approval, KMEW administration assigns a verified field associate operating in your local municipality or ward to mentor and assist you.": {
+    hi: "प्रारंभिक आवेदन स्वीकृति पर, केएमईडब्ल्यू प्रशासन आपका मार्गदर्शन और सहायता करने के लिए आपके स्थानीय नगर पालिका या वार्ड में कार्यरत एक सत्यापित फील्ड सहयोगी को नियुक्त करता है।",
+    bn: "প্রাথমিক আবেদন অনুমোদনের পর, কেএমইডব্লিউ প্রশাসন আপনাকে নির্দেশনা ও সহায়তা করার জন্য আপনার স্থানীয় পৌরসভা বা ওয়ার্ডে কর্মরত একজন যাচাইকৃত মাঠ সহযোগীকে নিয়োগ করে।"
+  }
 };
