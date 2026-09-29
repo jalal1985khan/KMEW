@@ -108,11 +108,10 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => handleRoleSelect("MEMBER")}
-            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-1 ${
-              selectedRole === "MEMBER"
+            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-1 ${selectedRole === "MEMBER"
                 ? "bg-white text-emerald-800 shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
-            }`}
+              }`}
           >
             <UserCheck className="w-4 h-4" />
             <span>Member</span>
@@ -121,11 +120,10 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => handleRoleSelect("ASSOCIATE")}
-            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-1 ${
-              selectedRole === "ASSOCIATE"
+            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-1 ${selectedRole === "ASSOCIATE"
                 ? "bg-white text-blue-900 shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
-            }`}
+              }`}
           >
             <Users className="w-4 h-4" />
             <span>Associate</span>
@@ -134,11 +132,10 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => handleRoleSelect("ADMIN")}
-            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-1 ${
-              selectedRole === "ADMIN"
+            className={`py-2 px-1 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-1 ${selectedRole === "ADMIN"
                 ? "bg-white text-purple-900 shadow-xs"
                 : "text-slate-600 hover:text-slate-900"
-            }`}
+              }`}
           >
             <Shield className="w-4 h-4" />
             <span>Admin</span>

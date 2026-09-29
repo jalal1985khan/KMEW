@@ -40,11 +40,11 @@ import {
 import {
   INITIAL_ASSOCIATES,
   INITIAL_MEMBERS,
-  INITIAL_INSTALLMENTS,
   PaymentInstallment,
   PaymentStatus,
   MemberRecord,
 } from "@/lib/data/portalData";
+import { usePortalData } from "@/lib/data/portalStore";
 import {
   Users,
   CreditCard,
@@ -60,18 +60,22 @@ import {
 
 export default function AssociatePortalPage() {
   const { currentUser } = useAuth();
+  const {
+    members: allMembers,
+    associates,
+    installments,
+    verifyPayment,
+    recordCashCollection,
+  } = usePortalData();
 
   // Strict Account Isolation: Match associate by authenticated user id or email
   const associate =
-    INITIAL_ASSOCIATES.find(
+    associates.find(
       (a) => a.id === currentUser?.id || a.email.toLowerCase() === currentUser?.email?.toLowerCase()
-    ) || INITIAL_ASSOCIATES[0];
+    ) || associates[0] || INITIAL_ASSOCIATES[0];
 
   // Strictly isolate members and installments assigned to this associate
-  const [installments, setInstallments] = useState<PaymentInstallment[]>(INITIAL_INSTALLMENTS);
-  const [members, setMembers] = useState<MemberRecord[]>(
-    INITIAL_MEMBERS.filter((m) => m.assignedAssociateId === associate.id)
-  );
+  const members = allMembers.filter((m) => m.assignedAssociateId === associate.id);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("verifications");
@@ -104,20 +108,7 @@ export default function AssociatePortalPage() {
     e.preventDefault();
     if (!selectedInst) return;
 
-    setInstallments((prev) =>
-      prev.map((inst) =>
-        inst.id === selectedInst.id
-          ? {
-            ...inst,
-            status: "ASSOCIATE_VERIFIED" as PaymentStatus, // 🔵 Blue
-            associateVerifiedAt: `Today by ${associate.name} (${associate.badgeNumber})`,
-            remarks: verifyNotes,
-            utrReference: receiptNumber,
-          }
-          : inst
-      )
-    );
-
+    verifyPayment(selectedInst.id, associate.name, verifyNotes);
     setVerifyModalOpen(false);
   };
 
@@ -144,7 +135,7 @@ export default function AssociatePortalPage() {
       remarks: `Field cash receipt ${collectionReceipt} issued. Member approval pending.`,
     };
 
-    setInstallments((prev) => [newInst, ...prev]);
+    recordCashCollection(newInst);
     setCollectionSuccess(true);
     setTimeout(() => {
       setCollectionSuccess(false);

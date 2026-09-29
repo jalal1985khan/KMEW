@@ -163,6 +163,44 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true, log: createdLog });
     }
 
+    // 6. Member approves receipt (🟢 Green)
+    if (action === "approve_receipt") {
+      const { installmentId } = body;
+      const updated = await prisma.paymentInstallment.update({
+        where: { id: installmentId },
+        data: {
+          status: "MEMBER_APPROVED",
+          remarks: "Member verified and approved receipt handed over by associate.",
+        },
+      });
+      return NextResponse.json({ success: true, installment: updated });
+    }
+
+    // 7. Associate records field cash collection
+    if (action === "record_cash") {
+      const { installment } = body;
+      const created = await prisma.paymentInstallment.create({
+        data: {
+          id: installment.id || `PAY-FLD-${Date.now()}`,
+          memberId: installment.memberId,
+          memberName: installment.memberName,
+          associateId: installment.associateId,
+          associateName: installment.associateName,
+          installmentNo: installment.installmentNo,
+          totalInstallments: installment.totalInstallments,
+          amount: installment.amount,
+          dueDate: installment.dueDate || "Field Collection",
+          paidDate: installment.paidDate || new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+          status: "ASSOCIATE_VERIFIED",
+          paymentMode: "CASH",
+          utrReference: installment.utrReference,
+          associateVerifiedAt: installment.associateVerifiedAt,
+          remarks: installment.remarks,
+        },
+      });
+      return NextResponse.json({ success: true, installment: created });
+    }
+
     return NextResponse.json({ success: false, error: "Invalid action" }, { status: 400 });
   } catch (error) {
     console.error("Portal mutation error:", error);

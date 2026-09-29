@@ -33,10 +33,10 @@ import {
 } from "@/components/ui/dialog";
 import {
   INITIAL_MEMBERS,
-  INITIAL_INSTALLMENTS,
   PaymentInstallment,
   PaymentStatus,
 } from "@/lib/data/portalData";
+import { usePortalData } from "@/lib/data/portalStore";
 import {
   User,
   CreditCard,
@@ -51,16 +51,15 @@ import {
 
 export default function MemberPortalPage() {
   const { currentUser } = useAuth();
+  const { members, installments: allInstallments, submitPayment, approveReceipt } = usePortalData();
 
   // Strict Account Isolation: Match member by authenticated user id or email
   const member =
-    INITIAL_MEMBERS.find(
+    members.find(
       (m) => m.id === currentUser?.id || m.email.toLowerCase() === currentUser?.email?.toLowerCase()
-    ) || INITIAL_MEMBERS[0];
+    ) || members[0] || INITIAL_MEMBERS[0];
 
-  const [installments, setInstallments] = useState<PaymentInstallment[]>(
-    INITIAL_INSTALLMENTS.filter((i) => i.memberId === member.id)
-  );
+  const installments = allInstallments.filter((i) => i.memberId === member.id);
 
   // Pay Modal State
   const [payModalOpen, setPayModalOpen] = useState(false);
@@ -80,19 +79,11 @@ export default function MemberPortalPage() {
     e.preventDefault();
     if (!selectedInstallment) return;
 
-    setInstallments((prev) =>
-      prev.map((inst) =>
-        inst.id === selectedInstallment.id
-          ? {
-            ...inst,
-            status: "MEMBER_PAID" as PaymentStatus, // 🟡 Yellow
-            paidDate: "Today",
-            paymentMode: payMode,
-            utrReference: utrInput || `UPI/${Date.now().toString().slice(-8)}/SBI`,
-            remarks: `Submitted by member via ${payMode}. Awaiting associate verification.`,
-          }
-          : inst
-      )
+    submitPayment(
+      selectedInstallment.id,
+      payMode,
+      utrInput || `UPI/${Date.now().toString().slice(-8)}/SBI`,
+      `Submitted by member via ${payMode}. Awaiting associate verification.`
     );
 
     setSubmitSuccess(true);
@@ -103,17 +94,7 @@ export default function MemberPortalPage() {
   };
 
   const handleApproveReceipt = (id: string) => {
-    setInstallments((prev) =>
-      prev.map((inst) =>
-        inst.id === id
-          ? {
-            ...inst,
-            status: "MEMBER_APPROVED" as PaymentStatus, // 🟢 Green
-            remarks: "Member verified and approved receipt handed over by associate.",
-          }
-          : inst
-      )
-    );
+    approveReceipt(id);
   };
 
   return (

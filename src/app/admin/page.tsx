@@ -43,16 +43,13 @@ import {
   type AdminSectionKey,
 } from "@/components/portal/admin/AdminSidebar";
 import {
-  INITIAL_MEMBERS,
-  INITIAL_ASSOCIATES,
-  INITIAL_INSTALLMENTS,
-  INITIAL_AUDIT_LOGS,
   MemberRecord,
   AssociateRecord,
   PaymentInstallment,
   PaymentStatus,
   AuditLogItem,
 } from "@/lib/data/portalData";
+import { usePortalData } from "@/lib/data/portalStore";
 import { NewsManager } from "@/components/portal/admin/NewsManager";
 import { GalleryManager } from "@/components/portal/admin/GalleryManager";
 import { useNewsEvents, useGalleryItems } from "@/lib/data/contentStore";
@@ -127,10 +124,15 @@ export default function AdminPortalPage() {
   const { news } = useNewsEvents();
   const { gallery } = useGalleryItems();
 
-  const [members, setMembers] = useState<MemberRecord[]>(INITIAL_MEMBERS);
-  const [associates, setAssociates] = useState<AssociateRecord[]>(INITIAL_ASSOCIATES);
-  const [installments, setInstallments] = useState<PaymentInstallment[]>(INITIAL_INSTALLMENTS);
-  const [auditLogs, setAuditLogs] = useState<AuditLogItem[]>(INITIAL_AUDIT_LOGS);
+  const {
+    members,
+    associates,
+    installments,
+    auditLogs,
+    confirmPayment,
+    assignAssociate,
+    addAuditLog,
+  } = usePortalData();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [pipelineFilter, setPipelineFilter] = useState<string>("ALL");
@@ -138,38 +140,12 @@ export default function AdminPortalPage() {
   // Assign Associate Modal
   const [assignModalOpen, setAssignModalOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<MemberRecord | null>(null);
-  const [chosenAssociateId, setChosenAssociateId] = useState(associates[0]?.id || "");
+  const [chosenAssociateId, setChosenAssociateId] = useState("");
 
   // 1-Click Admin Final Confirmation (🔴 RED)
   const handleAdminConfirmPayment = (instId: string) => {
-    const targetInst = installments.find((i) => i.id === instId);
-    if (!targetInst) return;
-
     const adminName = currentUser?.name || "Rajeshwar Sharma";
-
-    setInstallments((prev) =>
-      prev.map((inst) =>
-        inst.id === instId
-          ? {
-            ...inst,
-            status: "ADMIN_CONFIRMED" as PaymentStatus, // 🔴 Red
-            adminConfirmedAt: `Today by Central Accounts (${adminName})`,
-            remarks: "Final administrative verification sealed and recorded into general ledger.",
-          }
-          : inst
-      )
-    );
-
-    // Append to audit log
-    const newAudit: AuditLogItem = {
-      id: `AUD-${(auditLogs.length + 1).toString().padStart(4, "0")}`,
-      timestamp: "Just now",
-      action: "Admin Final Confirmation",
-      performedBy: `${adminName} (Admin)`,
-      target: `Installment #${targetInst.installmentNo} for ${targetInst.memberName} (₹${targetInst.amount.toLocaleString("en-IN")})`,
-      statusBadge: "ADMIN_CONFIRMED",
-    };
-    setAuditLogs((prev) => [newAudit, ...prev]);
+    confirmPayment(instId, adminName);
   };
 
   // Open Assign Associate Modal
@@ -185,42 +161,13 @@ export default function AdminPortalPage() {
     const targetAssociate = associates.find((a) => a.id === chosenAssociateId);
     if (!targetAssociate) return;
 
-    setMembers((prev) =>
-      prev.map((m) =>
-        m.id === selectedMember.id
-          ? {
-            ...m,
-            assignedAssociateId: targetAssociate.id,
-            assignedAssociateName: targetAssociate.name,
-          }
-          : m
-      )
-    );
-
-    const newAudit: AuditLogItem = {
-      id: `AUD-${(auditLogs.length + 2).toString().padStart(4, "0")}`,
-      timestamp: "Just now",
-      action: "Associate Assigned",
-      performedBy: `${currentUser?.name || "Admin"} (Admin Portal)`,
-      target: `${selectedMember.name} allocated to ${targetAssociate.name} (${targetAssociate.badgeNumber})`,
-      statusBadge: "SUCCESS",
-    };
-    setAuditLogs((prev) => [newAudit, ...prev]);
-
+    assignAssociate(selectedMember.id, targetAssociate.id, targetAssociate.name);
     setAssignModalOpen(false);
   };
 
   const handleContentAuditLog = (action: string, target: string) => {
     const adminName = currentUser?.name || "Rajeshwar Sharma";
-    const newAudit: AuditLogItem = {
-      id: `AUD-${Date.now().toString().slice(-6)}`,
-      timestamp: "Just now",
-      action: action,
-      performedBy: `${adminName} (ADMIN)`,
-      target: target,
-      statusBadge: "SUCCESS",
-    };
-    setAuditLogs((prev) => [newAudit, ...prev]);
+    addAuditLog(action, `${adminName} (ADMIN)`, target, "SUCCESS");
   };
 
   // Filtered lists
