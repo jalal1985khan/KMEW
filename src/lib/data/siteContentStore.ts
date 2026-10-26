@@ -87,11 +87,36 @@ export interface DonateContent {
   showQrCode: boolean;
 }
 
+export interface LegalDocument {
+  id: string;
+  title: string;
+  category: "Registration" | "Tax Exemption" | "Statutory" | "Audit";
+  documentNumber: string;
+  authority: string;
+  issueDate: string;
+  description: string;
+  image: string;
+}
+
+export interface LegalContent {
+  title: string;
+  subtitle: string;
+  panNumber: string;
+  societyRegNumber: string;
+  tax12aNumber: string;
+  tax80gNumber: string;
+  registeredAddress: string;
+  contactEmail: string;
+  contactPhone: string;
+  documents: LegalDocument[];
+}
+
 export interface FullSiteContent {
   homepage: HomepageContent;
   about: AboutContent;
   programs: ProgramsContent;
   donate: DonateContent;
+  legal: LegalContent;
 }
 
 export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
@@ -168,11 +193,96 @@ export const DEFAULT_DONATE_CONTENT: DonateContent = {
   showQrCode: true,
 };
 
+export const DEFAULT_LEGAL_DOCUMENTS: LegalDocument[] = [
+  {
+    id: "doc-society-reg",
+    title: "Certificate of Registration of Societies",
+    category: "Registration",
+    documentNumber: "S/2L/23211 of 2014-2015",
+    authority: "Registrar of Firms, Societies & Non-Trading Corporations, West Bengal",
+    issueDate: "14-07-2014",
+    description:
+      "Official certificate of incorporation issued under the West Bengal Societies Registration Act XXVI of 1961, formally incorporating KMEW.",
+    image: "/legal/society-registration.png",
+  },
+  {
+    id: "doc-pan-card",
+    title: "Permanent Account Number (PAN Card)",
+    category: "Statutory",
+    documentNumber: "AACAK8634P",
+    authority: "Income Tax Department, Government of India",
+    issueDate: "14-07-2014",
+    description:
+      "Statutory Permanent Account Number card issued to Kulti Maharaja Educational Welfare Organization by the Ministry of Finance.",
+    image: "/legal/pan-card.png",
+  },
+  {
+    id: "doc-12a-exemption",
+    title: "Section 12AA Tax Exemption Registration Order",
+    category: "Tax Exemption",
+    documentNumber: "CIT(E)/KOL/12AA/16-17/S-829/8144-46",
+    authority: "The Commissioner of Income Tax (Exemptions), Kolkata",
+    issueDate: "28-11-2016",
+    description:
+      "Statutory order under Section 12AA(1)(b)(i) of the Income Tax Act 1961 granting verified non-profit charitable status.",
+    image: "/legal/12a-tax-exemption.png",
+  },
+  {
+    id: "doc-ngo-letterhead",
+    title: "NGO Statutory Letterhead & Registration Details",
+    category: "Registration",
+    documentNumber: "S/2L/23211 of 2014-2015 / SO23211 of 2018-2019",
+    authority: "Government of West Bengal",
+    issueDate: "14-07-2014 (Renewed 10-12-2019)",
+    description:
+      "Official NGO letterhead with registered address, executive committee contacts, and educational welfare objectives.",
+    image: "/legal/ngo-letterhead.png",
+  },
+  {
+    id: "doc-80g-receipt",
+    title: "Section 80G Tax Exemption Donation Receipt Slip",
+    category: "Tax Exemption",
+    documentNumber: "Book No. 1 / Page No. 002",
+    authority: "Income Tax Department / KMEW Finance",
+    issueDate: "Statutory Format",
+    description:
+      "Official numbered donation receipt granting donors 50% tax deductions under Section 80G of the Indian Income Tax Act 1961.",
+    image: "/legal/donation-receipt.png",
+  },
+  {
+    id: "doc-ngo-charter",
+    title: "NGO Welfare Charter, Bylaws & Community Prospectus",
+    category: "Statutory",
+    documentNumber: "KMEW/PROS/2016",
+    authority: "KMEW Board of Trustees",
+    issueDate: "2016 - 2026",
+    description:
+      "Foundational charter establishing scholarship eligibility slabs, coaching centers, health camps, and women empowerment goals.",
+    image: "/legal/ngo-charter.png",
+  },
+];
+
+export const DEFAULT_LEGAL_CONTENT: LegalContent = {
+  title: "Legal & Regulatory Compliance Documents",
+  subtitle:
+    "Kulti Maharaja Educational Welfare Organization (KMEW) operates with radical institutional transparency under West Bengal Act XXVI of 1961 and Section 12A/80G of the Income Tax Act.",
+  panNumber: "AACAK8634P",
+  societyRegNumber: "S/2L/23211 of 2014-2015",
+  tax12aNumber: "CIT(E)/KOL/12AA/16-17/S-829/8144-46",
+  tax80gNumber: "Section 80G(5)(vi) Certified",
+  registeredAddress:
+    "Gandhi Nagar, Near Railway Station, PO Sitarampur, PS Kulti, Paschim Bardhaman, West Bengal 713359",
+  contactEmail: "kmew2017@gmail.com",
+  contactPhone: "+91 8972285850 / 7029700724",
+  documents: DEFAULT_LEGAL_DOCUMENTS,
+};
+
 export const DEFAULT_SITE_CONTENT: FullSiteContent = {
   homepage: DEFAULT_HOMEPAGE_CONTENT,
   about: DEFAULT_ABOUT_CONTENT,
   programs: DEFAULT_PROGRAMS_CONTENT,
   donate: DEFAULT_DONATE_CONTENT,
+  legal: DEFAULT_LEGAL_CONTENT,
 };
 
 const STORAGE_KEY = "kmew_site_content_cache";

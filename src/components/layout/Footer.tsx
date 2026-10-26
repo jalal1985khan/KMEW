@@ -176,23 +176,23 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-emerald-100/80">
               <li>
-                <Link href="/about#legal" className="hover:text-white transition-colors">
-                  Privacy Policy
+                <Link href="/legal" className="hover:text-white transition-colors">
+                  Society Registration
                 </Link>
               </li>
               <li>
-                <Link href="/about#legal" className="hover:text-white transition-colors">
-                  Terms & Conditions
+                <Link href="/legal" className="hover:text-white transition-colors">
+                  12A & 80G Tax Exemptions
                 </Link>
               </li>
               <li>
-                <Link href="/about#legal" className="hover:text-white transition-colors">
-                  Refund Policy
+                <Link href="/legal" className="hover:text-white transition-colors">
+                  Compliance Documents
                 </Link>
               </li>
               <li>
-                <Link href="/about#legal" className="hover:text-white transition-colors">
-                  Grievance Policy
+                <Link href="/legal" className="hover:text-white transition-colors">
+                  Welfare Charter & Terms
                 </Link>
               </li>
             </ul>

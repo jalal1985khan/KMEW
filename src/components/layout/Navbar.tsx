@@ -24,7 +24,8 @@ import {
   Newspaper,
   Images,
   Sparkles,
-  Check
+  Check,
+  Scale
 } from "lucide-react";
 import { KmewLogo } from "@/components/common/KmewLogo";
 import { applyLanguage } from "@/components/common/GoogleTranslate";
@@ -88,6 +89,13 @@ export function Navbar() {
           description: "Trustees, advisors, and executive team",
           icon: <Users className="w-4 h-4 text-purple-700" />,
           iconBg: "bg-purple-50",
+        },
+        {
+          label: "Legal & Compliance",
+          href: "/legal",
+          description: "12A, 80G, society registrations & audit documents",
+          icon: <Scale className="w-4 h-4 text-emerald-700" />,
+          iconBg: "bg-emerald-50",
         },
       ],
     },

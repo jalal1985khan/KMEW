@@ -36,6 +36,8 @@ import {
   type AboutContent,
   type ProgramsContent,
   type DonateContent,
+  type LegalContent,
+  type LegalDocument,
 } from "@/lib/data/siteContentStore";
 import { type ProgramItem } from "@/lib/data/kmewData";
 import {
@@ -61,6 +63,7 @@ import {
   FileText,
   Mail,
   Phone,
+  Scale,
 } from "lucide-react";
 
 export function SiteContentManager() {
@@ -88,7 +91,13 @@ export function SiteContentManager() {
     resetContent: resetDonate,
   } = useSiteContent("donate");
 
-  const [activeTab, setActiveTab] = useState<"homepage" | "about" | "programs" | "donate">("homepage");
+  const {
+    content: legalContent,
+    updateContent: updateLegal,
+    resetContent: resetLegal,
+  } = useSiteContent("legal");
+
+  const [activeTab, setActiveTab] = useState<"homepage" | "about" | "programs" | "donate" | "legal">("homepage");
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -97,6 +106,7 @@ export function SiteContentManager() {
   const [aboutForm, setAboutForm] = useState<AboutContent>(aboutContent);
   const [programsForm, setProgramsForm] = useState<ProgramsContent>(programsContent);
   const [donateForm, setDonateForm] = useState<DonateContent>(donateContent);
+  const [legalForm, setLegalForm] = useState<LegalContent>(legalContent);
 
   // Sync when hook finishes initial fetch or updates
   useEffect(() => {
@@ -104,7 +114,12 @@ export function SiteContentManager() {
     setAboutForm(aboutContent);
     setProgramsForm(programsContent);
     setDonateForm(donateContent);
-  }, [homeContent, aboutContent, programsContent, donateContent]);
+    setLegalForm(legalContent);
+  }, [homeContent, aboutContent, programsContent, donateContent, legalContent]);
+
+  // Modal states for Legal Documents
+  const [editingDoc, setEditingDoc] = useState<LegalDocument | null>(null);
+  const [isDocModalOpen, setIsDocModalOpen] = useState(false);
 
   // Modal states for Programs
   const [editingProgram, setEditingProgram] = useState<ProgramItem | null>(null);
@@ -169,6 +184,51 @@ export function SiteContentManager() {
     if (res && res.success !== false) {
       setSaveStatus("Donation & Bank Details successfully saved and published to live website!");
       setTimeout(() => setSaveStatus(null), 4000);
+    }
+  };
+
+  const handleSaveLegal = async () => {
+    setIsSaving(true);
+    const res = await updateLegal(legalForm);
+    setIsSaving(false);
+    if (res && res.success !== false) {
+      setSaveStatus("Legal & Compliance documents successfully saved and published to live website!");
+      setTimeout(() => setSaveStatus(null), 4000);
+    }
+  };
+
+  // Legal Document Modal Helpers
+  const handleOpenAddDoc = () => {
+    setEditingDoc({
+      id: `doc-${Date.now()}`,
+      title: "",
+      category: "Registration",
+      documentNumber: "",
+      authority: "Government Authority",
+      issueDate: new Date().toLocaleDateString("en-GB"),
+      description: "",
+      image: "/legal/society-registration.png",
+    });
+    setIsDocModalOpen(true);
+  };
+
+  const handleSaveDocModal = () => {
+    if (!editingDoc) return;
+    const exists = legalForm.documents.some((d) => d.id === editingDoc.id);
+    const updatedDocs = exists
+      ? legalForm.documents.map((d) => (d.id === editingDoc.id ? editingDoc : d))
+      : [...legalForm.documents, editingDoc];
+    setLegalForm({ ...legalForm, documents: updatedDocs });
+    setIsDocModalOpen(false);
+    setEditingDoc(null);
+  };
+
+  const handleDeleteDoc = (id: string) => {
+    if (confirm("Remove this legal document certificate from the compliance list?")) {
+      setLegalForm({
+        ...legalForm,
+        documents: legalForm.documents.filter((d) => d.id !== id),
+      });
     }
   };
 
@@ -313,22 +373,26 @@ export function SiteContentManager() {
 
       {/* Main Tabs Navigation */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
-        <TabsList className="grid grid-cols-2 sm:grid-cols-4 max-w-2xl h-auto sm:h-11 bg-slate-100 p-1 rounded-xl gap-1">
-          <TabsTrigger value="homepage" className="gap-2 text-xs sm:text-sm font-bold">
+        <TabsList className="flex flex-wrap sm:grid sm:grid-cols-5 max-w-4xl h-auto sm:h-11 bg-slate-100 p-1 rounded-xl gap-1">
+          <TabsTrigger value="homepage" className="gap-1.5 text-xs font-bold">
             <Home className="w-4 h-4" />
             <span>Homepage</span>
           </TabsTrigger>
-          <TabsTrigger value="about" className="gap-2 text-xs sm:text-sm font-bold">
+          <TabsTrigger value="about" className="gap-1.5 text-xs font-bold">
             <BookOpen className="w-4 h-4" />
             <span>About Us</span>
           </TabsTrigger>
-          <TabsTrigger value="programs" className="gap-2 text-xs sm:text-sm font-bold">
+          <TabsTrigger value="programs" className="gap-1.5 text-xs font-bold">
             <GraduationCap className="w-4 h-4" />
             <span>Programs ({programsForm.programsList.length})</span>
           </TabsTrigger>
-          <TabsTrigger value="donate" className="gap-2 text-xs sm:text-sm font-bold">
+          <TabsTrigger value="donate" className="gap-1.5 text-xs font-bold">
             <CreditCard className="w-4 h-4 text-emerald-600" />
             <span>Donations & Bank</span>
+          </TabsTrigger>
+          <TabsTrigger value="legal" className="gap-1.5 text-xs font-bold">
+            <Scale className="w-4 h-4 text-purple-600" />
+            <span>Legal ({legalForm.documents?.length || 0})</span>
           </TabsTrigger>
         </TabsList>
 
@@ -1231,6 +1295,269 @@ export function SiteContentManager() {
             </CardFooter>
           </Card>
         </TabsContent>
+
+        {/* ========================================================
+            TAB 5: LEGAL & REGULATORY COMPLIANCE CMS
+        ======================================================== */}
+        <TabsContent value="legal" className="space-y-6 mt-6">
+          <Card className="border-slate-200 shadow-2xs">
+            <CardHeader className="border-b border-slate-100 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <CardTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <Scale className="w-5 h-5 text-purple-600" />
+                    <span>Legal & Regulatory Compliance CMS</span>
+                  </CardTitle>
+                  <CardDescription className="text-xs text-slate-500 mt-0.5">
+                    Upload and manage official society registrations, Section 12A/80G orders, PAN cards, and compliance scans published live on /legal
+                  </CardDescription>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href="/legal"
+                    target="_blank"
+                    className="inline-flex items-center text-xs gap-1.5 h-8 px-3 rounded-md border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition-colors"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Preview /legal</span>
+                  </Link>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      if (confirm("Reset legal compliance documents back to defaults?")) {
+                        resetLegal();
+                      }
+                    }}
+                    className="text-xs gap-1.5 h-8 text-slate-600 hover:text-slate-900"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Reset</span>
+                  </Button>
+                  <Button
+                    size="sm"
+                    disabled={isSaving}
+                    onClick={handleSaveLegal}
+                    className="text-xs gap-1.5 h-8 bg-[#0e705b] hover:bg-[#0a544b] text-white font-bold"
+                  >
+                    <Save className="w-3.5 h-3.5" />
+                    <span>{isSaving ? "Saving..." : "Save Legal Content"}</span>
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-6 space-y-8">
+              {/* SECTION A: Key Statutory Identifiers */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Building className="w-4 h-4 text-purple-700" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                    Official Statutory Identifiers
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Society Registration Number</label>
+                    <Input
+                      className="font-mono"
+                      value={legalForm.societyRegNumber}
+                      onChange={(e) => setLegalForm({ ...legalForm, societyRegNumber: e.target.value })}
+                      placeholder="e.g. S/2L/23211 of 2014-2015"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Organization PAN</label>
+                    <Input
+                      className="font-mono text-amber-700 font-bold"
+                      value={legalForm.panNumber}
+                      onChange={(e) => setLegalForm({ ...legalForm, panNumber: e.target.value })}
+                      placeholder="e.g. AACAK8634P"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Section 12AA Order Number</label>
+                    <Input
+                      className="font-mono text-emerald-700 font-bold"
+                      value={legalForm.tax12aNumber}
+                      onChange={(e) => setLegalForm({ ...legalForm, tax12aNumber: e.target.value })}
+                      placeholder="e.g. CIT(E)/KOL/12AA/16-17/S-829/8144-46"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Section 80G Status</label>
+                    <Input
+                      value={legalForm.tax80gNumber}
+                      onChange={(e) => setLegalForm({ ...legalForm, tax80gNumber: e.target.value })}
+                      placeholder="e.g. Section 80G(5)(vi) Certified"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Compliance Email</label>
+                    <Input
+                      value={legalForm.contactEmail}
+                      onChange={(e) => setLegalForm({ ...legalForm, contactEmail: e.target.value })}
+                      placeholder="e.g. kmew2017@gmail.com"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Compliance Phone</label>
+                    <Input
+                      value={legalForm.contactPhone}
+                      onChange={(e) => setLegalForm({ ...legalForm, contactPhone: e.target.value })}
+                      placeholder="e.g. +91 8972285850 / 7029700724"
+                    />
+                  </div>
+
+                  <div className="space-y-1 sm:col-span-3">
+                    <label className="font-bold text-slate-700">Registered Office Address</label>
+                    <Input
+                      value={legalForm.registeredAddress}
+                      onChange={(e) => setLegalForm({ ...legalForm, registeredAddress: e.target.value })}
+                      placeholder="e.g. Gandhi Nagar, Near Railway Station, PO Sitarampur, PS Kulti, Paschim Bardhaman, 713359"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* SECTION B: Page Headline & Description */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-purple-700" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                    Page Header Content
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 text-xs">
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Page Headline</label>
+                    <Input
+                      value={legalForm.title}
+                      onChange={(e) => setLegalForm({ ...legalForm, title: e.target.value })}
+                      placeholder="e.g. Legal & Regulatory Compliance Documents"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Page Subtitle / Transparency Statement</label>
+                    <Textarea
+                      rows={2}
+                      value={legalForm.subtitle}
+                      onChange={(e) => setLegalForm({ ...legalForm, subtitle: e.target.value })}
+                      placeholder="Statement on non-profit society status, governance and audit standards..."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* SECTION C: Legal Documents & Certificates Manager */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Scale className="w-4 h-4 text-purple-700" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                      Uploaded Legal Documents & Scans ({legalForm.documents.length})
+                    </h3>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={handleOpenAddDoc}
+                    className="bg-purple-700 hover:bg-purple-800 text-white font-bold text-xs gap-1.5 h-8"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Upload New Certificate</span>
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {legalForm.documents.map((doc) => (
+                    <div
+                      key={doc.id}
+                      className="p-4 rounded-2xl border border-slate-200 bg-white shadow-2xs flex flex-col justify-between space-y-3"
+                    >
+                      <div className="space-y-2">
+                        <div className="h-40 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 flex items-center justify-center relative p-2">
+                          {doc.image ? (
+                            <img
+                              src={doc.image}
+                              alt={doc.title}
+                              className="max-h-full max-w-full object-contain rounded"
+                            />
+                          ) : (
+                            <FileText className="w-10 h-10 text-slate-300" />
+                          )}
+                          <Badge className="absolute top-2 left-2 text-[10px] bg-slate-900/80 text-white border-0 font-bold">
+                            {doc.category}
+                          </Badge>
+                        </div>
+
+                        <div>
+                          <h4 className="font-bold text-slate-900 text-xs line-clamp-1">
+                            {doc.title}
+                          </h4>
+                          <p className="font-mono text-emerald-700 text-[11px] truncate">
+                            {doc.documentNumber}
+                          </p>
+                          <p className="text-[10px] text-slate-500 truncate">{doc.authority}</p>
+                          <span className="text-[10px] text-slate-400">Date: {doc.issueDate}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-end gap-1.5 pt-2 border-t border-slate-100">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            setEditingDoc(doc);
+                            setIsDocModalOpen(true);
+                          }}
+                          className="text-xs gap-1 h-7 text-slate-700"
+                        >
+                          <Edit2 className="w-3 h-3" />
+                          <span>Edit</span>
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => handleDeleteDoc(doc.id)}
+                          className="text-xs text-rose-600 hover:bg-rose-50 h-7 px-2"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+
+            <CardFooter className="border-t border-slate-100 bg-slate-50/70 p-4 px-6 flex justify-between items-center">
+              <span className="text-xs text-slate-500">
+                All changes reflect live on <code className="text-purple-700 font-bold">/legal</code> upon saving.
+              </span>
+              <Button
+                size="sm"
+                disabled={isSaving}
+                onClick={handleSaveLegal}
+                className="bg-[#0e705b] hover:bg-[#0a544b] text-white font-bold gap-1.5"
+              >
+                <Save className="w-4 h-4" />
+                <span>{isSaving ? "Saving..." : "Save Legal Content"}</span>
+              </Button>
+            </CardFooter>
+          </Card>
+        </TabsContent>
       </Tabs>
 
       {/* ========================================================
@@ -1537,6 +1864,123 @@ export function SiteContentManager() {
           </div>
         </DialogContent>
       </Dialog>
+      {/* ========================================================
+          MODAL: ADD / EDIT LEGAL DOCUMENT
+      ======================================================== */}
+      {editingDoc && (
+        <Dialog open={isDocModalOpen} onOpenChange={setIsDocModalOpen}>
+          <DialogContent className="sm:max-w-2xl w-[95vw] max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+            <div className="p-6 pb-4 border-b border-slate-100 shrink-0">
+              <DialogHeader>
+                <DialogTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <Scale className="w-5 h-5 text-purple-600" />
+                  <span>
+                    {editingDoc.id.startsWith("doc-") && editingDoc.title
+                      ? "Edit Legal Certificate"
+                      : "Upload New Statutory Certificate"}
+                  </span>
+                </DialogTitle>
+                <DialogDescription className="text-xs text-slate-500 mt-1">
+                  Upload an official certificate scan or PDF snapshot with regulatory reference numbers.
+                </DialogDescription>
+              </DialogHeader>
+            </div>
+
+            <div className="p-6 overflow-y-auto space-y-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold text-slate-700">Document / Certificate Title</label>
+                <Input
+                  value={editingDoc.title}
+                  onChange={(e) => setEditingDoc({ ...editingDoc, title: e.target.value })}
+                  placeholder="e.g. Certificate of Registration of Societies"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-700">Category</label>
+                  <select
+                    value={editingDoc.category}
+                    onChange={(e) =>
+                      setEditingDoc({
+                        ...editingDoc,
+                        category: e.target.value as any,
+                      })
+                    }
+                    className="w-full h-9 rounded-md border border-slate-200 bg-white px-3 text-xs focus:border-purple-600 focus:outline-hidden"
+                  >
+                    <option value="Registration">Registration</option>
+                    <option value="Tax Exemption">Tax Exemption</option>
+                    <option value="Statutory">Statutory</option>
+                    <option value="Audit">Audit</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-700">Registration / Order / Ref No.</label>
+                  <Input
+                    className="font-mono text-emerald-800"
+                    value={editingDoc.documentNumber}
+                    onChange={(e) => setEditingDoc({ ...editingDoc, documentNumber: e.target.value })}
+                    placeholder="e.g. S/2L/23211 of 2014-2015"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-700">Issuing Authority / Act</label>
+                  <Input
+                    value={editingDoc.authority}
+                    onChange={(e) => setEditingDoc({ ...editingDoc, authority: e.target.value })}
+                    placeholder="e.g. Registrar of Societies, West Bengal"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-bold text-slate-700">Issue / Order Date</label>
+                  <Input
+                    value={editingDoc.issueDate}
+                    onChange={(e) => setEditingDoc({ ...editingDoc, issueDate: e.target.value })}
+                    placeholder="e.g. 14-07-2014"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-slate-700">Description / Statutory Note</label>
+                <Textarea
+                  rows={2}
+                  value={editingDoc.description}
+                  onChange={(e) => setEditingDoc({ ...editingDoc, description: e.target.value })}
+                  placeholder="Official purpose and statutory validity details..."
+                />
+              </div>
+
+              <ImagePickerInput
+                label="Certificate Scan Document Image"
+                value={editingDoc.image}
+                onChange={(url) => setEditingDoc({ ...editingDoc, image: url })}
+                placeholder="/legal/certificate.png"
+                defaultCategory="Banners"
+              />
+            </div>
+
+            <div className="p-4 px-6 border-t border-slate-100 bg-slate-50/70 flex justify-end gap-2 shrink-0">
+              <Button variant="outline" size="sm" onClick={() => setIsDocModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleSaveDocModal}
+                className="bg-purple-700 hover:bg-purple-800 text-white font-bold"
+              >
+                Save Certificate
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }

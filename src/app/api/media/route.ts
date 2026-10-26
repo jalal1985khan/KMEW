@@ -220,6 +220,55 @@ export const DEFAULT_MEDIA_ASSETS: MediaItem[] = [
     uploadedAt: "Default Asset",
     isDefault: true,
   },
+  // Legal & Regulatory Certificates
+  {
+    id: "asset-legal-society",
+    title: "Certificate of Registration of Societies",
+    url: "/legal/society-registration.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
+  {
+    id: "asset-legal-pan",
+    title: "Permanent Account Number (PAN Card)",
+    url: "/legal/pan-card.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
+  {
+    id: "asset-legal-12a",
+    title: "Section 12AA Income Tax Exemption Order",
+    url: "/legal/12a-tax-exemption.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
+  {
+    id: "asset-legal-letterhead",
+    title: "NGO Registered Letterhead & Office Details",
+    url: "/legal/ngo-letterhead.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
+  {
+    id: "asset-legal-receipt",
+    title: "80G Tax Exemption Donation Receipt Slip",
+    url: "/legal/donation-receipt.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
+  {
+    id: "asset-legal-charter",
+    title: "NGO Welfare Charter & Community Prospectus",
+    url: "/legal/ngo-charter.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
 ];
 
 const MEDIA_CONTENT_KEY = "media_library";
