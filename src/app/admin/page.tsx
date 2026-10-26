@@ -53,6 +53,7 @@ import { usePortalData } from "@/lib/data/portalStore";
 import { NewsManager } from "@/components/portal/admin/NewsManager";
 import { GalleryManager } from "@/components/portal/admin/GalleryManager";
 import { SiteContentManager } from "@/components/portal/admin/SiteContentManager";
+import { MediaManager } from "@/components/portal/admin/MediaManager";
 import { useNewsEvents, useGalleryItems } from "@/lib/data/contentStore";
 import {
   Shield,
@@ -80,6 +81,7 @@ import {
   LogOut,
   AlertTriangle,
   LayoutTemplate,
+  FolderOpen,
 } from "lucide-react";
 
 const SECTION_METADATA: Record<
@@ -106,6 +108,16 @@ const SECTION_METADATA: Record<
     subtitle: "Complete tamper-evident chronological ledger of all financial and system operations",
     icon: History,
   },
+  cms: {
+    title: "Website Pages CMS",
+    subtitle: "Edit and publish live content for Homepage, About Us, and Programs Directory",
+    icon: LayoutTemplate,
+  },
+  media: {
+    title: "Media Library & Asset Manager",
+    subtitle: "Manage, browse, and upload web-optimized compressed image assets",
+    icon: FolderOpen,
+  },
   news: {
     title: "News & Events Management",
     subtitle: "Create, edit, and publish press announcements, scholarship notices, and community drives",
@@ -115,11 +127,6 @@ const SECTION_METADATA: Record<
     title: "Photo Gallery Management",
     subtitle: "Organize, upload, curate, and categorize community initiative showcase photographs",
     icon: ImageIcon,
-  },
-  cms: {
-    title: "Website Pages CMS",
-    subtitle: "Edit and publish live content for Homepage, About Us, and Programs Directory",
-    icon: LayoutTemplate,
   },
 };
 
@@ -790,6 +797,9 @@ export default function AdminPortalPage() {
             {activeSection === "gallery" && (
               <GalleryManager onAuditLog={handleContentAuditLog} />
             )}
+
+            {/* SECTION 8: Media Library */}
+            {activeSection === "media" && <MediaManager />}
           </div>
         </main>
       </SidebarInset>

@@ -31,6 +31,7 @@ import {
   LogOut,
   Shield,
   LayoutTemplate,
+  FolderOpen,
 } from "lucide-react";
 
 export type AdminSectionKey =
@@ -39,6 +40,7 @@ export type AdminSectionKey =
   | "associates"
   | "audit"
   | "cms"
+  | "media"
   | "news"
   | "gallery";
 
@@ -191,6 +193,21 @@ export function AdminSidebar({
                 </SidebarMenuButton>
                 <SidebarMenuBadge className="bg-emerald-50 text-emerald-700 text-[10px] font-bold">
                   Live
+                </SidebarMenuBadge>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={activeSection === "media"}
+                  onClick={() => onSelectSection("media")}
+                  tooltip="Media Library & Image Compression"
+                  className="font-medium cursor-pointer"
+                >
+                  <FolderOpen className="size-4 text-amber-600" />
+                  <span>Media Library</span>
+                </SidebarMenuButton>
+                <SidebarMenuBadge className="bg-amber-50 text-amber-800 text-[10px] font-bold">
+                  Auto
                 </SidebarMenuBadge>
               </SidebarMenuItem>
 
