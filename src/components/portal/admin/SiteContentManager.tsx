@@ -864,19 +864,24 @@ export function SiteContentManager() {
       {/* ========================================================
           MODAL: ADD / EDIT PROGRAM
       ======================================================== */}
+      {/* ========================================================
+          MODAL: ADD / EDIT PROGRAM
+      ======================================================== */}
       {editingProgram && (
         <Dialog open={isProgramModalOpen} onOpenChange={setIsProgramModalOpen}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-lg font-bold text-slate-900">
-                {editingProgram.id.startsWith("program-") ? "Add New Program" : "Edit Program"}
-              </DialogTitle>
-              <DialogDescription className="text-xs text-slate-500">
-                Update the program title, category, description, requirements, and metrics.
-              </DialogDescription>
-            </DialogHeader>
+          <DialogContent className="sm:max-w-3xl lg:max-w-4xl w-[95vw] max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+            <div className="p-6 pb-4 border-b border-slate-100 shrink-0">
+              <DialogHeader>
+                <DialogTitle className="text-xl font-bold text-slate-900">
+                  {editingProgram.id.startsWith("program-") ? "Add New Program" : "Edit Program"}
+                </DialogTitle>
+                <DialogDescription className="text-xs text-slate-500 mt-1">
+                  Update the program title, category, description, requirements, and metrics.
+                </DialogDescription>
+              </DialogHeader>
+            </div>
 
-            <div className="space-y-4 py-2">
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-700">Program Title</label>
@@ -946,36 +951,38 @@ export function SiteContentManager() {
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700">Objectives (One per line)</label>
-                <Textarea
-                  rows={3}
-                  value={editingProgram.objectives.join("\n")}
-                  onChange={(e) =>
-                    setEditingProgram({
-                      ...editingProgram,
-                      objectives: e.target.value.split("\n").filter((l) => l.trim()),
-                    })
-                  }
-                  placeholder="Full or partial tuition fee sponsorship&#10;Quarterly mentorship&#10;Stipends for textbooks"
-                  className="font-mono text-xs"
-                />
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-700">Objectives (One per line)</label>
+                  <Textarea
+                    rows={4}
+                    value={editingProgram.objectives.join("\n")}
+                    onChange={(e) =>
+                      setEditingProgram({
+                        ...editingProgram,
+                        objectives: e.target.value.split("\n").filter((l) => l.trim()),
+                      })
+                    }
+                    placeholder="Full or partial tuition fee sponsorship&#10;Quarterly mentorship&#10;Stipends for textbooks"
+                    className="font-mono text-xs"
+                  />
+                </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700">Eligibility Criteria (One per line)</label>
-                <Textarea
-                  rows={3}
-                  value={editingProgram.eligibility.join("\n")}
-                  onChange={(e) =>
-                    setEditingProgram({
-                      ...editingProgram,
-                      eligibility: e.target.value.split("\n").filter((l) => l.trim()),
-                    })
-                  }
-                  placeholder="Annual family income below ₹2,50,000&#10;Minimum 70% aggregate marks"
-                  className="font-mono text-xs"
-                />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-700">Eligibility Criteria (One per line)</label>
+                  <Textarea
+                    rows={4}
+                    value={editingProgram.eligibility.join("\n")}
+                    onChange={(e) =>
+                      setEditingProgram({
+                        ...editingProgram,
+                        eligibility: e.target.value.split("\n").filter((l) => l.trim()),
+                      })
+                    }
+                    placeholder="Annual family income below ₹2,50,000&#10;Minimum 70% aggregate marks"
+                    className="font-mono text-xs"
+                  />
+                </div>
               </div>
 
               <div className="space-y-1.5">
@@ -988,23 +995,23 @@ export function SiteContentManager() {
               </div>
             </div>
 
-            <DialogFooter className="gap-2 pt-2 border-t border-slate-100">
+            <div className="p-4 px-6 border-t border-slate-100 bg-slate-50/70 flex justify-end gap-2.5 shrink-0">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setIsProgramModalOpen(false)}
-                className="text-xs"
+                className="text-xs font-semibold"
               >
                 Cancel
               </Button>
               <Button
                 size="sm"
                 onClick={handleSaveProgramModal}
-                className="bg-[#0e705b] hover:bg-[#0a544b] text-white text-xs font-bold gap-1"
+                className="bg-[#0e705b] hover:bg-[#0a544b] text-white text-xs font-bold gap-1 shadow-xs"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" /> Save Program
               </Button>
-            </DialogFooter>
+            </div>
           </DialogContent>
         </Dialog>
       )}
@@ -1013,63 +1020,76 @@ export function SiteContentManager() {
           MODAL: ADD / EDIT SUCCESS STORY
       ======================================================== */}
       <Dialog open={isStoryModalOpen} onOpenChange={setIsStoryModalOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-base font-bold text-slate-900">
-              {editingStoryIndex !== null ? "Edit Success Story" : "Add Success Story"}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-3 py-2">
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Beneficiary Name</label>
-              <Input
-                value={storyForm.name}
-                onChange={(e) => setStoryForm({ ...storyForm, name: e.target.value })}
-                placeholder="e.g. Pooja Banerjee"
-              />
+        <DialogContent className="sm:max-w-xl w-[95vw] max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+          <div className="p-6 pb-3 border-b border-slate-100 shrink-0">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-bold text-slate-900">
+                {editingStoryIndex !== null ? "Edit Success Story" : "Add Success Story"}
+              </DialogTitle>
+              <DialogDescription className="text-xs text-slate-500 mt-0.5">
+                Share a member or student testimonial to showcase real community impact.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-6 space-y-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Beneficiary Name</label>
+                <Input
+                  value={storyForm.name}
+                  onChange={(e) => setStoryForm({ ...storyForm, name: e.target.value })}
+                  placeholder="e.g. Pooja Banerjee"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Role / Designation</label>
+                <Input
+                  value={storyForm.role}
+                  onChange={(e) => setStoryForm({ ...storyForm, role: e.target.value })}
+                  placeholder="e.g. KMEW Scholar • Now Software Engineer at TCS"
+                />
+              </div>
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Role / Achievement</label>
-              <Input
-                value={storyForm.role}
-                onChange={(e) => setStoryForm({ ...storyForm, role: e.target.value })}
-                placeholder="e.g. KMEW Scholar • Now Software Engineer at TCS"
-              />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Course / Program</label>
+                <Input
+                  value={storyForm.course}
+                  onChange={(e) => setStoryForm({ ...storyForm, course: e.target.value })}
+                  placeholder="e.g. B.Tech Computer Science"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Location</label>
+                <Input
+                  value={storyForm.location}
+                  onChange={(e) => setStoryForm({ ...storyForm, location: e.target.value })}
+                  placeholder="e.g. Kulti, Paschim Bardhaman"
+                />
+              </div>
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Course / Program</label>
-              <Input
-                value={storyForm.course}
-                onChange={(e) => setStoryForm({ ...storyForm, course: e.target.value })}
-                placeholder="e.g. B.Tech Computer Science"
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Location</label>
-              <Input
-                value={storyForm.location}
-                onChange={(e) => setStoryForm({ ...storyForm, location: e.target.value })}
-                placeholder="e.g. Kulti, Paschim Bardhaman"
-              />
-            </div>
+
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700">Testimonial Quote</label>
               <Textarea
-                rows={4}
+                rows={3}
                 value={storyForm.quote}
                 onChange={(e) => setStoryForm({ ...storyForm, quote: e.target.value })}
                 placeholder="Their inspiring personal experience with KMEW..."
               />
             </div>
           </div>
-          <DialogFooter className="gap-2 pt-2 border-t border-slate-100">
+
+          <div className="p-4 px-6 border-t border-slate-100 bg-slate-50/70 flex justify-end gap-2 shrink-0">
             <Button variant="outline" size="sm" onClick={() => setIsStoryModalOpen(false)}>
               Cancel
             </Button>
             <Button size="sm" onClick={handleSaveStoryModal} className="bg-[#0e705b] hover:bg-[#0a544b] text-white font-bold">
               Save Story
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
 
@@ -1077,29 +1097,38 @@ export function SiteContentManager() {
           MODAL: ADD / EDIT LEADER
       ======================================================== */}
       <Dialog open={isLeaderModalOpen} onOpenChange={setIsLeaderModalOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-base font-bold text-slate-900">
-              {editingLeaderIndex !== null ? "Edit Leader Profile" : "Add Leader Profile"}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-3 py-2">
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Full Name</label>
-              <Input
-                value={leaderForm.name}
-                onChange={(e) => setLeaderForm({ ...leaderForm, name: e.target.value })}
-                placeholder="e.g. Dr. B. K. Mukherjee"
-              />
+        <DialogContent className="sm:max-w-xl w-[95vw] max-h-[90vh] flex flex-col p-0 gap-0 overflow-hidden">
+          <div className="p-6 pb-3 border-b border-slate-100 shrink-0">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-bold text-slate-900">
+                {editingLeaderIndex !== null ? "Edit Leader Profile" : "Add Leader Profile"}
+              </DialogTitle>
+              <DialogDescription className="text-xs text-slate-500 mt-0.5">
+                Profile and credentials for the governance board of trustees.
+              </DialogDescription>
+            </DialogHeader>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-6 space-y-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Full Name</label>
+                <Input
+                  value={leaderForm.name}
+                  onChange={(e) => setLeaderForm({ ...leaderForm, name: e.target.value })}
+                  placeholder="e.g. Dr. B. K. Mukherjee"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">Role / Designation</label>
+                <Input
+                  value={leaderForm.role}
+                  onChange={(e) => setLeaderForm({ ...leaderForm, role: e.target.value })}
+                  placeholder="e.g. President & Founder Trustee"
+                />
+              </div>
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Role / Designation</label>
-              <Input
-                value={leaderForm.role}
-                onChange={(e) => setLeaderForm({ ...leaderForm, role: e.target.value })}
-                placeholder="e.g. President & Founder Trustee"
-              />
-            </div>
+
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700">Bio Summary</label>
               <Textarea
@@ -1109,23 +1138,25 @@ export function SiteContentManager() {
                 placeholder="Background and experience in educational leadership..."
               />
             </div>
+
             <div className="space-y-1">
               <label className="text-xs font-bold text-slate-700">Photo URL</label>
               <Input
                 value={leaderForm.image}
                 onChange={(e) => setLeaderForm({ ...leaderForm, image: e.target.value })}
-                placeholder="https://..."
+                placeholder="https://... or /team/member.png"
               />
             </div>
           </div>
-          <DialogFooter className="gap-2 pt-2 border-t border-slate-100">
+
+          <div className="p-4 px-6 border-t border-slate-100 bg-slate-50/70 flex justify-end gap-2 shrink-0">
             <Button variant="outline" size="sm" onClick={() => setIsLeaderModalOpen(false)}>
               Cancel
             </Button>
             <Button size="sm" onClick={handleSaveLeaderModal} className="bg-[#0e705b] hover:bg-[#0a544b] text-white font-bold">
               Save Profile
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
