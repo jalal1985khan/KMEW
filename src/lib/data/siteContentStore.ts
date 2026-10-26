@@ -63,10 +63,35 @@ export interface ProgramsContent {
   programsList: ProgramItem[];
 }
 
+export interface DonateContent {
+  title: string;
+  subtitle: string;
+  taxExemptionNote: string;
+  bankName: string;
+  accountName: string;
+  accountNumber: string;
+  ifscCode: string;
+  accountType: string;
+  branch: string;
+  cifNumber: string;
+  micrCode: string;
+  panNumber: string;
+  address: string;
+  upiId: string;
+  passbookImage: string;
+  qrCodeImage: string;
+  instructionsNote: string;
+  supportEmail: string;
+  supportPhone: string;
+  showPassbook: boolean;
+  showQrCode: boolean;
+}
+
 export interface FullSiteContent {
   homepage: HomepageContent;
   about: AboutContent;
   programs: ProgramsContent;
+  donate: DonateContent;
 }
 
 export const DEFAULT_HOMEPAGE_CONTENT: HomepageContent = {
@@ -116,10 +141,38 @@ export const DEFAULT_PROGRAMS_CONTENT: ProgramsContent = {
   programsList: PROGRAMS_DATA,
 };
 
+export const DEFAULT_DONATE_CONTENT: DonateContent = {
+  title: "Invest in Education, Transform Lives",
+  subtitle:
+    "All donations to KMEW are eligible for 50% tax deduction under Section 80G of the Indian Income Tax Act. 100% transparent and digitally audited.",
+  taxExemptionNote:
+    "Eligible for 50% deduction under Section 80G of the Income Tax Act. Official digitally-signed 80G Tax Exemption Certificate emailed within 24 hours.",
+  bankName: "State Bank of India (SBI)",
+  accountName: "KULTI MAHARAJA EDUCATIONAL WELFARE ORGANIZATION",
+  accountNumber: "44527300306",
+  ifscCode: "SBIN0000011",
+  accountType: "Regular Savings Bank Account",
+  branch: "Asansol Branch (Code: 11), Bijoy Pal Sarani, Asansol",
+  cifNumber: "92261766245",
+  micrCode: "713002100",
+  panNumber: "AACAK8634P",
+  address: "Gandhi Nagar, Near Railway Station, PO Sitarampur, PS Kulti, Asansol 713359",
+  upiId: "kmew@sbi",
+  passbookImage: "/bank-passbook.png",
+  qrCodeImage: "/bank-qr-code.png",
+  instructionsNote:
+    "After completing transfer, kindly email transaction UTR & PAN to donate@kmew.org.in or WhatsApp for your 80G Tax Exemption receipt.",
+  supportEmail: "donate@kmew.org.in",
+  supportPhone: "2250385",
+  showPassbook: true,
+  showQrCode: true,
+};
+
 export const DEFAULT_SITE_CONTENT: FullSiteContent = {
   homepage: DEFAULT_HOMEPAGE_CONTENT,
   about: DEFAULT_ABOUT_CONTENT,
   programs: DEFAULT_PROGRAMS_CONTENT,
+  donate: DEFAULT_DONATE_CONTENT,
 };
 
 const STORAGE_KEY = "kmew_site_content_cache";

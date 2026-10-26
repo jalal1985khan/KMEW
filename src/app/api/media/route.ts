@@ -204,6 +204,22 @@ export const DEFAULT_MEDIA_ASSETS: MediaItem[] = [
     uploadedAt: "Default Asset",
     isDefault: true,
   },
+  {
+    id: "asset-bank-passbook",
+    title: "Official SBI Bank Passbook",
+    url: "/bank-passbook.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
+  {
+    id: "asset-bank-qr",
+    title: "Official SBI UPI QR Code",
+    url: "/bank-qr-code.png",
+    category: "Banners",
+    uploadedAt: "Default Asset",
+    isDefault: true,
+  },
 ];
 
 const MEDIA_CONTENT_KEY = "media_library";

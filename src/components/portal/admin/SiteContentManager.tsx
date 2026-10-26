@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   Card,
@@ -35,6 +35,7 @@ import {
   type HomepageContent,
   type AboutContent,
   type ProgramsContent,
+  type DonateContent,
 } from "@/lib/data/siteContentStore";
 import { type ProgramItem } from "@/lib/data/kmewData";
 import {
@@ -55,6 +56,11 @@ import {
   Building,
   Target,
   Award,
+  CreditCard,
+  QrCode,
+  FileText,
+  Mail,
+  Phone,
 } from "lucide-react";
 
 export function SiteContentManager() {
@@ -76,7 +82,13 @@ export function SiteContentManager() {
     resetContent: resetPrograms,
   } = useSiteContent("programs");
 
-  const [activeTab, setActiveTab] = useState<"homepage" | "about" | "programs">("homepage");
+  const {
+    content: donateContent,
+    updateContent: updateDonate,
+    resetContent: resetDonate,
+  } = useSiteContent("donate");
+
+  const [activeTab, setActiveTab] = useState<"homepage" | "about" | "programs" | "donate">("homepage");
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -84,13 +96,15 @@ export function SiteContentManager() {
   const [homeForm, setHomeForm] = useState<HomepageContent>(homeContent);
   const [aboutForm, setAboutForm] = useState<AboutContent>(aboutContent);
   const [programsForm, setProgramsForm] = useState<ProgramsContent>(programsContent);
+  const [donateForm, setDonateForm] = useState<DonateContent>(donateContent);
 
-  // Sync when hook finishes initial fetch
-  useState(() => {
+  // Sync when hook finishes initial fetch or updates
+  useEffect(() => {
     setHomeForm(homeContent);
     setAboutForm(aboutContent);
     setProgramsForm(programsContent);
-  });
+    setDonateForm(donateContent);
+  }, [homeContent, aboutContent, programsContent, donateContent]);
 
   // Modal states for Programs
   const [editingProgram, setEditingProgram] = useState<ProgramItem | null>(null);
@@ -144,6 +158,16 @@ export function SiteContentManager() {
     setIsSaving(false);
     if (res && res.success !== false) {
       setSaveStatus("Programs directory successfully saved to live database!");
+      setTimeout(() => setSaveStatus(null), 4000);
+    }
+  };
+
+  const handleSaveDonate = async () => {
+    setIsSaving(true);
+    const res = await updateDonate(donateForm);
+    setIsSaving(false);
+    if (res && res.success !== false) {
+      setSaveStatus("Donation & Bank Details successfully saved and published to live website!");
       setTimeout(() => setSaveStatus(null), 4000);
     }
   };
@@ -289,7 +313,7 @@ export function SiteContentManager() {
 
       {/* Main Tabs Navigation */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
-        <TabsList className="grid grid-cols-3 max-w-xl h-11 bg-slate-100 p-1 rounded-xl">
+        <TabsList className="grid grid-cols-2 sm:grid-cols-4 max-w-2xl h-auto sm:h-11 bg-slate-100 p-1 rounded-xl gap-1">
           <TabsTrigger value="homepage" className="gap-2 text-xs sm:text-sm font-bold">
             <Home className="w-4 h-4" />
             <span>Homepage</span>
@@ -301,6 +325,10 @@ export function SiteContentManager() {
           <TabsTrigger value="programs" className="gap-2 text-xs sm:text-sm font-bold">
             <GraduationCap className="w-4 h-4" />
             <span>Programs ({programsForm.programsList.length})</span>
+          </TabsTrigger>
+          <TabsTrigger value="donate" className="gap-2 text-xs sm:text-sm font-bold">
+            <CreditCard className="w-4 h-4 text-emerald-600" />
+            <span>Donations & Bank</span>
           </TabsTrigger>
         </TabsList>
 
@@ -874,6 +902,333 @@ export function SiteContentManager() {
                 ))}
               </div>
             </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* ========================================================
+            TAB 4: DONATIONS & BANK DETAILS CMS
+        ======================================================== */}
+        <TabsContent value="donate" className="space-y-6 mt-6">
+          <Card className="border-slate-200 shadow-2xs">
+            <CardHeader className="border-b border-slate-100 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <CardTitle className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <CreditCard className="w-5 h-5 text-emerald-600" />
+                    <span>Donations Page & Bank Accounts CMS</span>
+                  </CardTitle>
+                  <CardDescription className="text-xs text-slate-500 mt-0.5">
+                    Manage bank transfer details, official UPI QR code, passbook proofs, and 80G tax receipt settings displayed live on /donate
+                  </CardDescription>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href="/donate"
+                    target="_blank"
+                    className="inline-flex items-center text-xs gap-1.5 h-8 px-3 rounded-md border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium transition-colors"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Preview /donate</span>
+                  </Link>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => {
+                      if (confirm("Reset donation and bank details back to default values?")) {
+                        resetDonate();
+                      }
+                    }}
+                    className="text-xs gap-1.5 h-8 text-slate-600 hover:text-slate-900"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Reset</span>
+                  </Button>
+                  <Button
+                    size="sm"
+                    disabled={isSaving}
+                    onClick={handleSaveDonate}
+                    className="text-xs gap-1.5 h-8 bg-[#0e705b] hover:bg-[#0a544b] text-white font-bold"
+                  >
+                    <Save className="w-3.5 h-3.5" />
+                    <span>{isSaving ? "Saving..." : "Save Bank Details"}</span>
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-6 space-y-8">
+              {/* SECTION A: Official Bank Account Details */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Building className="w-4 h-4 text-emerald-700" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                    Official Bank Account Credentials
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-slate-700">Account Holder Name</label>
+                    <Input
+                      value={donateForm.accountName}
+                      onChange={(e) => setDonateForm({ ...donateForm, accountName: e.target.value })}
+                      placeholder="e.g. KULTI MAHARAJA EDUCATIONAL WELFARE ORGANIZATION"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Bank Name</label>
+                    <Input
+                      value={donateForm.bankName}
+                      onChange={(e) => setDonateForm({ ...donateForm, bankName: e.target.value })}
+                      placeholder="e.g. State Bank of India (SBI)"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Account Number</label>
+                    <Input
+                      className="font-mono font-bold text-amber-700"
+                      value={donateForm.accountNumber}
+                      onChange={(e) => setDonateForm({ ...donateForm, accountNumber: e.target.value })}
+                      placeholder="e.g. 44527300306"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">IFSC Code</label>
+                    <Input
+                      className="font-mono font-bold text-emerald-700"
+                      value={donateForm.ifscCode}
+                      onChange={(e) => setDonateForm({ ...donateForm, ifscCode: e.target.value })}
+                      placeholder="e.g. SBIN0000011"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Account Type</label>
+                    <Input
+                      value={donateForm.accountType}
+                      onChange={(e) => setDonateForm({ ...donateForm, accountType: e.target.value })}
+                      placeholder="e.g. Regular Savings Bank Account"
+                    />
+                  </div>
+
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-slate-700">Branch Name & Details</label>
+                    <Input
+                      value={donateForm.branch}
+                      onChange={(e) => setDonateForm({ ...donateForm, branch: e.target.value })}
+                      placeholder="e.g. Asansol Branch (Code: 11), Bijoy Pal Sarani, Asansol"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Organization PAN</label>
+                    <Input
+                      className="font-mono"
+                      value={donateForm.panNumber}
+                      onChange={(e) => setDonateForm({ ...donateForm, panNumber: e.target.value })}
+                      placeholder="e.g. AACAK8634P"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">CIF Number (Optional)</label>
+                    <Input
+                      className="font-mono"
+                      value={donateForm.cifNumber || ""}
+                      onChange={(e) => setDonateForm({ ...donateForm, cifNumber: e.target.value })}
+                      placeholder="e.g. 92261766245"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">MICR Code (Optional)</label>
+                    <Input
+                      className="font-mono"
+                      value={donateForm.micrCode || ""}
+                      onChange={(e) => setDonateForm({ ...donateForm, micrCode: e.target.value })}
+                      placeholder="e.g. 713002100"
+                    />
+                  </div>
+
+                  <div className="space-y-1 sm:col-span-3">
+                    <label className="font-bold text-slate-700">Bank Registered Address</label>
+                    <Input
+                      value={donateForm.address || ""}
+                      onChange={(e) => setDonateForm({ ...donateForm, address: e.target.value })}
+                      placeholder="e.g. Gandhi Nagar, Near Railway Station, PO Sitarampur, PS Kulti, Asansol 713359"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* SECTION B: Digital Payments & Media Assets (QR Code & Passbook) */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <QrCode className="w-4 h-4 text-emerald-700" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                    UPI Handle & Verification Image Documents
+                  </h3>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="max-w-md space-y-1 text-xs">
+                    <label className="font-bold text-slate-700">Official UPI Handle / VPA</label>
+                    <Input
+                      className="font-mono font-bold text-emerald-700"
+                      value={donateForm.upiId}
+                      onChange={(e) => setDonateForm({ ...donateForm, upiId: e.target.value })}
+                      placeholder="e.g. kmew@sbi"
+                    />
+                    <p className="text-[11px] text-slate-500">
+                      Used for quick one-click copy and compatibility with Google Pay, PhonePe, and BHIM.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                    {/* QR Code Picker */}
+                    <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                          <QrCode className="w-4 h-4 text-amber-600" />
+                          <span>Official UPI QR Code Image</span>
+                        </span>
+                        <Badge variant="outline" className="text-[10px] bg-amber-50 text-amber-800 border-amber-200 font-bold">
+                          Scan & Pay
+                        </Badge>
+                      </div>
+
+                      <ImagePickerInput
+                        label=""
+                        value={donateForm.qrCodeImage}
+                        onChange={(url) => setDonateForm({ ...donateForm, qrCodeImage: url })}
+                        defaultCategory="Banners"
+                        placeholder="/bank-qr-code.png"
+                      />
+
+                      <p className="text-[11px] text-slate-500 leading-tight">
+                        Displays prominent QR code on /donate with modal zoom capability for quick smartphone scanning.
+                      </p>
+                    </div>
+
+                    {/* Passbook Proof Picker */}
+                    <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                          <FileText className="w-4 h-4 text-blue-600" />
+                          <span>Official Bank Passbook Document</span>
+                        </span>
+                        <Badge variant="outline" className="text-[10px] bg-blue-50 text-blue-800 border-blue-200 font-bold">
+                          Proof / Document
+                        </Badge>
+                      </div>
+
+                      <ImagePickerInput
+                        label=""
+                        value={donateForm.passbookImage}
+                        onChange={(url) => setDonateForm({ ...donateForm, passbookImage: url })}
+                        defaultCategory="Banners"
+                        placeholder="/bank-passbook.png"
+                      />
+
+                      <p className="text-[11px] text-slate-500 leading-tight">
+                        Provides donors visual proof of official SBI NGO account ownership with lightbox viewer.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              {/* SECTION C: Page Headings & 80G Receipt Instructions */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-emerald-700" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                    Page Text & 80G Tax Exemption Receipt Guidance
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  <div className="space-y-1 md:col-span-2">
+                    <label className="font-bold text-slate-700">Donation Page Headline</label>
+                    <Input
+                      value={donateForm.title}
+                      onChange={(e) => setDonateForm({ ...donateForm, title: e.target.value })}
+                      placeholder="e.g. Invest in Education, Transform Lives"
+                    />
+                  </div>
+
+                  <div className="space-y-1 md:col-span-2">
+                    <label className="font-bold text-slate-700">Page Subtitle</label>
+                    <Textarea
+                      rows={2}
+                      value={donateForm.subtitle}
+                      onChange={(e) => setDonateForm({ ...donateForm, subtitle: e.target.value })}
+                      placeholder="Brief inspiring mission statement on tax deductions..."
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Section 80G Benefit Explainer</label>
+                    <Textarea
+                      rows={2}
+                      value={donateForm.taxExemptionNote}
+                      onChange={(e) => setDonateForm({ ...donateForm, taxExemptionNote: e.target.value })}
+                      placeholder="Explanation of tax benefits for Indian taxpayers..."
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Transfer Instructions & Next Steps</label>
+                    <Textarea
+                      rows={2}
+                      value={donateForm.instructionsNote}
+                      onChange={(e) => setDonateForm({ ...donateForm, instructionsNote: e.target.value })}
+                      placeholder="Instructions on sharing UTR / PAN for receipt generation..."
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Donation Support Email</label>
+                    <Input
+                      value={donateForm.supportEmail}
+                      onChange={(e) => setDonateForm({ ...donateForm, supportEmail: e.target.value })}
+                      placeholder="e.g. donate@kmew.org.in"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-bold text-slate-700">Donation Support Phone / Contact</label>
+                    <Input
+                      value={donateForm.supportPhone}
+                      onChange={(e) => setDonateForm({ ...donateForm, supportPhone: e.target.value })}
+                      placeholder="e.g. +91 98321 00000 / 2250385"
+                    />
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+
+            <CardFooter className="border-t border-slate-100 bg-slate-50/70 p-4 px-6 flex justify-between items-center">
+              <span className="text-xs text-slate-500">
+                All changes reflect immediately on <code className="text-[#0e705b] font-bold">/donate</code> upon saving.
+              </span>
+              <Button
+                size="sm"
+                disabled={isSaving}
+                onClick={handleSaveDonate}
+                className="bg-[#0e705b] hover:bg-[#0a544b] text-white font-bold gap-1.5"
+              >
+                <Save className="w-4 h-4" />
+                <span>{isSaving ? "Saving..." : "Save Bank Details"}</span>
+              </Button>
+            </CardFooter>
           </Card>
         </TabsContent>
       </Tabs>
