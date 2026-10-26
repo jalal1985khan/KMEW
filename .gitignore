@@ -14,15 +14,14 @@
 /coverage
 
 # next.js
-/.next/
-/out/
-
-# production
+.next/
+out/
 /build
 
 # misc
 .DS_Store
 *.pem
+*.pdf
 
 # debug
 npm-debug.log*
@@ -30,11 +29,15 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 
 # vercel
-.vercel
+.vercel/
+
+# agents, ai & skills
+.agents/
+skills-lock.json
 
 # typescript
 *.tsbuildinfo
