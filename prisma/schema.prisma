@@ -139,3 +139,13 @@ model GalleryItem {
 
   @@map("gallery_items")
 }
+
+// Dynamic CMS Page Content for Homepage, About, Programs, and Site Content
+model SiteContent {
+  key       String   @id // e.g. "homepage", "about", "programs"
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("site_content")
+}

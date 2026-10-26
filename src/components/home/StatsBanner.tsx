@@ -1,4 +1,22 @@
+"use client";
+
+import { useSiteContent } from "@/lib/data/siteContentStore";
+
 export function StatsBanner() {
+  const { content } = useSiteContent("homepage");
+
+  const m1Value = content?.impactMetrics?.[0]?.value || "10,000+";
+  const m1Label = content?.impactMetrics?.[0]?.label?.replace("\n", " ") || "Members Supported";
+
+  const m2Value = content?.impactMetrics?.[1]?.value || "500+";
+  const m2Label = content?.impactMetrics?.[1]?.label?.replace("\n", " ") || "Families Reached";
+
+  const m3Value = content?.impactMetrics?.[2]?.value || "25+";
+  const m3Label = content?.impactMetrics?.[2]?.label?.replace("\n", " ") || "Programs Conducted";
+
+  const m4Value = content?.impactMetrics?.[3]?.value || "₹XX L+";
+  const m4Label = content?.impactMetrics?.[3]?.label?.replace("\n", " ") || "Contributions Managed";
+
   return (
     <section className="bg-[#062d27] text-white py-10 lg:py-14 relative overflow-hidden">
       {/* Background image & gradient overlays */}
@@ -38,53 +56,47 @@ export function StatsBanner() {
           {/* Right: 4 Metrics with Icons */}
           <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 text-center">
 
-            {/* Metric 1: Members Supported */}
+            {/* Metric 1 */}
             <div className="flex flex-col items-center">
               <div className="flex items-center justify-center mb-2.5 text-white">
                 <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                  {/* Center person */}
                   <circle cx="12" cy="7" r="3" />
                   <path d="M7 16c0-2.8 2.2-5 5-5s5 2.2 5 5v1.5H7V16z" />
-                  {/* Left person */}
                   <circle cx="6" cy="9" r="2.2" />
                   <path d="M2.5 17c0-2 1.6-3.8 3.5-3.8.7 0 1.4.2 2 .6-.6.8-1 1.8-1 3v.7H2.5V17z" />
-                  {/* Right person */}
                   <circle cx="18" cy="9" r="2.2" />
                   <path d="M17 14.4c.6-.4 1.3-.6 2-.6 1.9 0 3.5 1.8 3.5 3.8v.5H18v-.7c0-1.2-.4-2.2-1-3z" />
                 </svg>
               </div>
               <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                10,000+
+                {m1Value}
               </span>
               <span className="text-xs sm:text-sm text-white/80 font-normal mt-1">
-                Members Supported
+                {m1Label}
               </span>
             </div>
 
-            {/* Metric 2: Families Reached */}
+            {/* Metric 2 */}
             <div className="flex flex-col items-center">
               <div className="flex items-center justify-center mb-2.5 text-white">
                 <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                  {/* Left parent */}
                   <circle cx="6.5" cy="6" r="2.2" />
                   <path d="M4 10.5C4 9.7 4.7 9 5.5 9h2c.8 0 1.5.7 1.5 1.5V17c0 .6-.4 1-1 1H7.5v5h-2v-5H5c-.6 0-1-.4-1-1v-6.5z" />
-                  {/* Right parent */}
                   <circle cx="17.5" cy="6" r="2.2" />
                   <path d="M15 10.5c0-.8.7-1.5 1.5-1.5h2c.8 0 1.5.7 1.5 1.5V17c0 .6-.4 1-1 1h-.5v5h-2v-5h-.5c-.6 0-1-.4-1-1v-6.5z" />
-                  {/* Center child */}
                   <circle cx="12" cy="11.5" r="1.8" />
                   <path d="M10.2 15c0-.6.5-1.1 1.1-1.1h1.4c.6 0 1.1.5 1.1 1.1V19c0 .4-.3.8-.8.8h-.2v3.2h-1.6v-3.2h-.2c-.4 0-.8-.4-.8-.8V15z" />
                 </svg>
               </div>
               <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                500+
+                {m2Value}
               </span>
               <span className="text-xs sm:text-sm text-white/80 font-normal mt-1">
-                Families Reached
+                {m2Label}
               </span>
             </div>
 
-            {/* Metric 3: Programs Conducted */}
+            {/* Metric 3 */}
             <div className="flex flex-col items-center">
               <div className="flex items-center justify-center mb-2.5 text-white">
                 <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
@@ -92,22 +104,20 @@ export function StatsBanner() {
                 </svg>
               </div>
               <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                25+
+                {m3Value}
               </span>
               <span className="text-xs sm:text-sm text-white/80 font-normal mt-1">
-                Programs Conducted
+                {m3Label}
               </span>
             </div>
 
-            {/* Metric 4: Contributions Managed */}
+            {/* Metric 4 */}
             <div className="flex flex-col items-center">
               <div className="flex items-center justify-center mb-2.5 text-white">
                 <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
-                  {/* Left shorter stack */}
                   <ellipse cx="6" cy="14" rx="4" ry="1.6" />
                   <path d="M2 14v2c0 .9 1.8 1.6 4 1.6s4-.7 4-1.6v-2c-.7.6-2.2 1-4 1s-3.3-.4-4-1z" />
                   <path d="M2 16.5v2c0 .9 1.8 1.6 4 1.6s4-.7 4-1.6v-2c-.7.6-2.2 1-4 1s-3.3-.4-4-1z" />
-                  {/* Right taller stack */}
                   <ellipse cx="17" cy="8" rx="4.5" ry="1.8" />
                   <path d="M12.5 8v2.2c0 1 2 1.8 4.5 1.8s4.5-.8 4.5-1.8V8c-.8.7-2.4 1.2-4.5 1.2s-3.7-.5-4.5-1.2z" />
                   <path d="M12.5 10.5v2.2c0 1 2 1.8 4.5 1.8s4.5-.8 4.5-1.8v-2.2c-.8.7-2.4 1.2-4.5 1.2s-3.7-.5-4.5-1.2z" />
@@ -116,10 +126,10 @@ export function StatsBanner() {
                 </svg>
               </div>
               <span className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                ₹XX L+
+                {m4Value}
               </span>
               <span className="text-xs sm:text-sm text-white/80 font-normal mt-1">
-                Contributions Managed
+                {m4Label}
               </span>
             </div>
 

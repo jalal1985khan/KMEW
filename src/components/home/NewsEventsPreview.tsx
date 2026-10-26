@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useNewsEvents } from "@/lib/data/contentStore";
 
 export function NewsEventsPreview() {
-  const newsItems = [
+  const { news } = useNewsEvents();
+
+  const defaultNews = [
     {
       id: "edu-program",
       date: "25 Sep 2026",
@@ -25,6 +30,16 @@ export function NewsEventsPreview() {
       href: "/news#scholarship-drive"
     },
   ];
+
+  const displayNews = news && news.length > 0
+    ? news.slice(0, 3).map((item) => ({
+        id: item.id,
+        date: item.date,
+        title: item.title,
+        image: item.image || "/news/edu.png",
+        href: `/news#${item.id}`
+      }))
+    : defaultNews;
 
   return (
     <section className="py-4 sm:py-4 bg-white border-b border-slate-100" id="news">
@@ -73,7 +88,7 @@ export function NewsEventsPreview() {
 
         {/* 3 Horizontal News Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {newsItems.map((item) => (
+          {displayNews.map((item) => (
             <article
               key={item.id}
               className="bg-white rounded-2xl p-3.5 sm:p-4 border border-slate-100 shadow-2xs hover:shadow-md transition-all flex flex-row items-center gap-4 group"

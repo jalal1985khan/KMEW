@@ -136,3 +136,13 @@ CREATE TABLE "gallery_items" (
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
+-- CreateTable
+CREATE TABLE "site_content" (
+    "key" TEXT NOT NULL,
+    "data" JSONB NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "site_content_pkey" PRIMARY KEY ("key")
+);
+

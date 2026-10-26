@@ -30,6 +30,7 @@ import {
   ExternalLink,
   LogOut,
   Shield,
+  LayoutTemplate,
 } from "lucide-react";
 
 export type AdminSectionKey =
@@ -37,6 +38,7 @@ export type AdminSectionKey =
   | "members"
   | "associates"
   | "audit"
+  | "cms"
   | "news"
   | "gallery";
 
@@ -177,6 +179,21 @@ export function AdminSidebar({
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  isActive={activeSection === "cms"}
+                  onClick={() => onSelectSection("cms")}
+                  tooltip="Website Pages CMS (Homepage, About, Programs)"
+                  className="font-medium cursor-pointer"
+                >
+                  <LayoutTemplate className="size-4 text-emerald-600" />
+                  <span>Pages CMS</span>
+                </SidebarMenuButton>
+                <SidebarMenuBadge className="bg-emerald-50 text-emerald-700 text-[10px] font-bold">
+                  Live
+                </SidebarMenuBadge>
+              </SidebarMenuItem>
+
               <SidebarMenuItem>
                 <SidebarMenuButton
                   isActive={activeSection === "news"}

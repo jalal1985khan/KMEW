@@ -52,6 +52,7 @@ import {
 import { usePortalData } from "@/lib/data/portalStore";
 import { NewsManager } from "@/components/portal/admin/NewsManager";
 import { GalleryManager } from "@/components/portal/admin/GalleryManager";
+import { SiteContentManager } from "@/components/portal/admin/SiteContentManager";
 import { useNewsEvents, useGalleryItems } from "@/lib/data/contentStore";
 import {
   Shield,
@@ -78,6 +79,7 @@ import {
   ExternalLink,
   LogOut,
   AlertTriangle,
+  LayoutTemplate,
 } from "lucide-react";
 
 const SECTION_METADATA: Record<
@@ -113,6 +115,11 @@ const SECTION_METADATA: Record<
     title: "Photo Gallery Management",
     subtitle: "Organize, upload, curate, and categorize community initiative showcase photographs",
     icon: ImageIcon,
+  },
+  cms: {
+    title: "Website Pages CMS",
+    subtitle: "Edit and publish live content for Homepage, About Us, and Programs Directory",
+    icon: LayoutTemplate,
   },
 };
 
@@ -771,12 +778,15 @@ export default function AdminPortalPage() {
               </Card>
             )}
 
-            {/* SECTION 5: News & Events Management */}
+            {/* SECTION 5: Pages CMS */}
+            {activeSection === "cms" && <SiteContentManager />}
+
+            {/* SECTION 6: News & Events Management */}
             {activeSection === "news" && (
               <NewsManager onAuditLog={handleContentAuditLog} />
             )}
 
-            {/* SECTION 6: Photo Gallery Management */}
+            {/* SECTION 7: Photo Gallery Management */}
             {activeSection === "gallery" && (
               <GalleryManager onAuditLog={handleContentAuditLog} />
             )}

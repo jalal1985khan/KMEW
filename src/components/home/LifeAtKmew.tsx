@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useGalleryItems } from "@/lib/data/contentStore";
 
 export function LifeAtKmew() {
-  const photos = [
+  const { gallery } = useGalleryItems();
+
+  const defaultPhotos = [
     { title: "Classroom Study", image: "/gallery/g1.png" },
     { title: "Smiling Children", image: "/gallery/g2.png" },
     { title: "Community Assembly", image: "/gallery/g3.png" },
@@ -11,6 +16,13 @@ export function LifeAtKmew() {
     { title: "Outdoor Activities", image: "/gallery/g6.png" },
     { title: "Seedling Growth", image: "/gallery/g7.png" },
   ];
+
+  const photos = gallery && gallery.length > 0
+    ? gallery.slice(0, 7).map((item) => ({
+        title: item.title,
+        image: item.image || "/gallery/g1.png"
+      }))
+    : defaultPhotos;
 
   return (
     <section className="py-4 sm:py-4 bg-white border-b border-slate-100" id="gallery">

@@ -13,6 +13,7 @@ import {
   Info
 } from "lucide-react";
 import { PROGRAMS_DATA, ProgramItem } from "@/lib/data/kmewData";
+import { useSiteContent } from "@/lib/data/siteContentStore";
 
 const PROGRAM_ALIASES: Record<string, string> = {
   "merit-cum-means-scholarship": "scholarships",
@@ -24,12 +25,19 @@ const PROGRAM_ALIASES: Record<string, string> = {
 };
 
 export default function ProgramsPage() {
+  const { content } = useSiteContent("programs");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", "Scholarships", "Education", "Skill Development", "Health & Welfare", "School Support"];
+  const pageTitle = content?.pageTitle || "KMEW Programs & Welfare Initiatives";
+  const pageSubtitle = content?.pageSubtitle || "Explore our educational grants, vocational empowerment tracks, and community health camps. Members can apply directly online through our transparent portal.";
+  const programsList = content?.programsList && content.programsList.length > 0 ? content.programsList : PROGRAMS_DATA;
 
-  const filtered = PROGRAMS_DATA.filter((p) => {
+  // Extract categories dynamically
+  const uniqueCategories = Array.from(new Set(programsList.map((p) => p.category)));
+  const categories = ["All", ...uniqueCategories];
+
+  const filtered = programsList.filter((p) => {
     const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
     const matchesSearch =
       p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -47,10 +55,10 @@ export default function ProgramsPage() {
             <span>Comprehensive Directory</span>
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight">
-            KMEW Programs & Welfare Initiatives
+            {pageTitle}
           </h1>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-            Explore our educational grants, vocational empowerment tracks, and community health camps. Members can apply directly online through our transparent portal.
+          <p className="text-sm sm:text-base text-slate-600 leading-relaxed whitespace-pre-line">
+            {pageSubtitle}
           </p>
         </div>
 
@@ -115,13 +123,14 @@ export default function ProgramsPage() {
                 id={program.id}
                 className="relative bg-white rounded-3xl border border-slate-200 shadow-sm hover:shadow-md transition-all overflow-hidden grid grid-cols-1 lg:grid-cols-12 scroll-mt-24"
               >
+                {/* Specific alias anchors for URLs like /programs#education */}
                 {PROGRAM_ALIASES[program.id] && (
                   <span id={PROGRAM_ALIASES[program.id]} className="absolute -top-24 block" />
                 )}
                 {/* Left Image */}
                 <div className="lg:col-span-5 relative h-64 lg:h-auto bg-slate-100">
                   <img
-                    src={program.image}
+                    src={program.image || "/programs/clc.png"}
                     alt={program.title}
                     className="w-full h-full object-cover"
                     loading="lazy"
@@ -151,7 +160,7 @@ export default function ProgramsPage() {
                       {program.title}
                     </h2>
 
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed whitespace-pre-line">
                       {program.detailedDescription}
                     </p>
 
@@ -162,7 +171,7 @@ export default function ProgramsPage() {
                           <Target className="w-3.5 h-3.5 text-blue-700" /> Key Objectives
                         </h4>
                         <ul className="space-y-1.5 text-xs text-slate-600">
-                          {program.objectives.map((obj, i) => (
+                          {program.objectives?.map((obj, i) => (
                             <li key={i} className="flex items-start gap-1.5">
                               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                               <span>{obj}</span>
@@ -177,7 +186,7 @@ export default function ProgramsPage() {
                           <FileCheck className="w-3.5 h-3.5 text-amber-700" /> Eligibility
                         </h4>
                         <ul className="space-y-1.5 text-xs text-amber-950 font-medium">
-                          {program.eligibility.map((el, i) => (
+                          {program.eligibility?.map((el, i) => (
                             <li key={i} className="flex items-start gap-1.5">
                               <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
                               <span>{el}</span>
@@ -198,7 +207,7 @@ export default function ProgramsPage() {
                       className="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs bg-blue-900 hover:bg-blue-800 text-white shadow-md flex items-center justify-center gap-2 transition-colors"
                     >
                       <span>Apply Online as Member</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </div>

@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { useSiteContent } from "@/lib/data/siteContentStore";
 
 export function SuccessStories() {
-  const stories = [
+  const { content } = useSiteContent("homepage");
+
+  const defaultStories = [
     {
       name: "Rina",
       role: "KMEW Member",
@@ -22,6 +27,8 @@ export function SuccessStories() {
       image: "/stories/shabana.png"
     }
   ];
+
+  const stories = content?.successStories && content.successStories.length > 0 ? content.successStories : defaultStories;
 
   return (
     <section className="py-4 sm:py-4 bg-[#fafcfb] border-b border-slate-100" id="stories">
@@ -68,15 +75,15 @@ export function SuccessStories() {
           </div>
         </div>
 
-        {/* 3 Story Cards */}
+        {/* Story Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {stories.map((story) => (
+          {stories.map((story, idx) => (
             <div
-              key={story.name}
+              key={`${story.name}-${idx}`}
               className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-100 shadow-2xs hover:shadow-md transition-all flex flex-row items-center gap-4 sm:gap-5 group"
             >
               <img
-                src={story.image}
+                src={story.image || "/stories/rina.png"}
                 alt={story.name}
                 className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover shrink-0 border border-slate-100"
               />
