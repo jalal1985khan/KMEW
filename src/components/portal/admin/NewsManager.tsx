@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { ImagePickerInput } from "./ImagePickerInput";
 import {
   Table,
   TableHeader,
@@ -441,46 +442,14 @@ export function NewsManager({ onAuditLog }: NewsManagerProps) {
               </div>
             </div>
 
-            {/* Image Selection with Presets */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-700">Banner Image</label>
-              <div className="flex items-center gap-3">
-                <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
-                  <img
-                    src={formData.image}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/news/scholarship.png";
-                    }}
-                  />
-                </div>
-                <div className="flex-1 space-y-1">
-                  <Input
-                    placeholder="Enter image URL or select from presets below"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    className="text-xs"
-                  />
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {DEFAULT_NEWS_IMAGES.map((preset) => (
-                      <button
-                        key={preset.value}
-                        type="button"
-                        onClick={() => setFormData({ ...formData, image: preset.value })}
-                        className={`text-[10px] px-2 py-0.5 rounded-md border font-medium transition-colors ${
-                          formData.image === preset.value
-                            ? "bg-emerald-100 text-emerald-900 border-emerald-300 font-bold"
-                            : "bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-200"
-                        }`}
-                      >
-                        {preset.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Banner Image with Media Library & Auto Compression */}
+            <ImagePickerInput
+              label="Banner Image"
+              value={formData.image}
+              onChange={(url) => setFormData({ ...formData, image: url })}
+              placeholder="/news/scholarship.png"
+              defaultCategory="News"
+            />
 
             {/* Detailed Summary */}
             <div className="space-y-1">

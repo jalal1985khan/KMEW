@@ -29,6 +29,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { ImagePickerInput } from "./ImagePickerInput";
 import {
   useSiteContent,
   type HomepageContent,
@@ -405,6 +406,14 @@ export function SiteContentManager() {
                 </div>
               </div>
 
+              <ImagePickerInput
+                label="Hero Background Banner Image"
+                value={homeForm.heroBgImage}
+                onChange={(url) => setHomeForm({ ...homeForm, heroBgImage: url })}
+                placeholder="/homepage-hero-banner.png"
+                defaultCategory="Banners"
+              />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-700">Corner Stat Number</label>
@@ -611,6 +620,14 @@ export function SiteContentManager() {
                   onChange={(e) => setAboutForm({ ...aboutForm, historyParagraph2: e.target.value })}
                 />
               </div>
+
+              <ImagePickerInput
+                label="History Showcase Photo"
+                value={aboutForm.historyImage}
+                onChange={(url) => setAboutForm({ ...aboutForm, historyImage: url })}
+                placeholder="/news/scholarship.png"
+                defaultCategory="News"
+              />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                 <div className="space-y-1.5">
@@ -985,14 +1002,13 @@ export function SiteContentManager() {
                 </div>
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700">Image Asset Path / URL</label>
-                <Input
-                  value={editingProgram.image}
-                  onChange={(e) => setEditingProgram({ ...editingProgram, image: e.target.value })}
-                  placeholder="/programs/scholarships.png"
-                />
-              </div>
+              <ImagePickerInput
+                label="Program Cover Image"
+                value={editingProgram.image}
+                onChange={(url) => setEditingProgram({ ...editingProgram, image: url })}
+                placeholder="/programs/scholarships.png"
+                defaultCategory="Programs"
+              />
             </div>
 
             <div className="p-4 px-6 border-t border-slate-100 bg-slate-50/70 flex justify-end gap-2.5 shrink-0">
@@ -1080,6 +1096,14 @@ export function SiteContentManager() {
                 placeholder="Their inspiring personal experience with KMEW..."
               />
             </div>
+
+            <ImagePickerInput
+              label="Beneficiary Photo"
+              value={storyForm.image}
+              onChange={(url) => setStoryForm({ ...storyForm, image: url })}
+              placeholder="/stories/rina.png"
+              defaultCategory="Stories"
+            />
           </div>
 
           <div className="p-4 px-6 border-t border-slate-100 bg-slate-50/70 flex justify-end gap-2 shrink-0">
@@ -1139,14 +1163,13 @@ export function SiteContentManager() {
               />
             </div>
 
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-700">Photo URL</label>
-              <Input
-                value={leaderForm.image}
-                onChange={(e) => setLeaderForm({ ...leaderForm, image: e.target.value })}
-                placeholder="https://... or /team/member.png"
-              />
-            </div>
+            <ImagePickerInput
+              label="Trustee Photo"
+              value={leaderForm.image}
+              onChange={(url) => setLeaderForm({ ...leaderForm, image: url })}
+              placeholder="/team/member.png"
+              defaultCategory="Uploads"
+            />
           </div>
 
           <div className="p-4 px-6 border-t border-slate-100 bg-slate-50/70 flex justify-end gap-2 shrink-0">

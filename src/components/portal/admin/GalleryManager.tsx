@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { ImagePickerInput } from "./ImagePickerInput";
 import {
   Dialog,
   DialogContent,
@@ -329,45 +330,14 @@ export function GalleryManager({ onAuditLog }: GalleryManagerProps) {
               </select>
             </div>
 
-            {/* Image Selection with Presets */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-700">Photo URL & Presets</label>
-              <div className="flex items-center gap-3">
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0">
-                  <img
-                    src={formData.image}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/gallery/g1.png";
-                    }}
-                  />
-                </div>
-                <div className="flex-1 space-y-1">
-                  <Input
-                    placeholder="Enter image URL or select from presets below"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    className="text-xs"
-                  />
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {DEFAULT_GALLERY_IMAGES.map((preset) => (
-                      <button
-                        key={preset.value}
-                        type="button"
-                        onClick={() => setFormData({ ...formData, image: preset.value })}
-                        className={`text-[10px] px-2 py-0.5 rounded-md border font-medium transition-colors ${formData.image === preset.value
-                            ? "bg-blue-100 text-blue-900 border-blue-300 font-bold"
-                            : "bg-slate-50 text-slate-600 hover:bg-slate-100 border-slate-200"
-                          }`}
-                      >
-                        {preset.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Photo Selection with Media Library & Auto Compression */}
+            <ImagePickerInput
+              label="Photo Image"
+              value={formData.image}
+              onChange={(url) => setFormData({ ...formData, image: url })}
+              placeholder="/gallery/g1.png"
+              defaultCategory="Gallery"
+            />
 
             {/* Description */}
             <div className="space-y-1">
